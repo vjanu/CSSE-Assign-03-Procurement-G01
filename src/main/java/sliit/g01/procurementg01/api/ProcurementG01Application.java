@@ -1,4 +1,4 @@
-package sliit.g01.procurementg01;
+package sliit.g01.procurementg01.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
