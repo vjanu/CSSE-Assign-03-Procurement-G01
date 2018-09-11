@@ -3,6 +3,13 @@ package sliit.g01.procurementg01.api.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+
+/*
+ * NOTE: This this is the parent class do not create a mongo repository for this.
+ *       We only create mongo repositories for all the child classes.
+ *       But make sure to implement an empty constructor and all getters and setters in,
+ *       all the classes.
+ */
 public class AuthorizedEmployee {
 
     @Id
