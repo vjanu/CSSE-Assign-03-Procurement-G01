@@ -25,13 +25,4 @@ public class Category {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
-
-	public void selectCategory(String categoryId) {
-		this.categoryId = categoryId;
-	}
-
-	public boolean addCategory(String categoryId, String categoryName) {
-		return false;
-	}
-
 }

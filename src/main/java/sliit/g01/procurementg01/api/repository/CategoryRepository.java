@@ -6,6 +6,4 @@ import sliit.g01.procurementg01.api.model.Category;
 
 public interface CategoryRepository extends MongoRepository<Category, String> {
 	Category findByCategoryId(String categoryId);
-
-	// List<Category> findAllCategories();
 }
