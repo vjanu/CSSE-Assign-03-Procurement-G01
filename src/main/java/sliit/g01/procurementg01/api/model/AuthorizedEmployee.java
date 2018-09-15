@@ -1,8 +1,6 @@
 package sliit.g01.procurementg01.api.model;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 
 /*
  * NOTE: This this is the parent class do not create a mongo repository for this.
@@ -12,65 +10,62 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 public class AuthorizedEmployee {
 
-    @Id
-    private String employeeId;
-    private String employeeType;
-    private String employeeName;
-    private String address;
-    private String email;
-    private String phone;
+	@Id
+	private String employeeId;
+	private String employeeType;
+	private String employeeName;
+	private String address;
+	private String email;
+	private String phone;
 
+	public void addComment(String comment) {
+	}
 
-    public void addComment(String comment) {}
+	public String getEmployeeId() {
+		return employeeId;
+	}
 
+	public void setEmployeeId(String employeeId) {
+		this.employeeId = employeeId;
+	}
 
-    public String getEmployeeId() {
-        return employeeId;
-    }
+	public String getEmployeeType() {
+		return employeeType;
+	}
 
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
-    }
+	public void setEmployeeType(String employeeType) {
+		this.employeeType = employeeType;
+	}
 
-    public String getEmployeeType() {
-        return employeeType;
-    }
+	public String getEmployeeName() {
+		return employeeName;
+	}
 
-    public void setEmployeeType(String employeeType) {
-        this.employeeType = employeeType;
-    }
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
 
-    public String getEmployeeName() {
-        return employeeName;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getPhone() {
+		return phone;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 }
-
-

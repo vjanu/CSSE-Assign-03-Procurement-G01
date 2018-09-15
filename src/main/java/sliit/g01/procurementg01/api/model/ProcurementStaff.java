@@ -1,5 +1,8 @@
 package sliit.g01.procurementg01.api.model;
 
-public class ProcurementStaff {
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "procurementStaff")
+public class ProcurementStaff extends AuthorizedEmployee{
 
 }
