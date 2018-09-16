@@ -91,29 +91,27 @@
 					<div class="card-header">
 						<h4>Request Orders</h4>
 						<form action="/add-new-order" method="POST">
-						<label>Name:</label> <input type="text" name="constructorname">
-						<label>Date:</label> <input type="text" name="constructorname"></br>
-						<label>Select the status
-						  <input type="radio" name="status" value="immediate" checked> Immediate
-  <input type="radio" name="status" value="Unimmediate"> Unimmediate
-  </label></br>
-							<label>Item</label> <select name="menu">
+							<label>Name:</label> <input type="text" name="constructorname">
+							<label>Date:</label> <input type="text" name="constructorname"></br>
+							<label>Select the status <input type="radio"
+								name="status" value="immediate" checked> Immediate <input
+								type="radio" name="status" value="Unimmediate">
+								Unimmediate
+							</label></br> <label>Item</label> <select name="menu">
 
 								<option value="0" selected>please select the item</option>
 								<option value="1">cement</option>
 								<option value="2">sand</option>
 								<option value="3">bricks</option>
 								<option value="other">other, please specify:</option>
-							</select></br>
-							
-							<label>Quantity</label> <input type="text" name="choicetext">
+							</select></br> <label>Quantity</label> <input type="text" name="choicetext">
 							<small class="float-sm-right">
 								<button class="btn btn-primary">Add Order</button>
 							</small>
-								</form>
+						</form>
 					</div>
 
-				
+
 				</div>
 				<div class="card-body">
 
@@ -122,9 +120,9 @@
 							<thead>
 								<tr>
 									<th scope="col" class="text-center">OrderId</th>
-                                    <th scope="col">ConstructorName</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Items</th>
+									<th scope="col">ConstructorName</th>
+									<th scope="col">Date</th>
+									<th scope="col">Items</th>
 									<th scope="col">Quantity</th>
 									<th scope="col">Status</th>
 									<th scope="col" class="text-center">Remove</th>
@@ -133,12 +131,12 @@
 							<tbody>
 								<tr th:each="requestmaterial : ${requestmaterialList}">
 									<td th:text="${requestmaterial.OrderId}"></td>
-											<td th:text="${requestmaterial.ConstructorName}"></td>
-											<td th:text="${requestmaterial.Date}"></td>
+									<td th:text="${requestmaterial.ConstructorName}"></td>
+									<td th:text="${requestmaterial.Date}"></td>
 									<td th:text="${requestmaterial.Items}"></td>
 									<td th:text="${requestmaterial.Quantity}"></td>
-																		<td th:text="${requestmaterial.Status}"></td>
-									
+									<td th:text="${requestmaterial.Status}"></td>
+
 									<td></td>
 								</tr>
 

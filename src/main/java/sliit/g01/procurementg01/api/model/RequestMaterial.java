@@ -6,9 +6,32 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "RequestMaterial")
 public class RequestMaterial {
 @Id
+
     private String orderId;
+    private String name; 
+    private String date;
 	private String[] item;
 	private double quantity;
+	private String status;
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public String[] getItem() {
 		return item;
 	}
