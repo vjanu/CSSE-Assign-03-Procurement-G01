@@ -4,7 +4,7 @@
 
 
 /* * * * *     Global Variables     * * * * */
-let BASE_URL_LOCAL = 'http://localhost:8080';
+let BASE_URL_LOCAL = 'http://localhost:9000';
 let USER_INFO = 'user-info'
 let CURRENT_URL = window.location.href;
 
