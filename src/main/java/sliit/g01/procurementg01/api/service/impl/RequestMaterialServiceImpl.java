@@ -1,4 +1,4 @@
-package sliit.g01.procurementg01.api.service;
+package sliit.g01.procurementg01.api.service.impl;
 
 import java.util.List;
 
@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 
 import sliit.g01.procurementg01.api.model.RequestMaterial;
 
-import sliit.g01.procurementg01.api.repository.RequestMaterialRepository;;
+import sliit.g01.procurementg01.api.repository.RequestMaterialRepository;
+import sliit.g01.procurementg01.api.service.RequestMaterialService;;
 
 @Service("requestmaterialService")
 public class RequestMaterialServiceImpl implements RequestMaterialService {
