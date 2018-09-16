@@ -5,7 +5,7 @@
 
 /* * * * *     Global Variables     * * * * */
 let BASE_URL_LOCAL = 'http://localhost:9000';
-let USER_INFO = 'user-info'
+let USER_INFO = 'user-info';
 let CURRENT_URL = window.location.href;
 
 /* * * * *     Event Triggers     * * * * */
@@ -15,7 +15,7 @@ $('#btn-logout').on('click', function (e) {
     window.location.href = "index.html";
 });
 
-$('#btn-add-new-site').on('click', function (e) {
+$('#btn-add-site').on('click', function (e) {
     e.preventDefault();
     addNewSite();
 });
@@ -98,9 +98,16 @@ function getItemList(items){
 }
 
 function addNewSite(){
-	axios.get(BASE_URL_LOCAL + '/requestmaterial/')
+	let data = {
+		siteId : $('#site-id').val(),
+		siteName : $('#site-name').val(),
+		address : $('#address').val(),
+		storageCapacity : $('#storage-capacity').val(),
+		currentCapacity : $('#current-capacity').val()
+	}
+	axios.post(BASE_URL_LOCAL + '/site/add-new-site', data)
     .then(function (response) {
-    	
+    	alert(response.data)
     })
     .catch(function (error) {
         // handle error

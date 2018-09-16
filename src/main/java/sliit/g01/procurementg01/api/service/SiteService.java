@@ -19,7 +19,7 @@ public interface SiteService {
 
 	Site getSite(int siteId);
 
-	Boolean deleteSite(int siteId);
+	boolean deleteSite(int siteId);
 
 	Site updateSite(int siteId, Site site);
 

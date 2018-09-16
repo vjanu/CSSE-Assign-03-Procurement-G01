@@ -3,6 +3,8 @@ package sliit.g01.procurementg01.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,10 +26,16 @@ public class SiteController {
 	@Autowired
 	private SiteService siteService;
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = "/add-new-site", method = RequestMethod.POST)
+	public ResponseEntity<String> addSite(@Validated @RequestBody Site site) {
+		if (siteService.addSite(site)) {
+			return new ResponseEntity<>("New Site Added", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Not Created", HttpStatus.NOT_IMPLEMENTED);
+		}
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public List<Site> listAllSites() {
 		return siteService.listAllSites();
 	}

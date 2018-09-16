@@ -37,13 +37,13 @@ public class SiteServiceImpl implements SiteService {
 	}
 
 	@Override
-	public Boolean deleteSite(int siteId) {
+	public boolean deleteSite(int siteId) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
-		
+	public boolean addSite(Site site) {
 		return (siteRepository.save(site) != null);
 	}
 
