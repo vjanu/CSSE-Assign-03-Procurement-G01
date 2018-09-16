@@ -33,14 +33,12 @@ public class SiteServiceImpl implements SiteService {
 
 	@Override
 	public List<Site> listAllSites() {
-		// TODO Auto-generated method stub
-		return null;
+		return siteRepository.findAll();
 	}
 
 	@Override
 	public Site getSite(int siteId) {
-		// TODO Auto-generated method stub
-		return null;
+		return siteRepository.findBySiteId(siteId);
 	}
 
 	@Override
@@ -51,14 +49,12 @@ public class SiteServiceImpl implements SiteService {
 
 	@Override
 	public Site addSite(Site site) {
-		// TODO Auto-generated method stub
-		return null;
+		return siteRepository.save(site);
 	}
 
 	@Override
 	public Site updateSite(int siteId, Site site) {
-		// TODO Auto-generated method stub
-		return null;
+		return siteRepository.save(site);
 	}
 
 	

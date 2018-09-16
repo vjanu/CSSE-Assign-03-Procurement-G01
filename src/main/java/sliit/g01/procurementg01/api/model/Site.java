@@ -14,7 +14,7 @@ public class Site  {
     private int siteId;
 	private String siteName;
 	private String address;
-	private Map items;
+	private Map<String, Integer> items;
 	private float storageCapacity;
 	private float currentCapacity;
 
