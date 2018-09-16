@@ -122,17 +122,23 @@
 							<thead>
 								<tr>
 									<th scope="col" class="text-center">OrderId</th>
-
-									<th scope="col">Items</th>
+                                    <th scope="col">ConstructorName</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Items</th>
 									<th scope="col">Quantity</th>
+									<th scope="col">Status</th>
 									<th scope="col" class="text-center">Remove</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr th:each="requestmaterial : ${requestmaterialList}">
 									<td th:text="${requestmaterial.OrderId}"></td>
+											<td th:text="${requestmaterial.ConstructorName}"></td>
+											<td th:text="${requestmaterial.Date}"></td>
 									<td th:text="${requestmaterial.Items}"></td>
 									<td th:text="${requestmaterial.Quantity}"></td>
+																		<td th:text="${requestmaterial.Status}"></td>
+									
 									<td></td>
 								</tr>
 
