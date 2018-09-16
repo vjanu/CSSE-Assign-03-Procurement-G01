@@ -1,5 +1,6 @@
 /**
  * This JS file includes all Procurement Staff related Scripts
+ * @author Tharindu TCJ
  */
 
 
@@ -60,46 +61,30 @@ function loadRequestedMaterialTable(){
      .then(function (response) {
     	 console.log(response)
     	 response.data.forEach(item => {
-    	 
-    		 $('#manage-material-requests tbody').append('<tr>' +
-            '<td>'+item.orderId+'</td>' +
-            '<td class="nr-fid" scope="row">' + item.requestedPerson + '</td>' +
-            '<td >' + item.siteId + '</td>' +
-            '<td >' + getItemList(item.items) + '</td>' +
-            '<td>' + item.requestedDate + '</td>' +
-            '<td>' + item.isImmediated + '</td>' +
-            '<td>' + item.isProcumentApproved + '</td>' +
-            '<td><center>' +
-            '<a href="#" title="" class="btn btn-primary btn-sm">\n' +
-            '        <span class="far fa-eye" aria-hidden="true"></span>\n' +
-            '        <span><strong>Edit</strong></span></a>'+
-            '</a></center>' +
-            '</td>' +
-            '<td><center>' +
-            '<a href="#" title="" class="btn btn-danger btn-sm">\n' +
-            '        <span class="far fa-eye" aria-hidden="true"></span>\n' +
-            '        <span><strong>Remove</strong></span></a>'+
-            '</a></center>' +
-            '</td>' +
-            '</tr>');
+    		 
+    		 var html = '<tr>';
+    		 html += '<td>'+item.orderId+'</td>';
+    		 html += '<td class="nr-fid" scope="row">' + item.requestedPerson + '</td>';
+    		 html += '<td >' + item.siteId + '</td>';
+    		 html += '<td >' + getItemList(item.items) + '</td>';
+    		 html += '<td>' + item.requestedDate + '</td>';
+    		 html += '<td class="text-center">' + getImmediateButton(item.isImmediated) + '</td>';
+    		 html += '<td><center>' +getApprovedButton(item.isProcumentApproved) +'</td>';
+    		 html += '<td><center>' +
+		             '<a href="#" title="" class="btn btn-danger btn-sm">\n' +
+		             '        <span class="far fa-trash-alt" aria-hidden="true"></span>\n' +
+		             '        <span><strong>Remove</strong></span></a>'+
+		             '</a></center>'+
+		             '</td>';
+    		 html += '</tr>';
+    		 
+    		 $('#manage-material-requests tbody').append(html);
     	 });
      })
      .catch(function (error) {
          // handle error
          console.log(error);
      });
-}
-
-
-function getItemList(items){
-	var html = '<ul>';
-	for (var key in items) {
-		if (items.hasOwnProperty(key)) {
-			html += '<li>'+ key +' - '+items[key]+'</li>';
-		}
-	}
-	html +=  '</ul>';
-	return html;
 }
 
 function addNewSite(){
@@ -181,6 +166,12 @@ function loadAllSites(){
 }
 
 /* * * * *     Reusable functions     * * * * */
+
+/**
+ * Here we format date into below format
+ * 			yyyy-mm-dd --> 2018-09-16
+ * @author Tharindu TCJ
+ */
 function formatDate(date) {
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
@@ -191,4 +182,40 @@ function formatDate(date) {
     if (day.length < 2) day = '0' + day;
 
     return [year, month, day].join('-');
+}
+
+/**
+ * This function will generate the item object into list manner
+ * @author Tharindu TCJ
+ */
+function getItemList(items){
+	var html = '<ul>';
+	for (var key in items) {
+		if (items.hasOwnProperty(key)) {
+			html += '<li>'+ key +' - '+items[key]+'</li>';
+		}
+	}
+	html +=  '</ul>';
+	return html;
+}
+
+function getApprovedButton(status){
+	var btnClass = (status == 1) ? "btn btn-success btn-sm" : "btn btn-primary btn-sm" ;
+	var btnText = (status == 1) ? "Approved" : "Approve" ;
+	var isDisabled = (status == 1) ? "disabled" : "" ;
+	
+	
+	var html = '<button type="button" title="" class="'+btnClass+'" '+isDisabled+'>' +
+		    '        <span class="fa fa-check" aria-hidden="true"></span>' +
+		    '        <span><strong>'+btnText+'</strong></span></a>'+
+		    '</button>';
+	return html;
+}
+
+function getImmediateButton(status){
+	var badgeClass = (status == 1) ? "badge badge-pill badge-danger" : "badge badge-pill badge-warning" ;
+	var badgeText = (status == 1) ? "Yes" : "No" ;
+	
+	var html = '<h4><span class="'+badgeClass+'">'+badgeText+'</span></h4>';
+	return html;
 }
