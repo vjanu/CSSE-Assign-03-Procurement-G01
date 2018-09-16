@@ -31,28 +31,30 @@ $('#btn-add-item').on('click', function (e) {
 
 /* * * * *     Page Activities     * * * * */
 if (CURRENT_URL.includes('manage-material-requests')) {
-    console.log("You are on Manage Material Requests page")
-    
-    
-    loadRequestedMaterialTable()
-    
+    console.log("You are on Manage Material Requests page");
+    loadRequestedMaterialTable();
 }
 
 if (CURRENT_URL.includes('manage-black-list')) {
-    console.log("You are on Manage Blacklist page")
+    console.log("You are on Manage Blacklist page");
 }
 
 if (CURRENT_URL.includes('manage-sites')) {
-    console.log("You are on Manage Sites page")
+    console.log("You are on Manage Sites page");
     loadAllSites();
 }
 
 if (CURRENT_URL.includes('view-ratings')) {
-    console.log("You are on View Ratings page")
+    console.log("You are on View Ratings page");
 }
 
 if (CURRENT_URL.includes('add-new-site')) {
-    console.log("You are on add new site page")
+    console.log("You are on add new site page");
+}
+
+if (CURRENT_URL.includes('add-new-item')) {
+    console.log("You are on add new item page");
+    generateCategoryDropdown();
 }
 
 
@@ -218,4 +220,22 @@ function getImmediateButton(status){
 	
 	var html = '<h4><span class="'+badgeClass+'">'+badgeText+'</span></h4>';
 	return html;
+}
+
+function generateCategoryDropdown(){
+	axios.get(BASE_URL_LOCAL + '/category/')
+    .then(function (response) {
+    	console.log(response.data)
+    	var html = '<select class="form-control" id="item-category-id">';
+    	
+    	response.data.forEach(item => {
+    		html += '<option value="'+item.categoryId+'">'+item.categoryName+'</option>';
+    	});
+    	html += '</select>';
+    	console.log(html)
+    	$('#cat-select').append(html);
+    }).catch(function (error) {
+        // handle error
+        console.log(error);
+    });
 }
