@@ -33,8 +33,7 @@ public class SiteServiceImpl implements SiteService {
 
 	@Override
 	public Site getSite(int siteId) {
-		// TODO Auto-generated method stub
-		return null;
+		return siteRepository.findBySiteId(siteId);
 	}
 
 	@Override
@@ -44,14 +43,13 @@ public class SiteServiceImpl implements SiteService {
 	}
 
 	@Override
-	public boolean addSite(Site site) {
+		
 		return (siteRepository.save(site) != null);
 	}
 
 	@Override
 	public Site updateSite(int siteId, Site site) {
-		// TODO Auto-generated method stub
-		return null;
+		return siteRepository.save(site);
 	}
 
 }

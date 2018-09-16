@@ -25,8 +25,6 @@ public class SiteController {
 	private SiteService siteService;
 
 	@RequestMapping(method = RequestMethod.POST)
-	public boolean addSite(@Validated @RequestBody final Site site) {
-		return siteService.addSite(site);
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
