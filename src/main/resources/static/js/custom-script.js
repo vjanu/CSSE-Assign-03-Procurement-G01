@@ -20,6 +20,11 @@ $('#btn-add-site').on('click', function (e) {
     addNewSite();
 });
 
+$('#btn-add-item').on('click', function (e) {
+    e.preventDefault();
+    addNewItem();
+});
+
 
 
 
@@ -38,7 +43,7 @@ if (CURRENT_URL.includes('manage-black-list')) {
 
 if (CURRENT_URL.includes('manage-sites')) {
     console.log("You are on Manage Sites page")
-    getAllSites();
+    loadAllSites();
 }
 
 if (CURRENT_URL.includes('view-ratings')) {
@@ -115,7 +120,32 @@ function addNewSite(){
     });
 }
 
-function getAllSites(){
+
+
+/**
+ * This function add new item to inventory
+ * @returns
+ */
+function addNewItem(){
+	let data = {
+		itemId : $('#item-id').val(),
+		itemName : $('#item-name').val(),
+		categoryId : $('#item-category-id').val(),
+		price : $('#item-price').val(),
+		deliveryInformation : $('#delivery-information').val(),
+		isRestrictedItem : $('#restricted-item').val()
+	}
+	axios.post(BASE_URL_LOCAL + '/item/add-new-item', data)
+    .then(function (response) {
+    	alert(response.data)
+    })
+    .catch(function (error) {
+        // handle error
+        console.log(error);
+    });
+}
+
+function loadAllSites(){
 	axios.get(BASE_URL_LOCAL + '/site/')
     .then(function (response) {
    	 console.log(response)
@@ -131,13 +161,13 @@ function getAllSites(){
            '<td>' + item.currentCapacity + '</td>' +
            '<td><center>' +
            '<a href="#" title="" class="btn btn-primary btn-sm">\n' +
-           '        <span class="far fa-eye" aria-hidden="true"></span>\n' +
+           '        <span class="fas fa-edit" aria-hidden="true"></span>\n' +
            '        <span><strong>Edit</strong></span></a>'+
            '</a></center>' +
            '</td>' +
            '<td><center>' +
            '<a href="#" title="" class="btn btn-danger btn-sm">\n' +
-           '        <span class="far fa-eye" aria-hidden="true"></span>\n' +
+           '        <span class="far fa-trash-alt" aria-hidden="true"></span>\n' +
            '        <span><strong>Remove</strong></span></a>'+
            '</a></center>' +
            '</td>' +
