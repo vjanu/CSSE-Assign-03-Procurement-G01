@@ -33,7 +33,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link nav-link-collapse" href="manage-sites.html">
                         <i class="far fa-fw fa-building"></i>
                         <span class="nav-link-text">Manage Sites</span>
@@ -54,7 +54,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="View Ratings">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="View Ratings">
                     <a class="nav-link nav-link-collapse" href="view-ratings.html">
                         <i class="far fa-fw fa-star"></i>
                         <span class="nav-link-text">View Ratings</span>
@@ -93,33 +93,63 @@
                     <li class="breadcrumb-item">
                         <a href="#">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item active">View Ratings</li>
+					<li class="breadcrumb-item">
+                        <a href="#">Manage Sites</a>
+                    </li>
+                    <li class="breadcrumb-item active">Add New Site</li>
                 </ol>
 
 
                 <div class="card">
                     <div class="card-header">
-                        <h4>Ratings Lists</h4>
+                        <h4>Manage Sites
+                            <small class="float-sm-right">
+                                <button class="btn btn-primary">Add new Site</button>
+                            </small>
+                        </h4>
                     </div>
                     <div class="card-body">
 
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="view-ratings">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="text-center">#</th>
-                                        <th scope="col" class="text-center">Rated By</th>
-                                        <th scope="col" class="text-center">Rate</th>
-                                        <th scope="col" class="text-center">Comments</th>
-                                        <th scope="col" class="text-center">Rated Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+					
+					
+                        <!-- main content: start -->
+
+                <div class="card-body mr-md-5 ml-md-5">
+                    <form>
+                        <!-- Name and Reg number -->
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="iManagerName">Internship Manager Name</label>
+                                <input type="text" class="form-control" id="iManagerName" placeholder="Perera A.L.K.">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="iManagerEmail">Internship Manager Email</label>
+                                <input type="email" class="form-control" id="iManagerEmail" placeholder="Supervisor Email">
+                            </div>
                         </div>
+                        <!-- Name and Reg number -->
+
+                        <!-- Address -->
+                        <div class="form-group">
+                            <label for="iManagerPassword">Internship Manager Password</label>
+                            <input type="text" class="form-control" id="iManagerPassword" placeholder="Supervisor Password">
+                        </div>
+                        <!-- Address -->
+
+
+                        <!-- Semester and grades -->
+
+                        <button type="button" class="btn btn-primary" id="btn-add-iManager">Add</button>
+                    </form>
+                </div>
+                <!-- main content: end -->
+						
+						
+						
                     </div>
                 </div>
+				
+				
             </div>
 
         </div>
