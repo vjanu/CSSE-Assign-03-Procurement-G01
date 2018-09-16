@@ -1,5 +1,7 @@
 package sliit.g01.procurementg01.api.model;
 
+import java.util.Map;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "RequestMaterial")
@@ -9,7 +11,7 @@ public class RequestMaterial {
 	private String requestedPerson;
 	private String siteId;
 	private String requestedDate;
-	private String item;
+	private Map<String, String> items;
 	private String isImmediated;
 	private String isProcumentApproved;
 	// private String status;
@@ -46,12 +48,12 @@ public class RequestMaterial {
 		this.requestedDate = requestedDate;
 	}
 
-	public String getItem() {
-		return item;
+	public Map<String, String> getItems() {
+		return items;
 	}
 
-	public void setItem(String item) {
-		this.item = item;
+	public void setItems(Map<String, String> items) {
+		this.items = items;
 	}
 
 	public String getIsImmediated() {
