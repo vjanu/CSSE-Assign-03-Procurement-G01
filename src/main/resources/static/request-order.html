@@ -25,7 +25,7 @@
 	rel="stylesheet">
 <link href="css/custom-style.css" rel="stylesheet">
 
-<title>Procurement Home</title>
+<title>Request Material Home</title>
 </head>
 
 <body class="fixed-nav">
@@ -44,12 +44,12 @@
 			<ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
 				<li class="nav-item active" data-toggle="tooltip"
 					data-placement="right" title="Dashboard"><a
-					class="nav-link nav-link-collapse" href="manage-sites.html"> <i
-						class="far fa-fw fa-building"></i> <span class="nav-link-text">Request Material
-							</span>
+					class="nav-link nav-link-collapse" href="#"> <i
+						class="far fa-fw fa-building"></i> <span class="nav-link-text">Request
+							Material </span>
 				</a></li>
 
-				
+
 			</ul>
 
 			<ul class="navbar-nav ml-auto">
@@ -83,28 +83,29 @@
 			<div>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-					<li class="breadcrumb-item active">Request Orders </li>
+					<li class="breadcrumb-item active">Request Orders</li>
 				</ol>
 
 
 				<div class="card">
 					<div class="card-header">
 						<h4>Request Orders</h4>
-						<label>Item</label> <select name="menu">
+						<form action="/add-new-order" method="POST">
+							<label>Item</label> <select name="menu">
 
-							<option value="0" selected>please select the item</option>
-							<option value="1">cement</option>
-							<option value="2">sand</option>
-							<option value="3">bricks</option>
-							<option value="other">other, please specify:</option>
-						</select>
-						</p>
-						<label>Quantity</label> <input type="text" name="choicetext">
+								<option value="0" selected>please select the item</option>
+								<option value="1">cement</option>
+								<option value="2">sand</option>
+								<option value="3">bricks</option>
+								<option value="other">other, please specify:</option>
+							</select> <label>Quantity</label> <input type="text" name="choicetext">
+							<small class="float-sm-right">
+								<button class="btn btn-primary">Add Order</button>
+							</small>
+								</form>
 					</div>
-					<small class="float-sm-right">
-						<button class="btn btn-primary">Add Order</button>
-					</small>
 
+				
 				</div>
 				<div class="card-body">
 
@@ -112,7 +113,7 @@
 						<table class="table table-bordered table-hover" id="manage-sites">
 							<thead>
 								<tr>
-									<th scope="col" class="text-center">Order Id</th>
+									<th scope="col" class="text-center">OrderId</th>
 
 									<th scope="col">Items</th>
 									<th scope="col">Quantity</th>
@@ -120,6 +121,13 @@
 								</tr>
 							</thead>
 							<tbody>
+								<tr th:each="requestmaterial : ${requestmaterialList}">
+									<td th:text="${requestmaterial.OrderId}"></td>
+									<td th:text="${requestmaterial.Items}"></td>
+									<td th:text="${requestmaterial.Quantity}"></td>
+									<td></td>
+								</tr>
+
 							</tbody>
 						</table>
 					</div>
