@@ -7,12 +7,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class RequestMaterial {
 @Id
     private String orderId;
-	private String item;
+	private String[] item;
 	private double quantity;
-	public String getItem() {
+	public String[] getItem() {
 		return item;
 	}
-	public void setItem(String item) {
+	public void setItem(String[] item) {
 		this.item = item;
 	}
 	public double getQuantity() {

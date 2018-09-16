@@ -91,6 +91,12 @@
 					<div class="card-header">
 						<h4>Request Orders</h4>
 						<form action="/add-new-order" method="POST">
+						<label>Name:</label> <input type="text" name="constructorname">
+						<label>Date:</label> <input type="text" name="constructorname"></br>
+						<label>Select the status
+						  <input type="radio" name="status" value="immediate" checked> Immediate
+  <input type="radio" name="status" value="Unimmediate"> Unimmediate
+  </label></br>
 							<label>Item</label> <select name="menu">
 
 								<option value="0" selected>please select the item</option>
@@ -98,7 +104,9 @@
 								<option value="2">sand</option>
 								<option value="3">bricks</option>
 								<option value="other">other, please specify:</option>
-							</select> <label>Quantity</label> <input type="text" name="choicetext">
+							</select></br>
+							
+							<label>Quantity</label> <input type="text" name="choicetext">
 							<small class="float-sm-right">
 								<button class="btn btn-primary">Add Order</button>
 							</small>
