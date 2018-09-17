@@ -23,3 +23,34 @@
       "storageCapacity":2,
       "currentCapacity":2
 }
+
+{  
+   "siteId":"ST0001",
+   "siteName":"Site001",
+   "address":"Kaduwela",
+   "items":{  
+      "cemenet":"2",
+      "sand":"22"
+   },
+   "storageCapacity":"500",
+   "currentCapacity":"100"
+}
+
+
+--------------Add Request---------------
+
+{
+	"orderId":"OR0125",
+	"requestedPerson":"Amal",
+	"siteId":"S004",
+	"requestedDate":"2018-08-03",
+	"items":{
+		"cemenet":"500KG",
+		"sand":"202KG",
+		"bricks":"1000"
+	},
+	"isImmediated":"1",
+	"isSiteManagerApproved":"0",
+	"isProcumentApproved":"0"
+}
+

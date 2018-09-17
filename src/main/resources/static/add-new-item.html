@@ -33,7 +33,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link nav-link-collapse" href="manage-sites.html">
                         <i class="far fa-fw fa-building"></i>
                         <span class="nav-link-text">Manage Sites</span>
@@ -61,7 +61,7 @@
                     </a>
                 </li>
 				
-				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Inventory">
+				<li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Inventory">
                     <a class="nav-link nav-link-collapse" href="add-new-item.html">
 						<i class="fa fa-university"></i>
                         <span class="nav-link-text">Inventory</span>
@@ -100,40 +100,74 @@
                     <li class="breadcrumb-item">
                         <a href="#">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item active">Manage Sites</li>
+					<li class="breadcrumb-item">
+                        <a href="#">Inventory</a>
+                    </li>
+                    <li class="breadcrumb-item active">Add New Item</li>
                 </ol>
 
 
                 <div class="card">
                     <div class="card-header">
-                        <h4>Manage Sites
-                            <small class="float-sm-right">
-                                <a href="add-new-site.html" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Add new Site</a>
-                            </small>
-                        </h4>
+                        <h4>Add New Item</h4>
                     </div>
                     <div class="card-body">
 
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="manage-sites">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="text-center">#</th>
-                                        <th scope="col" class="text-center">Site Name</th>
-                                        <th scope="col" class="text-center">Address</th>
-                                        <th scope="col" class="text-center">Items</th>
-                                        <th scope="col" class="text-center">Storage Capacity</th>
-                                        <th scope="col" class="text-center">Current Capacity</th>
-                                        <th scope="col" class="text-center">Edit</th>
-                                        <th scope="col" class="text-center">Remove</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+					
+					
+                        <!-- main content: start -->
+
+                <div class="card-body mr-md-5 ml-md-5">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="item-id">Item Id</label>
+                                <input type="text" class="form-control" id="item-id" placeholder="Item Id">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="item-name">Item Name</label>
+                                <input type="text" class="form-control" id="item-name" placeholder="Item Name">
+                            </div>
                         </div>
+                        
+                        
+                        <div class="form-row">
+                            <div class="form-group col-md-6" id="cat-select">
+	                            <label for="item-category" >Category</label>
+	                        </div>
+	
+	
+	                        <div class="form-group col-md-6">
+	                            <label for="item-price">Price</label>
+	                            <input type="text" class="form-control" id="item-price" placeholder="Item Price">
+	                        </div>
+                        </div>
+
+                        
+                        
+                        <div class="form-group">
+                            <label for="delivery-information">Delivery Information</label>
+                            <input type="text" class="form-control" id="delivery-information" placeholder="Delivery Information">
+                        </div>
+                        
+                        <div class="checkbox">
+						  <label><input id="restricted-item" type="checkbox" value="">Restricted Item</label>
+						</div>
+
+
+                        <!-- Semester and grades -->
+
+                        <button type="button" class="btn btn-primary" id="btn-add-item">Add Item</button>
+                    </form>
+                </div>
+                <!-- main content: end -->
+						
+						
+						
                     </div>
                 </div>
+				
+				
             </div>
 
         </div>
