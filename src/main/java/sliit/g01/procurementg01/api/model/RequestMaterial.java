@@ -1,11 +1,13 @@
 package sliit.g01.procurementg01.api.model;
 
 import java.util.Map;
-
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Map;
 
 @Document(collection = "RequestMaterial")
 public class RequestMaterial {
+
 
 	private String orderId;
 	private String requestedPerson;
@@ -14,6 +16,44 @@ public class RequestMaterial {
 	private Map<String, String> items;
 	private String isImmediated;
 	private String isProcumentApproved;
+	private String isSiteManagerApproved;
+	private String siteManagerName;
+	private String siteManagerID;
+	
+	public String getIsSiteManagerApproved() {
+		return isSiteManagerApproved;
+	}
+
+	public void setIsSiteManagerApproved(String isSiteManagerApproved) {
+		this.isSiteManagerApproved = isSiteManagerApproved;
+	}
+
+    public Map<String, String> getItem() {
+        return items;
+    }
+
+    public void setItem(Map<String, String> items) {
+        this.items = items;
+    }
+	
+	public String getSiteManagerName() {
+		return siteManagerName;
+	}
+
+	public void setSiteManagerName(String siteManagerName) {
+		this.siteManagerName = siteManagerName;
+	}
+
+	public String getSiteManagerID() {
+		return siteManagerID;
+	}
+
+	public void setSiteManagerID(String siteManagerID) {
+		this.siteManagerID = siteManagerID;
+	}
+
+	
+	
 	// private String status;
 
 	public String getOrderId() {
@@ -48,9 +88,11 @@ public class RequestMaterial {
 		this.requestedDate = requestedDate;
 	}
 
+
 	public Map<String, String> getItems() {
 		return items;
 	}
+
 
 	public void setItems(Map<String, String> items) {
 		this.items = items;
@@ -71,5 +113,9 @@ public class RequestMaterial {
 	public void setIsProcumentApproved(String isProcumentApproved) {
 		this.isProcumentApproved = isProcumentApproved;
 	}
+
+	
+
+	
 
 }

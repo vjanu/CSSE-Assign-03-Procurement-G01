@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import sliit.g01.procurementg01.api.model.RequestMaterial;
+import sliit.g01.procurementg01.api.model.Site;
 
 public interface RequestMaterialService {
 
@@ -16,5 +17,6 @@ public interface RequestMaterialService {
 
 	Boolean deleteOrder(String orderId);
 
+	RequestMaterial updateRequest(RequestMaterial requestMaterial);
 	
 }
