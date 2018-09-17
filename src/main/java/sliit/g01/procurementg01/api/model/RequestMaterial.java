@@ -28,12 +28,12 @@ public class RequestMaterial {
 		this.isSiteManagerApproved = isSiteManagerApproved;
 	}
 
-    public Map<String, Integer> getItem() {
-        return item;
+    public Map<String, String> getItem() {
+        return items;
     }
 
-    public void setItem(Map<String, Integer> item) {
-        this.item = item;
+    public void setItem(Map<String, String> items) {
+        this.items = items;
     }
 	
 	public String getSiteManagerName() {
