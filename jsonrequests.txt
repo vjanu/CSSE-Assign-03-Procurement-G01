@@ -51,6 +51,27 @@
 	},
 	"isImmediated":"1",
 	"isSiteManagerApproved":"0",
+	"siteManagerName":"Bimal",
+	"siteManagerID":"S005",
 	"isProcumentApproved":"0"
 }
 
+--------Add Item-------------
+
+{
+	"itemId":"I0001",
+	"itemName":"Cement",
+	"categoryId":"CAT001",
+	"price":"5000",
+	"deliveryInformation":"Bla bla",
+	"isRestrictedItem":"false"
+}
+
+{
+	"itemId":"I0002",
+	"itemName":"Bricks",
+	"categoryId":"CAT002",
+	"price":"400",
+	"deliveryInformation":"Bla bla",
+	"isRestrictedItem":"false"
+}

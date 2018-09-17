@@ -103,8 +103,7 @@ function loadRequestedMaterialTable(){
 function addNewSite(){
 	let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
 	var obj = {};	
-	for(var i of storedItems){obj[i.itemName] = i.itemQty;}
-	
+	for(var i of storedItems){obj[i.itemName] = i.itemQty;}	
 	
 	let data = {
 		siteId : $('#site-id').val(),
@@ -114,9 +113,6 @@ function addNewSite(){
 		storageCapacity : $('#storage-capacity').val(),
 		currentCapacity : $('#current-capacity').val()
 	}
-	
-	console.log(data);
-
 	
 	axios.post(BASE_URL_LOCAL + '/site/add-new-site', data)
     .then(function (response) {
