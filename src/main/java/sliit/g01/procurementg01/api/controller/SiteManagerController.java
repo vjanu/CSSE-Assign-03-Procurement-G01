@@ -25,7 +25,7 @@ public class SiteManagerController {
 
   
     
-    @GetMapping("/employee/site-manager/sites/{siteId}")
+    @GetMapping("/sites/{siteId}")
     public List<SiteManager> getManagersOfSite(@PathVariable String siteId) {
         return siteManagerRepository.findAllByManagedSiteId(siteId);
     }

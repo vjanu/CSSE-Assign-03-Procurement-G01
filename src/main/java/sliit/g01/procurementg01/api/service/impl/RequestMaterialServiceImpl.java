@@ -37,4 +37,18 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 		return null;
 	}
 
+	@Override
+	public RequestMaterial updateRequest(final RequestMaterial requestMaterial) {
+		   final RequestMaterial existingNote = requestmaterialRepository.findByOrderId(requestMaterial.getOrderId());
+//	        if (existingNote == null || existingNote.isDeleted()) {
+//	            throw new NoteNotFoundException("The requested note is not found");
+//	        }
+
+	        existingNote.setSiteId(requestMaterial.getSiteId());
+
+
+	        return requestmaterialRepository.save(existingNote);
+	
+	}
+
 }
