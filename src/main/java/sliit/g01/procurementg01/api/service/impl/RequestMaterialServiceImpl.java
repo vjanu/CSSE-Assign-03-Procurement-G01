@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sliit.g01.procurementg01.api.model.RequestMaterial;
-
 import sliit.g01.procurementg01.api.repository.RequestMaterialRepository;
 import sliit.g01.procurementg01.api.service.RequestMaterialService;;
 
@@ -15,10 +14,11 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 
 	@Autowired
 	private RequestMaterialRepository requestmaterialRepository;
+
 	@Override
 	public Boolean addOrder(RequestMaterial requestmaterial) {
 		return (requestmaterialRepository.save(requestmaterial) != null);
-		
+
 	}
 
 	@Override
@@ -38,17 +38,13 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 	}
 
 	@Override
-	public RequestMaterial updateRequest(final RequestMaterial requestMaterial) {
-		   final RequestMaterial existingNote = requestmaterialRepository.findByOrderId(requestMaterial.getOrderId());
-//	        if (existingNote == null || existingNote.isDeleted()) {
-//	            throw new NoteNotFoundException("The requested note is not found");
-//	        }
+	public RequestMaterial updateRequest(String orderId, RequestMaterial requestMaterial) {
+		RequestMaterial req = requestmaterialRepository.findByOrderId(orderId);
 
-	        existingNote.setSiteId(requestMaterial.getSiteId());
+		if (requestMaterial.getIsProcumentApproved() != null)
+			req.setIsProcumentApproved(requestMaterial.getIsProcumentApproved());
 
-
-	        return requestmaterialRepository.save(existingNote);
-	
+		return requestmaterialRepository.save(req);
 	}
 
 }
