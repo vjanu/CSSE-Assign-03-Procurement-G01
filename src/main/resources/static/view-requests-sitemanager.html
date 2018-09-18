@@ -60,13 +60,6 @@
                         <span class="nav-link-text">View Ratings</span>
                     </a>
                 </li>
-
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Inventory">
-                    <a class="nav-link nav-link-collapse" href="add-new-item.html">
-                        <i class="fa fa-university"></i>
-                        <span class="nav-link-text">Inventory</span>
-                    </a>
-                </li>
             </ul>
 
             <ul class="navbar-nav ml-auto">
@@ -98,99 +91,43 @@
             <div>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="#">Dashboard</a>
+                        <a href="sitemanager-dashboard.html">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item">
-                        <a href="#">Manage Sites</a>
-                    </li>
-                    <li class="breadcrumb-item active">Add New Site</li>
+                    <li class="breadcrumb-item active">View Requests</li>
                 </ol>
 
 
                 <div class="card">
                     <div class="card-header">
-                        <h4>Add New Sites</h4>
+                        <h4>View Requests</h4>
                     </div>
                     <div class="card-body">
 
-
-
-                        <!-- main content: start -->
-
-                        <div class="card-body mr-md-5 ml-md-5">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <form>
-                                        <!-- Site Id ane Name -->
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="site-id">Site Id</label>
-                                                <input type="text" class="form-control" id="site-id" placeholder="Site Id">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="site-name">Site Name</label>
-                                                <input type="text" class="form-control" id="site-name" placeholder="site Name">
-                                            </div>
-                                        </div>
-                                        <!-- Site Id ane Name -->
-
-                                        <!-- Address -->
-                                        <div class="form-group">
-                                            <label for="address">Address</label>
-                                            <input type="text" class="form-control" id="address" placeholder="Address">
-                                        </div>
-                                        <!-- Address -->
-
-                                        <!-- Storage Capacity -->
-                                        <div class="form-group">
-                                            <label for="storage-capacity">Storage Capacity</label>
-                                            <input type="text" class="form-control" id="storage-capacity" placeholder="Storage Capacity">
-                                        </div>
-                                        <!-- Storage Capacity -->
-
-                                        <!-- Current Capacity -->
-                                        <div class="form-group">
-                                            <label for="current-capacity">Current Capacity</label>
-                                            <input type="text" class="form-control" id="current-capacity" placeholder="Current Capacity">
-                                        </div>
-                                        <!-- Current Capacity -->
-
-                                        <button type="button" class="btn btn-primary" id="btn-add-site">Add Site</button>
-                                    </form>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="row">
-                                        <div class="form-group col-md-4" id="item-select">
-                                            <label for="site-id">Item</label>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="item-qty">Quantity</label>
-                                            <input type="text" class="form-control" id="item-qty" placeholder="Quantity">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <button type="button" class="btn btn-primary" id="btn-add-item-to-site">Add Item</button>
-                                        </div>
-
-                                        <div class="table-responsive" id="item-list">
-                                            <table class="table table-bordered table-hover" id="site-item-table">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col" class="text-center">Item ID</th>
-                                                        <th scope="col" class="text-center">Item Name</th>
-                                                        <th scope="col" class="text-center">Quantity</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" id="view-requests">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-center">Request ID</th>
+                                        <th scope="col" class="text-center">Requested Person</th>
+                                        <th scope="col" class="text-center">Requested Date</th>
+                                        <th scope="col" class="text-center">Site ID</th>
+                                        <th scope="col" class="text-center">Requested Items</th>
+                                        <th scope="col" class="text-center">Immediate</th>
+                                        <th scope="col" class="text-center">Approval Status</th>
+                                        <th scope="col" class="text-center">Approve</th>
+                                        <th scope="col" class="text-center">Decline</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
                         </div>
-                        <!-- main content: end -->
-
                     </div>
+
+                    <!--<input type="text" id="siteId" class="form-control" placeholder="Password" required="required">-->
+                    <!--<input type="text" id="orderId" class="form-control" placeholder="Password" required="required">-->
+                    <!--<input type="button" value="Upload" class="btn btn-success " id ="btn-update">-->
+                    
                 </div>
             </div>
 
@@ -205,7 +142,8 @@
         </footer>
 
         <!-- Logout Modal-->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -228,14 +166,13 @@
     <!-- Bootstrap core JavaScript
 ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>ss
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="js/custom-script.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
+    <script src="js/axios.min.js"></script>
+    <script src="js/site-script.js"></script>
 </body>
 
 </html>

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import sliit.g01.procurementg01.api.model.RequestMaterial;
@@ -19,11 +20,11 @@ import sliit.g01.procurementg01.api.service.RequestMaterialService;
 @RequestMapping("/requestmaterial")
 public class RequestMaterialController {
 	@Autowired
-	private RequestMaterialService requestmaterial;
+	private RequestMaterialService requestMaterialService;
 
 	@PostMapping("/add-new-order")
 	public ResponseEntity<String> addOrder(@RequestBody RequestMaterial requestMaterial) {
-		if (requestmaterial.addOrder(requestMaterial)) {
+		if (requestMaterialService.addOrder(requestMaterial)) {
 			return new ResponseEntity<>("New order Added", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Not Created", HttpStatus.NOT_IMPLEMENTED);
@@ -33,11 +34,23 @@ public class RequestMaterialController {
 
 	@GetMapping("/")
 	public List<RequestMaterial> getAllOrders() {
-		return requestmaterial.getAllOrders();
+		return requestMaterialService.getAllOrders();
 	}
 
 	@GetMapping("/{orderId}")
 	public RequestMaterial getOrder(@PathVariable String orderId) {
-		return requestmaterial.getOrder(orderId);
+		return requestMaterialService.getOrder(orderId);
 	}
+
+	@RequestMapping(method = RequestMethod.PUT, value = "/update/{id}")
+	public RequestMaterial update(@PathVariable String id, @RequestBody RequestMaterial requestMaterial) {
+		return requestMaterialService.updateRequest(id, requestMaterial);
+	}
+
+	// @PostMapping("/update/{orderId}")
+	// public RequestMaterial updateRequest(@Validated @RequestBody final
+	// RequestMaterial requestmaterial) {
+	// return requestMaterialService.updateRequest(requestmaterial);
+	// }
+
 }

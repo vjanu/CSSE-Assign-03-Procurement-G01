@@ -4,6 +4,10 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import sliit.g01.procurementg01.api.model.RequestMaterial;
 
-public interface RequestMaterialRepository extends MongoRepository<RequestMaterial, String>{
+public interface RequestMaterialRepository extends MongoRepository<RequestMaterial, String> {
 	RequestMaterial findByOrderId(String orderId);
+
+	// RequestMaterial findOne(String orderId);
+
+	// void updateRequest();
 }
