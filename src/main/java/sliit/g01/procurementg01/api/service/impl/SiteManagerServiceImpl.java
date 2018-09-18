@@ -16,7 +16,7 @@ import sliit.g01.procurementg01.api.service.SiteManagerService;
 /**
  * created by viraj
  **/
-@Service
+@Service("SiteManagerService")
 public class SiteManagerServiceImpl implements SiteManagerService {
 
     @Autowired
@@ -27,6 +27,30 @@ public class SiteManagerServiceImpl implements SiteManagerService {
 		return siteManagerRepository.save(siteManager);
 	}
 
-	
-	
+	@Override
+	public String getManagedSite(String siteManagerId) {
+	    // check if a site manager exists under the given employee id to avoid null pointers.
+		SiteManager siteManager = siteManagerRepository.findByEmployeeId(siteManagerId);
+		String managedSiteId = siteManager != null ? siteManager.getManagedSiteId() : "";
+
+		return managedSiteId;
+	}
+
+	@Override
+	public SiteManager getSiteManagerOfSite(String managedSiteId) {
+		// check if a manager exists for a given site id to avoid null pointers.
+	    SiteManager siteManager = siteManagerRepository.findSiteManagerByManagedSiteId(managedSiteId);
+
+	    if (siteManager == null) {
+	        siteManager  = new SiteManager();
+        }
+
+        return siteManager;
+	}
+
+    @Override
+    public List<SiteManager> getSiteManagersOfSite(String managedSiteId) {
+        return siteManagerRepository.findAllByManagedSiteId(managedSiteId);
+    }
+
 }

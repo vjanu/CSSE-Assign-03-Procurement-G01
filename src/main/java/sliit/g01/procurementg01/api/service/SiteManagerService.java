@@ -16,6 +16,9 @@ public interface SiteManagerService {
 
 	SiteManager addSiteManager(SiteManager siteManager);
 	
-	
-    
+	String getManagedSite(String siteManagerId);
+
+	SiteManager getSiteManagerOfSite(String managedSiteId);
+
+	List<SiteManager> getSiteManagersOfSite(String managedSiteId);  // use this if you believe there are multiple managers per site.
 }
