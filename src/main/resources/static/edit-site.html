@@ -33,7 +33,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link nav-link-collapse" href="manage-sites.html">
                         <i class="far fa-fw fa-building"></i>
                         <span class="nav-link-text">Manage Sites</span>
@@ -54,7 +54,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="View Ratings">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="View Ratings">
                     <a class="nav-link nav-link-collapse" href="view-ratings.html">
                         <i class="far fa-fw fa-star"></i>
                         <span class="nav-link-text">View Ratings</span>
@@ -100,60 +100,96 @@
                     <li class="breadcrumb-item">
                         <a href="#">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item active">View Ratings</li>
+                    <li class="breadcrumb-item">
+                        <a href="#">Manage Sites</a>
+                    </li>
+                    <li class="breadcrumb-item active">Add New Site</li>
                 </ol>
 
 
                 <div class="card">
                     <div class="card-header">
-                        <h4>Ratings Lists</h4>
+                        <h4>Add New Sites</h4>
                     </div>
                     <div class="card-body">
 
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="view-ratings">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="text-center">#</th>
-                                        <th scope="col" class="text-center">Rated By</th>
-                                        <th scope="col" class="text-center">Person Name</th>
-                                        <th scope="col" class="text-center">Rate</th>
-                                        <th scope="col" class="text-center">Comments</th>
-                                        <th scope="col" class="text-center">Rated Date</th>
-                                        <th scope="col" class="text-center">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="text-center">RT100</td>
-                                        <td>Amal Perera (Supervisor)</td>
-                                        <td>Vira Dias (Constructor)</td>
-                                        <td>****</td>
-                                        <td>Bla bla bla</td>
-                                        <td>2018-08-08</td>
-                                        <td class="text-center">
-                                            <a href="#" title="" class="btn btn-danger btn-sm">
-                                            <span class="fas fa-ban" aria-hidden="true"></span>
-                                            <span><strong>Blacklist</strong></span></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">RT101</td>
-                                        <td>Amal Perera (Supervisor)</td>
-                                        <td>Vira Dias (Constructor)</td>
-                                        <td>****</td>
-                                        <td>Bla bla bla</td>
-                                        <td>2018-08-08</td>
-                                        <td class="text-center">
-                                            <button href="#" title="" class="btn btn-default btn-sm" disabled>
-                                                <span class="fas fa-ban" aria-hidden="true"></span>
-                                                <span><strong>Blacklisted</strong></span>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+
+
+                        <!-- main content: start -->
+
+                        <div class="card-body mr-md-5 ml-md-5">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <form>
+                                        <!-- Site Id ane Name -->
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="site-id">Site Id</label>
+                                                <input type="text" class="form-control" id="site-id" placeholder="Site Id">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="site-name">Site Name</label>
+                                                <input type="text" class="form-control" id="site-name" placeholder="site Name">
+                                            </div>
+                                        </div>
+                                        <!-- Site Id ane Name -->
+
+                                        <!-- Address -->
+                                        <div class="form-group">
+                                            <label for="address">Address</label>
+                                            <input type="text" class="form-control" id="address" placeholder="Address">
+                                        </div>
+                                        <!-- Address -->
+
+                                        <!-- Storage Capacity -->
+                                        <div class="form-group">
+                                            <label for="storage-capacity">Storage Capacity</label>
+                                            <input type="text" class="form-control" id="storage-capacity" placeholder="Storage Capacity">
+                                        </div>
+                                        <!-- Storage Capacity -->
+
+                                        <!-- Current Capacity -->
+                                        <div class="form-group">
+                                            <label for="current-capacity">Current Capacity</label>
+                                            <input type="text" class="form-control" id="current-capacity" placeholder="Current Capacity">
+                                        </div>
+                                        <!-- Current Capacity -->
+
+                                        <button type="button" class="btn btn-primary" id="btn-add-site">Add Site</button>
+                                    </form>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="form-group col-md-4" id="item-select">
+                                            <label for="site-id">Item</label>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="item-qty">Quantity</label>
+                                            <input type="text" class="form-control" id="item-qty" placeholder="Quantity">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <button type="button" class="btn btn-primary" id="btn-add-item-to-site">Add Item</button>
+                                        </div>
+
+                                        <div class="table-responsive" id="item-list">
+                                            <table class="table table-bordered table-hover" id="site-item-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" class="text-center">Item ID</th>
+                                                        <th scope="col" class="text-center">Item Name</th>
+                                                        <th scope="col" class="text-center">Quantity</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <!-- main content: end -->
+
                     </div>
                 </div>
             </div>

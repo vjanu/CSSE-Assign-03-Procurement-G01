@@ -47,6 +47,7 @@ if (CURRENT_URL.includes('manage-material-requests')) {
 
 if (CURRENT_URL.includes('manage-black-list')) {
     console.log("You are on Manage Blacklist page");
+    loadAllSuppliers()
 }
 
 if (CURRENT_URL.includes('manage-sites')) {
@@ -66,6 +67,34 @@ if (CURRENT_URL.includes('add-new-site')) {
 if (CURRENT_URL.includes('add-new-item')) {
     console.log("You are on add new item page");
     generateCategoryDropdown();
+}
+
+
+
+
+
+function loadAllSuppliers(){
+	axios.get(BASE_URL_LOCAL + '/sup/')
+    .then(function (response) {
+   	 console.log(response)
+   	 response.data.forEach(item => {
+   		var html = '<tr>';
+		 html += '<td>'+item.supId+'</td>';
+		 html += '<td class="nr-fid" scope="row">' + item.supName + '</td>';
+		 html += '<td >' + item.supName + '</td>';
+		 html += '<td>Supplier</td>';
+		 html += '<td>' + item.supName + '</td>';
+		 html += '<td class="text-center">' + getBlacklistBadge(item.isBanned) + '</td>';
+		 html += '<td><center>' +getBlacklistButton(item.isBanned) +'</td>';
+		 html += '</tr>';
+		 
+		 $('#manage-black-list tbody').append(html);
+   	 });
+   	}).catch(function (error) {
+        // handle error
+        console.log(error);
+    });
+    
 }
 
 
@@ -93,8 +122,7 @@ function loadRequestedMaterialTable(){
     		 
     		 $('#manage-material-requests tbody').append(html);
     	 });
-     })
-     .catch(function (error) {
+     }).catch(function (error) {
          // handle error
          console.log(error);
      });
@@ -267,6 +295,25 @@ function getImmediateButton(status){
 	
 	var html = '<h4><span class="'+badgeClass+'">'+badgeText+'</span></h4>';
 	return html;
+}
+
+function getBlacklistButton(status){
+	var btnClass = (status) ? "btn btn-default btn-sm" : "btn btn-danger btn-sm" ;
+	var btnText = (status) ? "Blacklisted" : "Blacklist" ;
+	var isDisabled = (status) ? "disabled" : "" ;
+
+	var html = '<button type="button" title="" class="'+btnClass+'" '+isDisabled+'>' +
+		    '        <span class="fas fa-ban" aria-hidden="true"></span>' +
+		    '        <span><strong>'+btnText+'</strong></span></a>'+
+		    '</button>';
+	return html;
+}
+
+function getBlacklistBadge(status){
+	var badgeClass = (status) ? "badge badge-pill badge-danger" : "badge badge-pill badge-primary" ;
+	var badgeText = (status) ? "Banned" : "Pending" ;
+
+    return '<h5><span class="'+badgeClass+'">'+badgeText+'</span></h5>';
 }
 
 function generateCategoryDropdown(){
