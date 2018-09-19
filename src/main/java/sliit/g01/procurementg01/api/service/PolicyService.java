@@ -25,4 +25,7 @@ public interface PolicyService {
 
     // for listing out all the company policies.
     List<Policy> getAllPolicies();
+
+    // delete a policy.
+    boolean deletePolicy(String policyId);
 }

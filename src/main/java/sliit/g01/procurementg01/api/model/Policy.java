@@ -17,10 +17,6 @@ public class Policy {
     private String description;
 
 
-    public Policy() {
-    }
-
-
     public String getPolicyId() {
         return policyId;
     }

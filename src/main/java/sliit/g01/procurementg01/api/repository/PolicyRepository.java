@@ -16,4 +16,5 @@ public interface PolicyRepository extends MongoRepository<Policy, String> {
 
     List<Policy> findAllByDescriptionContains(String keyword);
 
+    void deletePolicyByPolicyId(String policyId);
 }

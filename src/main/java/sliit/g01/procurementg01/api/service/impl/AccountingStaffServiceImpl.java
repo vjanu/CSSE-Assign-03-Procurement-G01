@@ -16,11 +16,11 @@ import sliit.g01.procurementg01.api.service.AccountingStaffService;
  ***/
 
 
-@Service
+@Service("AccountingStaffService")
 public class AccountingStaffServiceImpl implements AccountingStaffService {
 
-    @Autowired
-    private AccountingStaffRepository accountingStaffRepository;
+	@Autowired
+	private AccountingStaffRepository accountingStaffRepository;
 
 	@Override
 	public AccountingStaff addAccountingStaff(AccountingStaff accountingStaff) {
