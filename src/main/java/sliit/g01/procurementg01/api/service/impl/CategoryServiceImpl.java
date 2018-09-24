@@ -9,6 +9,9 @@ import sliit.g01.procurementg01.api.model.Category;
 import sliit.g01.procurementg01.api.repository.CategoryRepository;
 import sliit.g01.procurementg01.api.service.CategoryService;
 
+/**
+ * @author Tharindu
+ **/
 @Service("categoryService")
 public class CategoryServiceImpl implements CategoryService {
 

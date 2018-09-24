@@ -32,6 +32,11 @@ public class RequestMaterialController {
 		return requestMaterialService.getAllOrders();
 	}
 
+	@GetMapping("/sitemanager-approved/")
+	public List<RequestMaterial> getSiteMnagerApprovedRequests() {
+		return requestMaterialService.getSiteMnagerApprovedRequests();
+	}
+
 	@GetMapping("/{orderId}")
 	public RequestMaterial getOrder(@PathVariable String orderId) {
 		return requestMaterialService.getOrder(orderId);
@@ -40,6 +45,12 @@ public class RequestMaterialController {
 	@RequestMapping(method = RequestMethod.PUT, value = "/update/{id}")
 	public RequestMaterial update(@PathVariable String id, @RequestBody RequestMaterial requestMaterial) {
 		return requestMaterialService.updateRequest(id, requestMaterial);
+	}
+
+
+@RequestMapping(method = RequestMethod.DELETE, value = "/remove/{id}")
+	public Boolean remove(@PathVariable String id) {
+		return requestMaterialService.deleteOrder(id);
 	}
 
     @RequestMapping(method = RequestMethod.GET, value = "/request/{isSiteManagerApproved}")

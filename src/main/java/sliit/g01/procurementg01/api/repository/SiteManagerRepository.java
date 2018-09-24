@@ -6,6 +6,9 @@ import sliit.g01.procurementg01.api.model.SiteManager;
 
 import java.util.List;
 
+/**
+ * @author anushka
+ */
 public interface SiteManagerRepository extends MongoRepository<SiteManager, String> {
 
     // since site manager is the child of authorized employee class, we can use employeeId,

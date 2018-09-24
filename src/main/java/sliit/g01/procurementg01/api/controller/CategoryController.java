@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import sliit.g01.procurementg01.api.model.Category;
 import sliit.g01.procurementg01.api.service.CategoryService;
 
+/**
+ * @author Tharindu
+ **/
 @RestController
 @RequestMapping("/category")
 public class CategoryController {

@@ -4,6 +4,9 @@ import java.util.List;
 
 import sliit.g01.procurementg01.api.model.Category;
 
+/**
+ * @author Tharindu
+ **/
 public interface CategoryService {
 
 	Boolean addCategory(Category category);

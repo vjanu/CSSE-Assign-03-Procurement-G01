@@ -35,7 +35,8 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 
 	@Override
 	public Boolean deleteOrder(String orderId) {
-		return null;
+		requestmaterialRepository.delete(requestmaterialRepository.findByOrderId(orderId));
+		return true;
 	}
 
 	@Override
@@ -58,6 +59,11 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 	@Override
 	public List<RequestMaterial> getRequestsByImmediated(String isImmediated) {
 		return requestmaterialRepository.findByIsImmediated(isImmediated);
+	}
+
+	@Override
+	public List<RequestMaterial> getSiteMnagerApprovedRequests() {
+		return requestmaterialRepository.findByisSiteManagerApproved("1");
 	}
 
 }

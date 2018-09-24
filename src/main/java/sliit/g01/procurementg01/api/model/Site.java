@@ -2,6 +2,7 @@ package sliit.g01.procurementg01.api.model;
 
 import java.util.Map;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -10,12 +11,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Site")
 public class Site {
 
+    @Id
 	private String siteId;
 	private String siteName;
 	private String address;
 	private Map<String, String> items;
 	private float storageCapacity;
 	private float currentCapacity;
+	private SiteManager siteManager;
 
 	public Site() {
 	}
@@ -68,4 +71,11 @@ public class Site {
 		this.currentCapacity = currentCapacity;
 	}
 
+	public SiteManager getSiteManager() {
+		return siteManager;
+	}
+
+	public void setSiteManager(SiteManager siteManager) {
+		this.siteManager = siteManager;
+	}
 }

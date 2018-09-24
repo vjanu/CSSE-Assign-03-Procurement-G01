@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * @author anushka
  */
-
 @Service("PolicyService")
 public interface PolicyService {
 
