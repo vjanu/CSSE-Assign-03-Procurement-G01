@@ -5,14 +5,16 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import sliit.g01.procurementg01.api.model.Site;
 import sliit.g01.procurementg01.api.model.SiteManager;
-import sliit.g01.procurementg01.api.repository.SiteManagerRepository;
-import sliit.g01.procurementg01.api.repository.SiteRepository;
 import sliit.g01.procurementg01.api.service.impl.SiteManagerServiceImpl;
-import sliit.g01.procurementg01.api.service.impl.SiteServiceImpl;
 
 /**
  * @author anushka
@@ -20,18 +22,14 @@ import sliit.g01.procurementg01.api.service.impl.SiteServiceImpl;
 @RestController
 public class SiteManagerController {
 
-    @Autowired
-    private SiteManagerServiceImpl siteManagerService;
-
-    @Autowired
-	private SiteServiceImpl siteService;
-
+	@Autowired
+	private SiteManagerServiceImpl siteManagerService;
 
 	// add a new site manager as an employee to the system.
 	// this is different from adding an existing manager to a site.
-    @PostMapping("/employee/site-manager")
+	@PostMapping("/employee/site-manager")
 	public SiteManager addSiteManager(@Validated @RequestBody SiteManager siteManager) {
-	    return siteManagerService.addSiteManager(siteManager);
+		return siteManagerService.addSiteManager(siteManager);
 	}
 
 	// get the site manager whose managing the specified site.
@@ -42,33 +40,36 @@ public class SiteManagerController {
 
 	// get the site that the specified manager is managing.
 	@GetMapping("/employee/site-manager/{managerId}/site")
-    public String getManagedSiteId(@PathVariable String managerId) {
-	    return siteManagerService.getManagedSite(managerId);
-    }
+	public String getManagedSiteId(@PathVariable String managerId) {
+		return siteManagerService.getManagedSite(managerId);
+	}
 
-    // get all site managers
-    // TODO: get only the available site managers.
-    @GetMapping("/employee/site-manager")
-    public List<SiteManager> getAllSiteManagers() {
-        return siteManagerService.getAllSiteManagers();
-    }
+	// get all site managers
+	// TODO: get only the available site managers.
+	@GetMapping("/employee/site-manager")
+	public List<SiteManager> getAllSiteManagers() {
+		return siteManagerService.getAllSiteManagers();
+	}
 
-    // assign a free manager to a site that has no manager currently.
+	// assign a free manager to a site that has no manager currently.
 	// this is going to have a query parameter.
-	// possible url: <hostname>:<port>/employee/site-manager/assign?employeeId=<employeeId>&siteId=<siteId>
-	// TODO: make sure to check if the specified person is already assigned to a site or not.
+	// possible url:
+	// <hostname>:<port>/employee/site-manager/assign?employeeId=<employeeId>&siteId=<siteId>
+	// TODO: make sure to check if the specified person is already assigned to a
+	// site or not.
 	@PutMapping("/employee/site-manager/assign")
 	public String assignManagerToSite(@RequestParam Map<String, String> query) {
-        boolean status = false;
+		boolean status = false;
 
-    	if (query.containsKey("employeeId") && query.containsKey("siteId")) {
-    	    String employeeId = query.get("employeeId");
-    	    String siteId = query.get("siteId");
-    		// this is a double operation.
+		if (query.containsKey("employeeId") && query.containsKey("siteId")) {
+			String employeeId = query.get("employeeId");
+			String siteId = query.get("siteId");
+			// this is a double operation.
 			// we must specify the site id in the site manager's dataset.
 			// we must also specify the site manager's id in the site's dataset.
-			// it's all taken care of assignSiteManager method in SiteManagerservice.
-            status = siteManagerService.assignSiteToSiteManager(siteId, employeeId);
+			// it's all taken care of assignSiteManager method in
+			// SiteManagerservice.
+			status = siteManagerService.assignSiteToSiteManager(siteId, employeeId);
 		}
 
 		return "Success:" + Boolean.toString(status);

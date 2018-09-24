@@ -3,15 +3,14 @@ package sliit.g01.procurementg01.api.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import sliit.g01.procurementg01.api.model.AccountingStaff;
-import sliit.g01.procurementg01.api.model.Item;
+
 import sliit.g01.procurementg01.api.model.Rating;
 import sliit.g01.procurementg01.api.service.RatingService;
+
 /**
  * created by viraj
  **/
@@ -19,9 +18,8 @@ import sliit.g01.procurementg01.api.service.RatingService;
 @RequestMapping("/rating")
 public class RatingController {
 
-
-    @Autowired
-    private RatingService ratingService;
+	@Autowired
+	private RatingService ratingService;
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<String> addRating(@RequestBody Rating rating) {
@@ -32,7 +30,5 @@ public class RatingController {
 		}
 
 	}
-
-
 
 }

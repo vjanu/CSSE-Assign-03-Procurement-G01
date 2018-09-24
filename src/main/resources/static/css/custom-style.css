@@ -126,3 +126,9 @@ body { padding-top:20px; }
 .b:hover {
   color: hotpink;
 }
+
+
+.dropdown-item:hover{
+	color: #FFFFFF;
+	background:#e6e6e6;
+}

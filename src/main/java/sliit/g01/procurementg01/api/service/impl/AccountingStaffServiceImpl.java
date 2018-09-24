@@ -4,18 +4,16 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import sliit.g01.procurementg01.api.model.AccountingStaff;
 import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.repository.AccountingStaffRepository;
 import sliit.g01.procurementg01.api.service.AccountingStaffService;
+
 /***
  * created by viraj
  ***/
-
-
 @Service("AccountingStaffService")
 public class AccountingStaffServiceImpl implements AccountingStaffService {
 
@@ -41,23 +39,23 @@ public class AccountingStaffServiceImpl implements AccountingStaffService {
 
 	@Override
 	public void deleteAccountingStaff(String id) {
-//		 final AccountingStaff accountStaff = accountingStaffRepository.findOne(id);
-//		 accountStaff.setDeleted(true);
-//	     accountingStaffRepository.save(accountStaff);
-		
+		// final AccountingStaff accountStaff =
+		// accountingStaffRepository.findOne(id);
+		// accountStaff.setDeleted(true);
+		// accountingStaffRepository.save(accountStaff);
+
 	}
 
 	@Override
 	public List<Item> listItemDetails(String itemId) {
-//		return accountingStaffRepository.findOne(itemId);
+		// return accountingStaffRepository.findOne(itemId);
 		return null;
 	}
 
 	@Override
 	public AccountingStaff getAccountingStaff(String id) {
-//		return accountingStaffRepository.findOne(id);
+		// return accountingStaffRepository.findOne(id);
 		return null;
 	}
 
-	
 }
