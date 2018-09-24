@@ -21,7 +21,7 @@ public class SiteServiceImpl implements SiteService {
 	private SiteRepository siteRepository;
 
 	@Override
-	public List<Item> getAvailableItems(int siteId) {
+	public List<Item> getAvailableItems(String siteId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -32,12 +32,12 @@ public class SiteServiceImpl implements SiteService {
 	}
 
 	@Override
-	public Site getSite(int siteId) {
+	public Site getSite(String siteId) {
 		return siteRepository.findBySiteId(siteId);
 	}
 
 	@Override
-	public boolean deleteSite(int siteId) {
+	public boolean deleteSite(String siteId) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -48,7 +48,7 @@ public class SiteServiceImpl implements SiteService {
 	}
 
 	@Override
-	public Site updateSite(int siteId, Site site) {
+	public Site updateSite(String siteId, Site site) {
 		return siteRepository.save(site);
 	}
 

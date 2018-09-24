@@ -41,22 +41,22 @@ public class SiteController {
 	}
 
 	@RequestMapping(value = "/siteitem/{id}", method = RequestMethod.GET)
-	public List<Item> getAvailableItems(@PathVariable("id") final int id) {
+	public List<Item> getAvailableItems(@PathVariable("id") final String id) {
 		return siteService.getAvailableItems(id);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public Site updateSite(@PathVariable("id") final int id, @Validated @RequestBody final Site site) {
+	public Site updateSite(@PathVariable("id") final String id, @Validated @RequestBody final Site site) {
 		return siteService.updateSite(id, site);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Site getSite(@PathVariable("id") final int id) {
+	public Site getSite(@PathVariable("id") final String id) {
 		return siteService.getSite(id);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public Boolean deleteSite(@PathVariable("id") final int id) {
+	public Boolean deleteSite(@PathVariable("id") final String id) {
 		return siteService.deleteSite(id);
 	}
 }

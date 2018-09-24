@@ -2,6 +2,7 @@ package sliit.g01.procurementg01.api.model;
 
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -19,6 +20,17 @@ public class RequestMaterial {
 	private String isSiteManagerApproved;
 	private String siteManagerName;
 	private String siteManagerID;
+	@JsonIgnore
+	private String isDeclinedBySiteManager;
+
+
+	public String getIsDeclinedBySiteManager() {
+		return isDeclinedBySiteManager;
+	}
+
+	public void setIsDeclinedBySiteManager(String isDeclinedBySiteManager) {
+		this.isDeclinedBySiteManager = isDeclinedBySiteManager;
+	}
 
 	public String getIsSiteManagerApproved() {
 		return isSiteManagerApproved;

@@ -75,3 +75,17 @@
 	"deliveryInformation":"Bla bla",
 	"isRestrictedItem":"false"
 }
+
+------------Add Rating--------------
+{
+	"purchaseOrderReference":null,
+	"supplierName":null,
+	"supplierId":null,
+	"constructorName":"col nod",
+	"deliveryEfficiency":0,
+	"supportiveness":2,
+	"workOnTime":5,
+	"overallRate":3,
+	"feedback":"ddddddd",
+	"constructorId":"5698"
+}

@@ -11,16 +11,16 @@ import sliit.g01.procurementg01.api.model.Site;
 
 public interface SiteService {
 
-	List<Item> getAvailableItems(int siteId);
+	List<Item> getAvailableItems(String siteId);
 
 	boolean addSite(Site site);
 
 	List<Site> listAllSites();
 
-	Site getSite(int siteId);
+	Site getSite(String siteId);
 
-	boolean deleteSite(int siteId);
+	boolean deleteSite(String siteId);
 
-	Site updateSite(int siteId, Site site);
+	Site updateSite(String siteId, Site site);
 
 }

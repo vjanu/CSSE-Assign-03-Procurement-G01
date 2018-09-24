@@ -1,5 +1,6 @@
 package sliit.g01.procurementg01.api.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,20 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 
 		if (requestMaterial.getIsProcumentApproved() != null)
 			req.setIsProcumentApproved(requestMaterial.getIsProcumentApproved());
+		if (requestMaterial.getItems() == null)
+			requestMaterial.setItems(req.getItems());
 
-		return requestmaterialRepository.save(req);
+		return requestmaterialRepository.save(requestMaterial);
+	}
+
+	@Override
+	public List<RequestMaterial> getRequestsByStatus(String isSiteManagerApproved) {
+		return requestmaterialRepository.findByIsSiteManagerApproved(isSiteManagerApproved);
+	}
+
+	@Override
+	public List<RequestMaterial> getRequestsByImmediated(String isImmediated) {
+		return requestmaterialRepository.findByIsImmediated(isImmediated);
 	}
 
 }

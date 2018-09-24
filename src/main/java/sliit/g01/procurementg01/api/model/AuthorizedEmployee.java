@@ -17,6 +17,16 @@ public class AuthorizedEmployee {
 	private String address;
 	private String email;
 	private String phone;
+	private String nic;
+
+
+	public String getNic() {
+		return nic;
+	}
+
+	public void setNic(String nic) {
+		this.nic = nic;
+	}
 
 	public void addComment(String comment) {
 	}

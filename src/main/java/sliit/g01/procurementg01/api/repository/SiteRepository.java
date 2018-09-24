@@ -12,7 +12,7 @@ import sliit.g01.procurementg01.api.model.Site;
  **/
 
 public interface SiteRepository extends MongoRepository<Site, String> {
-	Site findBySiteId(int siteId);
+	Site findBySiteId(String siteId);
 //	Item findByDiteId(String siteId);
 
 }
