@@ -3,6 +3,9 @@ package sliit.g01.procurementg01.api.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author anushka
+ */
 @RestController
 public class RootController {
 

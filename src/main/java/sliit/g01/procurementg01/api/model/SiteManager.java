@@ -2,7 +2,9 @@ package sliit.g01.procurementg01.api.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-/*
+/**
+ * @author anushka
+ *
  * NOTE: Since this is a child class, we can reserve a document,
  *       in mongodb under the class name to store records/data.
  */
