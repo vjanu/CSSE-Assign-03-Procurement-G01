@@ -4,8 +4,9 @@
 
 /* * * * *     Global Variables     * * * * */
 let BASE_URL_LOCAL = 'http://localhost:9000';
-let USER_INFO = 'user-info'
+let USER_INFO = 'user-info';
 let CURRENT_URL = window.location.href;
+
 
 /* * * * *     Event Triggers     * * * * */
 $('#btn-logout').on('click', function (e) {
