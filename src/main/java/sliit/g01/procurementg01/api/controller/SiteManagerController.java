@@ -4,27 +4,32 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import sliit.g01.procurementg01.api.model.Site;
 import sliit.g01.procurementg01.api.model.SiteManager;
 import sliit.g01.procurementg01.api.repository.SiteManagerRepository;
+import sliit.g01.procurementg01.api.service.impl.SiteManagerServiceImpl;
 
 @RestController
-@RequestMapping("/employee/site-manager")
 public class SiteManagerController {
 
-	@Autowired
-	private SiteManagerRepository siteManagerRepository;
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String addSiteManager(@Validated @RequestBody SiteManager siteManager) {
-		siteManagerRepository.save(siteManager);
-		return "Added";
+    @Autowired
+    private SiteManagerServiceImpl siteManagerService;
+
+    @PostMapping("/employee/site-manager")
+	public SiteManager addSiteManager(@Validated @RequestBody SiteManager siteManager) {
+	    return siteManagerService.addSiteManager(siteManager);
 	}
-    }
 
+	@GetMapping("/employee/site-manager/sites/{siteId}")
+	public SiteManager getSiteManagerOfSite(@PathVariable String siteId) {
+		return siteManagerService.getSiteManagerOfSite(siteId);
+	}
+
+	@GetMapping("/employee/site-manager/{managerId}/site")
+    public String getManagedSiteId(@PathVariable String managerId) {
+	    return siteManagerService.getManagedSite(managerId);
+    }
+}

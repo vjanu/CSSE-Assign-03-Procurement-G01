@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import sliit.g01.procurementg01.api.model.AccountingStaff;
@@ -15,11 +16,11 @@ import sliit.g01.procurementg01.api.service.AccountingStaffService;
  ***/
 
 
-@Service
+@Service("AccountingStaffService")
 public class AccountingStaffServiceImpl implements AccountingStaffService {
 
-    @Autowired
-    private AccountingStaffRepository accountingStaffRepository;
+	@Autowired
+	private AccountingStaffRepository accountingStaffRepository;
 
 	@Override
 	public AccountingStaff addAccountingStaff(AccountingStaff accountingStaff) {
