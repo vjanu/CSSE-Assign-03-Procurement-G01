@@ -47,4 +47,9 @@ public class RequestMaterialController {
 		return requestMaterialService.updateRequest(id, requestMaterial);
 	}
 
+	@RequestMapping(method = RequestMethod.DELETE, value = "/remove/{id}")
+	public Boolean remove(@PathVariable String id) {
+		return requestMaterialService.deleteOrder(id);
+	}
+
 }

@@ -40,7 +40,22 @@ $(document).on('click', '#manage-material-requests .btn-primary', function(e){
     e.stopPropagation();
     var oid = $(this).closest("tr").find(".nr-oid").text();
     console.log(oid);
-    approveRequestedMaterial(oid);
+    var r = confirm("Are you sure? Thi action cannot be undone");
+    if (r == true) {
+        approveRequestedMaterial(oid);
+    }
+});
+
+
+$(document).on('click', '#manage-material-requests .btn-danger', function(e){ 
+	e.preventDefault();
+    e.stopPropagation();
+    var oid = $(this).closest("tr").find(".nr-oid").text();
+    console.log(oid);
+    var r = confirm("Are you sure want to delete this request? Thi action cannot be undone");
+    if (r == true) {
+        removeMaterialRequest(oid);
+    }
 });
 
 
@@ -80,6 +95,17 @@ if (CURRENT_URL.includes('add-new-item')) {
 }
 
 
+function removeMaterialRequest(rid){
+	axios.delete(BASE_URL_LOCAL + '/requestmaterial/remove/'+rid)
+    .then(function (response) {
+   	 	console.log(response);
+		loadRequestedMaterialTable();
+   	}).catch(function (error) {
+        // handle error
+        console.log(error);
+    });
+}
+
 
 function approveRequestedMaterial(oid){
 	console.log(oid);
@@ -89,7 +115,6 @@ function approveRequestedMaterial(oid){
 	axios.put(BASE_URL_LOCAL + '/requestmaterial/update/'+oid, data)
     .then(function (response) {
    	 	console.log(response);
-   	 	$("#btn-login").css("display", "block");
 		loadRequestedMaterialTable();
    	}).catch(function (error) {
         // handle error

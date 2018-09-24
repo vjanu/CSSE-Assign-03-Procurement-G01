@@ -34,7 +34,8 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 
 	@Override
 	public Boolean deleteOrder(String orderId) {
-		return null;
+		requestmaterialRepository.delete(requestmaterialRepository.findByOrderId(orderId));
+		return true;
 	}
 
 	@Override
