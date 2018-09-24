@@ -52,6 +52,34 @@
 	"isProcumentApproved":"0"
 }
 
+{
+    "orderId" : "OR0124",
+    "requestedPerson" : "Kamal",
+    "siteId" : "S003",
+    "requestedDate" : "2018-08-03",
+    "items" : {
+        "Cemenet" : "200KG",
+        "Sand" : "22KG"
+    },
+    "isImmediated" : "0",
+    "isProcumentApproved" : "0",
+}
+
+{
+    "orderId" : "OR0126",
+    "requestedPerson" : "Amala",
+    "siteId" : "S004",
+    "requestedDate" : "2018-08-03",
+    "items" : {
+        "cemenet" : "500KG",
+        "sand" : "202KG",
+        "bricks" : "1000"
+    },
+    "isImmediated" : "1",
+    "isProcumentApproved" : "1",
+    "isSiteManagerApproved" : "0"
+}
+
 --------Add Item-------------
 
 {

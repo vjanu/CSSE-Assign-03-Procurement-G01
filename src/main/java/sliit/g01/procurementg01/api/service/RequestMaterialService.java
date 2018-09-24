@@ -10,6 +10,8 @@ public interface RequestMaterialService {
 
 	List<RequestMaterial> getAllOrders();
 
+	List<RequestMaterial> getSiteMnagerApprovedRequests();
+
 	RequestMaterial getOrder(String orderId);
 
 	Boolean deleteOrder(String orderId);

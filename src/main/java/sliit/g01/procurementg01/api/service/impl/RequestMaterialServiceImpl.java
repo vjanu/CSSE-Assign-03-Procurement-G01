@@ -48,4 +48,9 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 		return requestmaterialRepository.save(req);
 	}
 
+	@Override
+	public List<RequestMaterial> getSiteMnagerApprovedRequests() {
+		return requestmaterialRepository.findByisSiteManagerApproved("1");
+	}
+
 }

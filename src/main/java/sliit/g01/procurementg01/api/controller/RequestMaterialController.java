@@ -37,6 +37,11 @@ public class RequestMaterialController {
 		return requestMaterialService.getAllOrders();
 	}
 
+	@GetMapping("/sitemanager-approved/")
+	public List<RequestMaterial> getSiteMnagerApprovedRequests() {
+		return requestMaterialService.getSiteMnagerApprovedRequests();
+	}
+
 	@GetMapping("/{orderId}")
 	public RequestMaterial getOrder(@PathVariable String orderId) {
 		return requestMaterialService.getOrder(orderId);

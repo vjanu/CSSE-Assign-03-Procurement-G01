@@ -150,7 +150,7 @@ function loadAllSuppliers(){
 
 
 function loadRequestedMaterialTable(){
-	 axios.get(BASE_URL_LOCAL + '/requestmaterial/')
+	 axios.get(BASE_URL_LOCAL + '/requestmaterial/sitemanager-approved/')
      .then(function (response) {
     	 console.log(response);
     	 $("#manage-material-requests tbody").empty();
@@ -158,10 +158,10 @@ function loadRequestedMaterialTable(){
     		 
     		 var html = '<tr>';
     		 html += '<td class="nr-oid" scope="row">'+item.orderId+'</td>';
-    		 html += '<td >' + item.requestedPerson + '</td>';
-    		 html += '<td >' + item.siteId + '</td>';
+    		 html += '<td class="text-center">' + item.requestedPerson + '</td>';
+    		 html += '<td class="text-center">' + item.siteId + '</td>';
     		 html += '<td >' + getItemList(item.items) + '</td>';
-    		 html += '<td>' + item.requestedDate + '</td>';
+    		 html += '<td class="text-center">' + item.requestedDate + '</td>';
     		 html += '<td class="text-center">' + getImmediateButton(item.isImmediated) + '</td>';
     		 html += '<td class="text-center">' +getApprovedButton(item.isProcumentApproved) +'</td>';
     		 html += '<td><center>' +
