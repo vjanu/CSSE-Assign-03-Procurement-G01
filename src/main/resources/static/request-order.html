@@ -83,7 +83,7 @@
 			<div>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-					<li class="breadcrumb-item active">Request Orders</li>
+					<li class="breadcrumb-item active">Request Material</li>
 				</ol>
 
 
@@ -91,22 +91,20 @@
 					<div class="card-header">
 						<h4>Request Orders</h4>
 						<form action="/add-new-order" method="POST">
-							<label>Name:</label> <input type="text" name="constructorname">
-							<label>Date:</label> <input type="text" name="constructorname"></br>
-							<label>Select the status <input type="radio"
-								name="status" value="immediate" checked> Immediate <input
-								type="radio" name="status" value="Unimmediate">
-								Unimmediate
-							</label></br> <label>Item</label> <select name="menu">
+						<label>OrderId:</label> <input type="text" name="orderId" id="orderId">
+							<label>Name:</label> <input type="text" name="constructorname" id="constructorname">
+							<label>Requested Date:</label> <input type="text" name="requesteddate" id="requesteddate"></br>
+							</br> <label>Item</label> <select name="menu" id="menu">
 
 								<option value="0" selected>please select the item</option>
 								<option value="1">cement</option>
 								<option value="2">sand</option>
 								<option value="3">bricks</option>
 								<option value="other">other, please specify:</option>
-							</select></br> <label>Quantity</label> <input type="text" name="choicetext">
+							</select></br> <label>Quantity</label> <input type="text" name="qty" id="qty"></br>
+							<label>Requesting Date:</label> <input type="text" name="requestingdate" id="requestingdate"></br> 
 							<small class="float-sm-right">
-								<button class="btn btn-primary">Add Order</button>
+								<button class="btn btn-primary" id="btn-add-request">Add Request</button>
 							</small>
 						</form>
 					</div>
@@ -121,10 +119,10 @@
 								<tr>
 									<th scope="col" class="text-center">OrderId</th>
 									<th scope="col">ConstructorName</th>
-									<th scope="col">Date</th>
+									<th scope="col">RequestedDate</th>
 									<th scope="col">Items</th>
 									<th scope="col">Quantity</th>
-									<th scope="col">Status</th>
+									<th scope="col">RequestingDate</th>
 									<th scope="col" class="text-center">Remove</th>
 								</tr>
 							</thead>
@@ -132,10 +130,10 @@
 								<tr th:each="requestmaterial : ${requestmaterialList}">
 									<td th:text="${requestmaterial.OrderId}"></td>
 									<td th:text="${requestmaterial.ConstructorName}"></td>
-									<td th:text="${requestmaterial.Date}"></td>
+									<td th:text="${requestmaterial.RequestedDate}"></td>
 									<td th:text="${requestmaterial.Items}"></td>
 									<td th:text="${requestmaterial.Quantity}"></td>
-									<td th:text="${requestmaterial.Status}"></td>
+									<td th:text="${requestmaterial.RequestingDate}"></td>
 
 									<td></td>
 								</tr>
@@ -197,7 +195,7 @@
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-	<script src="js/index.js"></script>
+	<script src="js/materialrequest-script.js"></script>
 </body>
 
 </html>

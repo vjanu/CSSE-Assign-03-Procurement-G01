@@ -13,6 +13,24 @@ public class RequestMaterial {
 	private String orderId;
 	private String requestedPerson;
 	private String siteId;
+	private String quantity;
+	public String getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+
+	public String getRequestingDate() {
+		return requestingDate;
+	}
+
+	public void setRequestingDate(String requestingDate) {
+		this.requestingDate = requestingDate;
+	}
+
+	private String requestingDate;
 	private String requestedDate;
 	private Map<String, String> items;
 	private String isImmediated;

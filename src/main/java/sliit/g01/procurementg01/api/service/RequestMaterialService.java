@@ -18,9 +18,11 @@ public interface RequestMaterialService {
 
 	RequestMaterial updateRequest(String id, RequestMaterial requestMaterial);
 
+
 	List<RequestMaterial> getRequestsByStatus(String isSiteManagerApproved);
 
 	List<RequestMaterial> getRequestsByImmediated(String isImmediated);
+
 
 
 }
