@@ -35,6 +35,15 @@ $('#btn-add-item').on('click', function (e) {
 });
 
 
+$(document).on('click', '#manage-material-requests .btn-primary', function(e){ 
+	e.preventDefault();
+    e.stopPropagation();
+    var oid = $(this).closest("tr").find(".nr-oid").text();
+    console.log(oid);
+    approveRequestedMaterial(oid);
+});
+
+
 
 
 
@@ -72,6 +81,22 @@ if (CURRENT_URL.includes('add-new-item')) {
 
 
 
+function approveRequestedMaterial(oid){
+	console.log(oid);
+	let data = {
+			"isProcumentApproved":"1"
+	}
+	axios.put(BASE_URL_LOCAL + '/requestmaterial/update/'+oid, data)
+    .then(function (response) {
+   	 	console.log(response);
+   	 	$("#btn-login").css("display", "block");
+		loadRequestedMaterialTable();
+   	}).catch(function (error) {
+        // handle error
+        console.log(error);
+    });
+}
+
 
 
 function loadAllSuppliers(){
@@ -102,17 +127,18 @@ function loadAllSuppliers(){
 function loadRequestedMaterialTable(){
 	 axios.get(BASE_URL_LOCAL + '/requestmaterial/')
      .then(function (response) {
-    	 console.log(response)
+    	 console.log(response);
+    	 $("#manage-material-requests tbody").empty();
     	 response.data.forEach(item => {
     		 
     		 var html = '<tr>';
-    		 html += '<td>'+item.orderId+'</td>';
-    		 html += '<td class="nr-fid" scope="row">' + item.requestedPerson + '</td>';
+    		 html += '<td class="nr-oid" scope="row">'+item.orderId+'</td>';
+    		 html += '<td >' + item.requestedPerson + '</td>';
     		 html += '<td >' + item.siteId + '</td>';
     		 html += '<td >' + getItemList(item.items) + '</td>';
     		 html += '<td>' + item.requestedDate + '</td>';
     		 html += '<td class="text-center">' + getImmediateButton(item.isImmediated) + '</td>';
-    		 html += '<td><center>' +getApprovedButton(item.isProcumentApproved) +'</td>';
+    		 html += '<td class="text-center">' +getApprovedButton(item.isProcumentApproved) +'</td>';
     		 html += '<td><center>' +
 		             '<a href="#" title="" class="btn btn-danger btn-sm">\n' +
 		             '        <span class="far fa-trash-alt" aria-hidden="true"></span>\n' +
@@ -338,7 +364,7 @@ function getApprovedButton(status){
 	var isDisabled = (status == 1) ? "disabled" : "" ;
 	
 	
-	var html = '<button type="button" title="" class="'+btnClass+'" '+isDisabled+'>' +
+	var html = '<button id="btn-approve-request-material" type="button" title="Approve Button" class="'+btnClass+'" '+isDisabled+'>' +
 		    '        <span class="fa fa-check" aria-hidden="true"></span>' +
 		    '        <span><strong>'+btnText+'</strong></span></a>'+
 		    '</button>';

@@ -47,10 +47,4 @@ public class RequestMaterialController {
 		return requestMaterialService.updateRequest(id, requestMaterial);
 	}
 
-	// @PostMapping("/update/{orderId}")
-	// public RequestMaterial updateRequest(@Validated @RequestBody final
-	// RequestMaterial requestmaterial) {
-	// return requestMaterialService.updateRequest(requestmaterial);
-	// }
-
 }
