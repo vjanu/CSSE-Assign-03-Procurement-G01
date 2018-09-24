@@ -8,11 +8,14 @@ import org.springframework.stereotype.Service;
 
 import sliit.g01.procurementg01.api.model.AccountingStaff;
 import sliit.g01.procurementg01.api.model.Item;
+import sliit.g01.procurementg01.api.model.Site;
 import sliit.g01.procurementg01.api.model.SiteManager;
 import sliit.g01.procurementg01.api.repository.AccountingStaffRepository;
 import sliit.g01.procurementg01.api.repository.SiteManagerRepository;
+import sliit.g01.procurementg01.api.repository.SiteRepository;
 import sliit.g01.procurementg01.api.service.AccountingStaffService;
 import sliit.g01.procurementg01.api.service.SiteManagerService;
+
 /**
  * created by viraj
  **/
@@ -22,35 +25,69 @@ public class SiteManagerServiceImpl implements SiteManagerService {
     @Autowired
     private SiteManagerRepository siteManagerRepository;
 
-	@Override
-	public SiteManager addSiteManager(SiteManager siteManager) {
-		return siteManagerRepository.save(siteManager);
-	}
+    @Autowired
+    private SiteRepository siteRepository;
 
-	@Override
-	public String getManagedSite(String siteManagerId) {
-	    // check if a site manager exists under the given employee id to avoid null pointers.
-		SiteManager siteManager = siteManagerRepository.findByEmployeeId(siteManagerId);
-		String managedSiteId = siteManager != null ? siteManager.getManagedSiteId() : "";
 
-		return managedSiteId;
-	}
+    @Override
+    public SiteManager addSiteManager(SiteManager siteManager) {
+        return siteManagerRepository.save(siteManager);
+    }
 
-	@Override
-	public SiteManager getSiteManagerOfSite(String managedSiteId) {
-		// check if a manager exists for a given site id to avoid null pointers.
-	    SiteManager siteManager = siteManagerRepository.findSiteManagerByManagedSiteId(managedSiteId);
+    @Override
+    public String getManagedSite(String siteManagerId) {
+        // check if a site manager exists under the given employee id to avoid null pointers.
+        SiteManager siteManager = siteManagerRepository.findByEmployeeId(siteManagerId);
+        String managedSiteId = siteManager != null ? siteManager.getManagedSiteId() : "";
 
-	    if (siteManager == null) {
-	        siteManager  = new SiteManager();
+        return managedSiteId;
+    }
+
+    @Override
+    public SiteManager getSiteManagerOfSite(String managedSiteId) {
+        // check if a manager exists for a given site id to avoid null pointers.
+        SiteManager siteManager = siteManagerRepository.findSiteManagerByManagedSiteId(managedSiteId);
+
+        if (siteManager == null) {
+            siteManager = new SiteManager();
         }
 
         return siteManager;
-	}
+    }
 
     @Override
     public List<SiteManager> getSiteManagersOfSite(String managedSiteId) {
         return siteManagerRepository.findAllByManagedSiteId(managedSiteId);
     }
 
+    @Override
+    public SiteManager getSiteManagerById(String employeeId) {
+        return siteManagerRepository.findByEmployeeId(employeeId);
+    }
+
+    // this will assign a site to an existing manager.
+    // this goes both ways => site manager is assigned to the site and the site is,
+    //                          assigned to the manager.
+    @Override
+    public boolean assignSiteToSiteManager(String siteId, String employeeId) {
+        // first update the site manager object in the database since we need,
+        // an updated record in the db when we are inserting that to the,
+        // site's record.
+        SiteManager siteManager = siteManagerRepository.findByEmployeeId(employeeId);
+        Site site = siteRepository.findSiteBySiteId(siteId);
+
+        // we only proceed if both the site manager and the site actually exist.
+        if (siteManager != null && site != null) {
+            siteManager.setManagedSiteId(siteId);
+            siteManagerRepository.save(siteManager);
+
+            // now we update the site with its new manager.
+            site.setSiteManager(siteManager);
+            siteRepository.save(site);
+
+            return true;
+        }
+
+        return false;
+    }
 }
