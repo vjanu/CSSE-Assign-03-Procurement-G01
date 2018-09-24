@@ -115,6 +115,7 @@ function approveRequestedMaterial(oid){
 	axios.put(BASE_URL_LOCAL + '/requestmaterial/update/'+oid, data)
     .then(function (response) {
    	 	console.log(response);
+   	 	$.notify("Successfully Approved", "success");
 		loadRequestedMaterialTable();
    	}).catch(function (error) {
         // handle error
@@ -200,11 +201,12 @@ function addNewSite(){
 	
 	axios.post(BASE_URL_LOCAL + '/site/add-new-site', data)
     .then(function (response) {
-    	alert(response.data)
+    	$.notify(response.data, "success");
     })
     .catch(function (error) {
         // handle error
         console.log(error);
+        $.notify("Site not added", "error");;     
     });
 }
 
@@ -225,11 +227,13 @@ function addNewItem(){
 	}
 	axios.post(BASE_URL_LOCAL + '/item/add-new-item', data)
     .then(function (response) {
-    	alert(response.data)
+    	alert(response.data);
+    	$.notify(response.data, "success");
     })
     .catch(function (error) {
         // handle error
         console.log(error);
+        $.notify("Item not added", "error");;    
     });
 }
 
@@ -279,7 +283,7 @@ function loadAllSites(){
                  '<td >' + getItemList(item.items) + '</td>' +
                  '<td>' + item.storageCapacity + '</td>' +
                  '<td>' + item.currentCapacity + '</td>' +
-                 '<td>' + item.siteManager.employeeName + '</td>' +
+                 '<td>' + item.siteManager + '</td>' +
                  '<td class="text-center">' +
                      '<a href="#" title="" class="btn btn-primary btn-sm">' +
                      '        <span class="fas fa-edit" aria-hidden="true"></span> Edit' +
