@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.service.ItemService;
 
+/**
+ * @author Tharindu
+ **/
 @RestController
 public class ItemController {
 

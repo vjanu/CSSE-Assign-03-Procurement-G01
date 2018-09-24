@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.repository.ItemRepository;
 
+/**
+ * @author Tharindu
+ **/
 @Service("itemService")
 public class ItemServiceImpl implements ItemService {
 
