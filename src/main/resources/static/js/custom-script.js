@@ -277,7 +277,7 @@ function getItemList(items){
 }
 
 function getApprovedButton(status){
-	var btnClass = (status == 1) ? "btn btn-success btn-sm" : "btn btn-primary btn-sm" ;
+	var btnClass = (status == 1) ? "btn btn-default btn-sm" : "btn btn-primary btn-sm" ;
 	var btnText = (status == 1) ? "Approved" : "Approve" ;
 	var isDisabled = (status == 1) ? "disabled" : "" ;
 	

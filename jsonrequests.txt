@@ -1,27 +1,23 @@
 //add site manager
-
 {
-	
-"managedSiteId":"0",
-"employeeId":"20",
-"employeeType":"e0",
-"employeeName":"ddd0",
-"address":"ddddddssswds0",
-"email":"dddxccdsc0",
-"phone":"222222222222o"
-
-           
+	"managedSiteId":"0",
+	"employeeId":"20",
+	"employeeType":"e0",
+	"employeeName":"ddd0",
+	"address":"ddddddssswds0",
+	"email":"dddxccdsc0",
+	"phone":"222222222222o"          
 }
 
 //add site
 
 {
-	  "siteId":2,
-	  "siteName":"vira",
-      "address":"guoixhasxjaxjsh",
-      "items":{"cement":2,"sand":22},
-      "storageCapacity":2,
-      "currentCapacity":2
+	"siteId":2,
+	"siteName":"vira",
+	"address":"guoixhasxjaxjsh",
+	"items":{"cement":2,"sand":22},
+	"storageCapacity":2,
+	"currentCapacity":2
 }
 
 {  
@@ -75,3 +71,6 @@
 	"deliveryInformation":"Bla bla",
 	"isRestrictedItem":"false"
 }
+
+
+--------Add Policy----------
