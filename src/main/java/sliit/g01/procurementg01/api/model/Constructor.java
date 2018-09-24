@@ -4,7 +4,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "Constructor")
 public class Constructor extends AuthorizedEmployee {
-	 private String site;
+	//add site
+	private String site;
 
 	public String getSite() {
 		return site;
