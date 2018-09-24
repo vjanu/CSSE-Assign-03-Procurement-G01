@@ -182,30 +182,28 @@ function addItemToSite(){
 function loadAllSites(){
 	axios.get(BASE_URL_LOCAL + '/site/')
     .then(function (response) {
-   	 console.log(response)
+   	 console.log(response.data[0].siteManager);
    	 response.data.forEach(item => {
-   		 
-   		 $('#manage-sites tbody').append('<tr>' +
+         let tr =
+             '<tr>' +
+                 '<td>'+item.siteId+'</td>' +
+                 '<td class="nr-fid" scope="row">' + item.siteName + '</td>' +
+                 '<td >' + item.address + '</td>' +
+                 '<td >' + getItemList(item.items) + '</td>' +
+                 '<td>' + item.storageCapacity + '</td>' +
+                 '<td>' + item.currentCapacity + '</td>' +
+                 '<td>' + item.siteManager.employeeName + '</td>' +
+                 '<td class="text-center">' +
+                     '<a href="#" title="" class="btn btn-primary btn-sm">' +
+                     '        <span class="fas fa-edit" aria-hidden="true"></span> Edit' +
+                     '</a>' +
+                     '<a href="#" title="" class="btn btn-danger btn-sm">' +
+                     '        <span class="far fa-trash-alt" aria-hidden="true"></span> Remove' +
+                     '</a>' +
+                 '</td>' +
+             '</tr>';
 
-           '<td>'+item.siteId+'</td>' +
-           '<td class="nr-fid" scope="row">' + item.siteName + '</td>' +
-           '<td >' + item.address + '</td>' +
-           '<td >' + getItemList(item.items) + '</td>' +
-           '<td>' + item.storageCapacity + '</td>' +
-           '<td>' + item.currentCapacity + '</td>' +
-           '<td><center>' +
-           '<a href="#" title="" class="btn btn-primary btn-sm">\n' +
-           '        <span class="fas fa-edit" aria-hidden="true"></span>\n' +
-           '        <span><strong>Edit</strong></span></a>'+
-           '</a></center>' +
-           '</td>' +
-           '<td><center>' +
-           '<a href="#" title="" class="btn btn-danger btn-sm">\n' +
-           '        <span class="far fa-trash-alt" aria-hidden="true"></span>\n' +
-           '        <span><strong>Remove</strong></span></a>'+
-           '</a></center>' +
-           '</td>' +
-           '</tr>');
+        $('#manage-sites tbody').append(tr);
    	 });
     })
     .catch(function (error) {
