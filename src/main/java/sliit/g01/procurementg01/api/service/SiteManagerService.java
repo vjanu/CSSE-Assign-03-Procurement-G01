@@ -25,5 +25,7 @@ public interface SiteManagerService {
 
 	List<SiteManager> getSiteManagersOfSite(String managedSiteId);  // use this if you believe there are multiple managers per site.
 
+    List<SiteManager> getAllSiteManagers();     // basically everyone in the db.
+
     boolean assignSiteToSiteManager(String siteId, String employeeId);
 }

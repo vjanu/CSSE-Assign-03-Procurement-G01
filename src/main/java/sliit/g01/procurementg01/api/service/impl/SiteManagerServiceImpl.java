@@ -90,4 +90,9 @@ public class SiteManagerServiceImpl implements SiteManagerService {
 
         return false;
     }
+
+    @Override
+    public List<SiteManager> getAllSiteManagers() {
+        return siteManagerRepository.findAll();
+    }
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.model.Site;
 import sliit.g01.procurementg01.api.service.SiteService;
+import sliit.g01.procurementg01.api.service.impl.SiteManagerServiceImpl;
 
 /**
  * created by viraj
@@ -26,9 +27,18 @@ public class SiteController {
 	@Autowired
 	private SiteService siteService;
 
-	@RequestMapping(value = "/add-new-site", method = RequestMethod.POST)
+    @Autowired
+    private SiteManagerServiceImpl siteManagerService;
+
+
+    @RequestMapping(value = "/add-new-site", method = RequestMethod.POST)
 	public ResponseEntity<String> addSite(@Validated @RequestBody Site site) {
 		if (siteService.addSite(site)) {
+            // update the site with its new site manager's details.
+            // when sending data, we only send site manager's employeeId enclosed in siteManager attribute.
+            // assignSiteToSiteManager method will take care of adding all details of the site manager to the,
+            // site's record while updating the managed site id in the site manager's entry in the database.
+            siteManagerService.assignSiteToSiteManager(site.getSiteId(), site.getSiteManager().getEmployeeId());    // in site object, we have included a site manager object which has the employee id.
 			return new ResponseEntity<>("New Site Added", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Not Created", HttpStatus.NOT_IMPLEMENTED);

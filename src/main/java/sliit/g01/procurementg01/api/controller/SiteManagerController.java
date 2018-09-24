@@ -46,6 +46,13 @@ public class SiteManagerController {
 	    return siteManagerService.getManagedSite(managerId);
     }
 
+    // get all site managers
+    // TODO: get only the available site managers.
+    @GetMapping("/employee/site-manager")
+    public List<SiteManager> getAllSiteManagers() {
+        return siteManagerService.getAllSiteManagers();
+    }
+
     // assign a free manager to a site that has no manager currently.
 	// this is going to have a query parameter.
 	// possible url: <hostname>:<port>/employee/site-manager/assign?employeeId=<employeeId>&siteId=<siteId>

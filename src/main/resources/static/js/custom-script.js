@@ -60,7 +60,8 @@ if (CURRENT_URL.includes('view-ratings')) {
 
 if (CURRENT_URL.includes('add-new-site')) {
 	console.log("You are on add new site page");
-	generateItemSelectDropdown()
+	generateItemSelectDropdown();
+    generateSiteManagersDropdown();
 }
 
 if (CURRENT_URL.includes('add-new-item')) {
@@ -111,7 +112,11 @@ function addNewSite(){
 		address : $('#address').val(),
 		items: obj,
 		storageCapacity : $('#storage-capacity').val(),
-		currentCapacity : $('#current-capacity').val()
+		currentCapacity : $('#current-capacity').val(),
+        siteManager: {
+		    employeeId: $('#site-managers').val()
+            // don't worry about the other details, it will be taken care of, by the backend.
+        }
 	}
 	
 	axios.post(BASE_URL_LOCAL + '/site/add-new-site', data)
@@ -179,6 +184,9 @@ function addItemToSite(){
 }
 
 
+/*
+ * Shows the information of each site in a tabular format.
+ */
 function loadAllSites(){
 	axios.get(BASE_URL_LOCAL + '/site/')
     .then(function (response) {
@@ -209,6 +217,56 @@ function loadAllSites(){
     .catch(function (error) {
         // handle error
         console.log(error);
+    });
+}
+
+
+/*
+ * this will fetch all the site managers so that one of them can be assigned to a new site.
+ * TODO: make sure to fetch only the managers with no current site assigned to them.
+ */
+function generateSiteManagersDropdown() {
+    axios.get(BASE_URL_LOCAL + '/employee/site-manager')
+        .then(response => {
+            if (response.data) {
+                // we'll put the site managers in a combo box so that,
+                // one of them can be chosen.
+                // each site manager is identified by his/her employeeId.
+                siteManagers = new Array();
+
+                response.data.forEach(siteManager => {
+                    siteManagers.push(
+                        { value: siteManager.employeeId, html: siteManager.employeeName }
+                    );
+                });
+
+                console.log(siteManagers);
+                // now we map this into a selector field.
+                setSelectOptions('site-managers', siteManagers);
+            }
+        })
+        .catch(reject => {
+            console.log(reject);
+        });
+
+}
+
+/*
+ * this will programmatically set the options of a given select-input field.
+ *
+ * @param selectTagName:
+ *      name of the select input tag.
+ *
+ * @param options:
+ *      an array that contains objects where each object has a value and a html.
+ *          value -> distinct identifier for each option.
+ *          html -> the actual text shown as an option.
+ */
+function setSelectOptions(selectTagName, options) {
+    let selector = $('select[name="site-managers"');
+
+    options.forEach(option => {
+        selector.append($("<option>", { value: option.value, html: option.html }));
     });
 }
 
