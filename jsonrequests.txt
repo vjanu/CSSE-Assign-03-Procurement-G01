@@ -75,3 +75,36 @@
 	"deliveryInformation":"Bla bla",
 	"isRestrictedItem":"false"
 }
+
+
+
+---------Add request--------------
+{
+
+        "orderId":"R001",
+        "requestedPerson":"Nimal silva",
+        "requestedDate":"12-08-2018",
+        "items":"cement",
+        "quantity":"10pckt",
+        "requestingDate":"16-08-2018"
+    
+}
+
+
+------add constructor--------------
+{
+
+"employeeId":"003",
+"employeeType":"sfaaa",
+"employeeName":"llllll",
+"address":"dd",
+"email":"wwww",
+"phone":"0171111111",
+"site":"vvv"
+
+
+
+
+}
+
+
