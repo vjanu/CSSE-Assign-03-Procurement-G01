@@ -18,14 +18,14 @@
     <!-- lato font(from google fonts) -->
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
     <link href="css/custom-style.css" rel="stylesheet">
-
+ 
 
     <title>Procurement Home</title>
 </head>
 
 <body class="fixed-nav">
 
-  
+    
     <!-- navbar: start -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
             <a class="navbar-brand" href="#">Procurement Home</a>
@@ -112,50 +112,105 @@
                     <li class="breadcrumb-item">
                         <a href="sitemanager-dashboard.html">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item active">View Requests</li>
-                </ol>
+                    <li class="breadcrumb-item active">Approve Requests</li>
+                </ol>                      
+                                        <div class="card">
+                         <div class="card-header">
+                            <h4>Make Requests</h4>
+                        </div>
+                        <div class="card-body">    
+                            <!-- main content: start -->
+    
+                            <div class="card-body mr-md-5 ml-md-5">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="site-id">Request ID</label>
+                                                    <input type="text" class="form-control" id="request-id" placeholder="Request Id">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="site-name">Site ID</label>
+                                                    <input type="text" class="form-control" id="site-id" placeholder="Site Id">
+                                                </div>
+                                            </div>
+    
+                                            <div class="form-group">
+                                                <label for="Requested Person">Requested Person</label>
+                                                <input type="text" class="form-control" id="requested-person" placeholder="Requested Person">
+                                            </div>
 
-               
-                       
-                                <div class="card">
-                                <div class="card-header">
-                                    <h4>View Requests</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div style="width: 100%; padding-left: -10px; ">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped" id="view-requests">
-                                            <thead>
-                                                <tr>
-                                                    <th  class="text-right">Request ID</th>
-                                                    <th  class="text-right">Requested Person</th>
-                                                    <th scope="col" class="text-center">Date</th>
-                                                    <th scope="col" class="text-right">Site ID</th>
-                                                    <th scope="col" class="text-center">Items</th>
-                                                    <th scope="col" class="text-right">Immediate</th>
-                                                    <th scope="col" class="text-right">Approval Status</th>
-                                                    <!-- <th scope="col" class="text-center">Approve</th>
-                                                    <th scope="col" class="text-center">Decline</th> -->
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
+                                            <div class="form-group">
+                                                <label for="Site Manager ID">Site Manager ID</label>
+                                                <input type="text" class="form-control" id="site-manager-id" placeholder="Site Manager ID">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="Site Manager Name">Site Manager Name</label>
+                                                <input type="text" class="form-control" id="site-manager-name" placeholder="Site Manager Name">
+                                            </div>
+    
+                                            <div class="form-group">
+                                                <label for="Site Name">Site Name</label>
+                                                <input type="text" class="form-control" id="site-name" placeholder="Site Name">
+                                            </div>
+    
+                                            <div class="form-group">
+                                                <label for="NIC">NIC</label>
+                                                <input type="text" class="form-control" id="nic" placeholder="NIC">
+                                            </div>
+
+                                            <fieldset class="form-group">
+                                                    <div class="row">
+                                                      <legend class="col-form-label col-sm-2 pt-0">Order Type</legend>
+                                                      <div class="col-sm-10">
+                                                        <div class="form-check">
+                                                          <input class="form-check-input" type="radio" name="type" id="gridRadios1" value="1" checked>
+                                                          <label class="form-check-label" for="gridRadios1">
+                                                           Immediate
+                                                          </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                          <input class="form-check-input" type="radio" name="type" id="gridRadios2" value="0">
+                                                          <label class="form-check-label" for="gridRadios2">
+                                                                Not Immediate
+                                                          </label>
+                                                        </div>
+                                                      
+                                                      </div>
+                                                    </div>
+                                                  </fieldset>
+
+<div class="form-group">
+        <label for="exampleFormControlTextarea1">Item List</label>
+        <textarea class="form-control" id="items" rows="5"></textarea>
+      </div>
+                                                 <div class="form-group">
+                                                    <label for="Date">Required Date
+                                                    </label>
+                                                    <input type="date" class="form-control" id="date" placeholder="dd/mm/yyyy">
+                                                </div>
+                                                <div class="form-group">
+                                            <button type="button" class="btn btn-primary" id="btn-accept" onclick="approveRequest()">Accept </button>
+                                            <button type="button" class="btn btn-primary" id="btn-decline" onclick="declineRequest()">Decline</button>
+                                            <button type="button" class="btn btn-primary" id="btn-clear">Clear</button>
+                                        </div>
+                                        </form>
                                     </div>
+                                   
                                 </div>
-                                </div>
-            
-                                <!-- <input type="text" id="siteId" class="form-control" placeholder="Password" required="required"> -->
-                                <!-- <input type="text" id="orderId" class="form-control" placeholder="Password" required="required">
-                                <input type="text" id="orderId1" class="form-control" placeholder="Password" required="required">
-                                <input type="text" id="orderId2" class="form-control" placeholder="Password" required="required">
-                                <input type="text" id="orderId3" class="form-control" placeholder="Password" required="required">
-                                <textarea id="orderId5" rows="4" cols="50">
-                                        </textarea>
-                                <input type="button" value="Upload" class="btn btn-success " id ="btn-update">
-                                 -->
-                            
-                </div>
+                            </div>
+                            <!-- main content: end -->
+    
+                      
+                    </div>
+                    
+               
+                  </div>
+
+
+
                 
             </div>
 
@@ -194,7 +249,7 @@
     <!-- Bootstrap core JavaScript
 ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>ss
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>

@@ -5,13 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import sliit.g01.procurementg01.api.model.RequestMaterial;
 import sliit.g01.procurementg01.api.service.RequestMaterialService;
@@ -38,6 +33,11 @@ public class RequestMaterialController {
 		return requestMaterialService.getAllOrders();
 	}
 
+	@GetMapping("/sitemanager-approved/")
+	public List<RequestMaterial> getSiteMnagerApprovedRequests() {
+		return requestMaterialService.getSiteMnagerApprovedRequests();
+	}
+
 	@GetMapping("/{orderId}")
 	public RequestMaterial getOrder(@PathVariable String orderId) {
 		return requestMaterialService.getOrder(orderId);
@@ -48,10 +48,24 @@ public class RequestMaterialController {
 		return requestMaterialService.updateRequest(id, requestMaterial);
 	}
 
-	// @PostMapping("/update/{orderId}")
-	// public RequestMaterial updateRequest(@Validated @RequestBody final
-	// RequestMaterial requestmaterial) {
-	// return requestMaterialService.updateRequest(requestmaterial);
-	// }
+
+@RequestMapping(method = RequestMethod.DELETE, value = "/remove/{id}")
+	public Boolean remove(@PathVariable String id) {
+		return requestMaterialService.deleteOrder(id);
+	}
+
+    @RequestMapping(method = RequestMethod.GET, value = "/request/{isSiteManagerApproved}")
+    public List<RequestMaterial> getRequestByStatus(@PathVariable String isSiteManagerApproved) {
+        return requestMaterialService.getRequestsByStatus(isSiteManagerApproved);
+    }
+
+	@RequestMapping(method = RequestMethod.GET, value = "/request/immediate/{isImmediated}")
+	public List<RequestMaterial> getRequestByImmediation(@PathVariable String isImmediated) {
+		return requestMaterialService.getRequestsByImmediated(isImmediated);
+	}
 
 }
+
+
+
+

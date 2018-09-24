@@ -35,6 +35,30 @@ $('#btn-add-item').on('click', function (e) {
 });
 
 
+$(document).on('click', '#manage-material-requests .btn-primary', function(e){ 
+	e.preventDefault();
+    e.stopPropagation();
+    var oid = $(this).closest("tr").find(".nr-oid").text();
+    console.log(oid);
+    var r = confirm("Are you sure? Thi action cannot be undone");
+    if (r == true) {
+        approveRequestedMaterial(oid);
+    }
+});
+
+
+$(document).on('click', '#manage-material-requests .btn-danger', function(e){ 
+	e.preventDefault();
+    e.stopPropagation();
+    var oid = $(this).closest("tr").find(".nr-oid").text();
+    console.log(oid);
+    var r = confirm("Are you sure want to delete this request? Thi action cannot be undone");
+    if (r == true) {
+        removeMaterialRequest(oid);
+    }
+});
+
+
 
 
 
@@ -47,6 +71,7 @@ if (CURRENT_URL.includes('manage-material-requests')) {
 
 if (CURRENT_URL.includes('manage-black-list')) {
     console.log("You are on Manage Blacklist page");
+    loadAllSuppliers()
 }
 
 if (CURRENT_URL.includes('manage-sites')) {
@@ -60,7 +85,8 @@ if (CURRENT_URL.includes('view-ratings')) {
 
 if (CURRENT_URL.includes('add-new-site')) {
 	console.log("You are on add new site page");
-	generateItemSelectDropdown()
+	generateItemSelectDropdown();
+    generateSiteManagersDropdown();
 }
 
 if (CURRENT_URL.includes('add-new-item')) {
@@ -69,20 +95,75 @@ if (CURRENT_URL.includes('add-new-item')) {
 }
 
 
+function removeMaterialRequest(rid){
+	axios.delete(BASE_URL_LOCAL + '/requestmaterial/remove/'+rid)
+    .then(function (response) {
+   	 	console.log(response);
+		loadRequestedMaterialTable();
+   	}).catch(function (error) {
+        // handle error
+        console.log(error);
+    });
+}
+
+
+function approveRequestedMaterial(oid){
+	console.log(oid);
+	let data = {
+			"isProcumentApproved":"1"
+	}
+	axios.put(BASE_URL_LOCAL + '/requestmaterial/update/'+oid, data)
+    .then(function (response) {
+   	 	console.log(response);
+		loadRequestedMaterialTable();
+   	}).catch(function (error) {
+        // handle error
+        console.log(error);
+    });
+}
+
+
+
+function loadAllSuppliers(){
+	axios.get(BASE_URL_LOCAL + '/sup/')
+    .then(function (response) {
+   	 console.log(response)
+   	 response.data.forEach(item => {
+   		var html = '<tr>';
+		 html += '<td>'+item.supId+'</td>';
+		 html += '<td class="nr-fid" scope="row">' + item.supName + '</td>';
+		 html += '<td >' + item.supName + '</td>';
+		 html += '<td>Supplier</td>';
+		 html += '<td>' + item.supName + '</td>';
+		 html += '<td class="text-center">' + getBlacklistBadge(item.isBanned) + '</td>';
+		 html += '<td><center>' +getBlacklistButton(item.isBanned) +'</td>';
+		 html += '</tr>';
+		 
+		 $('#manage-black-list tbody').append(html);
+   	 });
+   	}).catch(function (error) {
+        // handle error
+        console.log(error);
+    });
+    
+}
+
+
 function loadRequestedMaterialTable(){
-	 axios.get(BASE_URL_LOCAL + '/requestmaterial/')
+	 axios.get(BASE_URL_LOCAL + '/requestmaterial/sitemanager-approved/')
      .then(function (response) {
-    	 console.log(response)
+    	 console.log(response);
+    	 $("#manage-material-requests tbody").empty();
     	 response.data.forEach(item => {
     		 
     		 var html = '<tr>';
-    		 html += '<td>'+item.orderId+'</td>';
-    		 html += '<td class="nr-fid" scope="row">' + item.requestedPerson + '</td>';
-    		 html += '<td >' + item.siteId + '</td>';
+    		 html += '<td class="nr-oid" scope="row">'+item.orderId+'</td>';
+    		 html += '<td class="text-center">' + item.requestedPerson + '</td>';
+    		 html += '<td class="text-center">' + item.siteId + '</td>';
     		 html += '<td >' + getItemList(item.items) + '</td>';
-    		 html += '<td>' + item.requestedDate + '</td>';
+    		 html += '<td class="text-center">' + item.requestedDate + '</td>';
     		 html += '<td class="text-center">' + getImmediateButton(item.isImmediated) + '</td>';
-    		 html += '<td><center>' +getApprovedButton(item.isProcumentApproved) +'</td>';
+    		 html += '<td class="text-center">' +getApprovedButton(item.isProcumentApproved) +'</td>';
     		 html += '<td><center>' +
 		             '<a href="#" title="" class="btn btn-danger btn-sm">\n' +
 		             '        <span class="far fa-trash-alt" aria-hidden="true"></span>\n' +
@@ -93,8 +174,7 @@ function loadRequestedMaterialTable(){
     		 
     		 $('#manage-material-requests tbody').append(html);
     	 });
-     })
-     .catch(function (error) {
+     }).catch(function (error) {
          // handle error
          console.log(error);
      });
@@ -111,7 +191,11 @@ function addNewSite(){
 		address : $('#address').val(),
 		items: obj,
 		storageCapacity : $('#storage-capacity').val(),
-		currentCapacity : $('#current-capacity').val()
+		currentCapacity : $('#current-capacity').val(),
+        siteManager: {
+		    employeeId: $('#site-managers').val()
+            // don't worry about the other details, it will be taken care of, by the backend.
+        }
 	}
 	
 	axios.post(BASE_URL_LOCAL + '/site/add-new-site', data)
@@ -179,38 +263,89 @@ function addItemToSite(){
 }
 
 
+/*
+ * Shows the information of each site in a tabular format.
+ */
 function loadAllSites(){
 	axios.get(BASE_URL_LOCAL + '/site/')
     .then(function (response) {
-   	 console.log(response)
+   	 console.log(response.data[0].siteManager);
    	 response.data.forEach(item => {
-   		 
-   		 $('#manage-sites tbody').append('<tr>' +
+         let tr =
+             '<tr>' +
+                 '<td>'+item.siteId+'</td>' +
+                 '<td class="nr-fid" scope="row">' + item.siteName + '</td>' +
+                 '<td >' + item.address + '</td>' +
+                 '<td >' + getItemList(item.items) + '</td>' +
+                 '<td>' + item.storageCapacity + '</td>' +
+                 '<td>' + item.currentCapacity + '</td>' +
+                 '<td>' + item.siteManager.employeeName + '</td>' +
+                 '<td class="text-center">' +
+                     '<a href="#" title="" class="btn btn-primary btn-sm">' +
+                     '        <span class="fas fa-edit" aria-hidden="true"></span> Edit' +
+                     '</a>' +
+                     '<a href="#" title="" class="btn btn-danger btn-sm">' +
+                     '        <span class="far fa-trash-alt" aria-hidden="true"></span> Remove' +
+                     '</a>' +
+                 '</td>' +
+             '</tr>';
 
-           '<td>'+item.siteId+'</td>' +
-           '<td class="nr-fid" scope="row">' + item.siteName + '</td>' +
-           '<td >' + item.address + '</td>' +
-           '<td >' + getItemList(item.items) + '</td>' +
-           '<td>' + item.storageCapacity + '</td>' +
-           '<td>' + item.currentCapacity + '</td>' +
-           '<td><center>' +
-           '<a href="#" title="" class="btn btn-primary btn-sm">\n' +
-           '        <span class="fas fa-edit" aria-hidden="true"></span>\n' +
-           '        <span><strong>Edit</strong></span></a>'+
-           '</a></center>' +
-           '</td>' +
-           '<td><center>' +
-           '<a href="#" title="" class="btn btn-danger btn-sm">\n' +
-           '        <span class="far fa-trash-alt" aria-hidden="true"></span>\n' +
-           '        <span><strong>Remove</strong></span></a>'+
-           '</a></center>' +
-           '</td>' +
-           '</tr>');
+        $('#manage-sites tbody').append(tr);
    	 });
     })
     .catch(function (error) {
         // handle error
         console.log(error);
+    });
+}
+
+
+/*
+ * this will fetch all the site managers so that one of them can be assigned to a new site.
+ * TODO: make sure to fetch only the managers with no current site assigned to them.
+ */
+function generateSiteManagersDropdown() {
+    axios.get(BASE_URL_LOCAL + '/employee/site-manager')
+        .then(response => {
+            if (response.data) {
+                // we'll put the site managers in a combo box so that,
+                // one of them can be chosen.
+                // each site manager is identified by his/her employeeId.
+                siteManagers = new Array();
+
+                response.data.forEach(siteManager => {
+                    siteManagers.push(
+                        { value: siteManager.employeeId, html: siteManager.employeeName }
+                    );
+                });
+
+                console.log(siteManagers);
+                // now we map this into a selector field.
+                setSelectOptions('site-managers', siteManagers);
+            }
+        })
+        .catch(reject => {
+            console.log(reject);
+        });
+
+}
+
+/*
+ * this will programmatically set the options of a given select-input field.
+ *
+ * @param selectTagName:
+ *      name of the select input tag.
+ *
+ * @param options:
+ *      an array that contains objects where each object has a value and a html.
+ *          value -> distinct identifier for each option.
+ *          html -> the actual text shown as an option.
+ */
+function setSelectOptions(selectTagName, options) {
+    let selector = $('select[name="site-managers"');
+
+    options.forEach(option => {
+        selector.append($("<option>", { value: option.value, html: option.html }));
     });
 }
 
@@ -249,12 +384,12 @@ function getItemList(items){
 }
 
 function getApprovedButton(status){
-	var btnClass = (status == 1) ? "btn btn-success btn-sm" : "btn btn-primary btn-sm" ;
+	var btnClass = (status == 1) ? "btn btn-default btn-sm" : "btn btn-primary btn-sm" ;
 	var btnText = (status == 1) ? "Approved" : "Approve" ;
 	var isDisabled = (status == 1) ? "disabled" : "" ;
 	
 	
-	var html = '<button type="button" title="" class="'+btnClass+'" '+isDisabled+'>' +
+	var html = '<button id="btn-approve-request-material" type="button" title="Approve Button" class="'+btnClass+'" '+isDisabled+'>' +
 		    '        <span class="fa fa-check" aria-hidden="true"></span>' +
 		    '        <span><strong>'+btnText+'</strong></span></a>'+
 		    '</button>';
@@ -267,6 +402,25 @@ function getImmediateButton(status){
 	
 	var html = '<h4><span class="'+badgeClass+'">'+badgeText+'</span></h4>';
 	return html;
+}
+
+function getBlacklistButton(status){
+	var btnClass = (status) ? "btn btn-default btn-sm" : "btn btn-danger btn-sm" ;
+	var btnText = (status) ? "Blacklisted" : "Blacklist" ;
+	var isDisabled = (status) ? "disabled" : "" ;
+
+	var html = '<button type="button" title="" class="'+btnClass+'" '+isDisabled+'>' +
+		    '        <span class="fas fa-ban" aria-hidden="true"></span>' +
+		    '        <span><strong>'+btnText+'</strong></span></a>'+
+		    '</button>';
+	return html;
+}
+
+function getBlacklistBadge(status){
+	var badgeClass = (status) ? "badge badge-pill badge-danger" : "badge badge-pill badge-primary" ;
+	var badgeText = (status) ? "Banned" : "Pending" ;
+
+    return '<h5><span class="'+badgeClass+'">'+badgeText+'</span></h5>';
 }
 
 function generateCategoryDropdown(){

@@ -2,6 +2,9 @@ package sliit.g01.procurementg01.api.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * @author Tharindu
+ **/
 @Document(collection = "Item")
 public class Item {
 

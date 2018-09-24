@@ -19,13 +19,12 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
     <link href="css/custom-style.css" rel="stylesheet">
 
-
     <title>Procurement Home</title>
 </head>
 
 <body class="fixed-nav">
 
-  
+   
     <!-- navbar: start -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
             <a class="navbar-brand" href="#">Procurement Home</a>
@@ -112,30 +111,27 @@
                     <li class="breadcrumb-item">
                         <a href="sitemanager-dashboard.html">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item active">View Requests</li>
+                    <li class="breadcrumb-item active">Manage Requests</li>
                 </ol>
 
                
                        
                                 <div class="card">
                                 <div class="card-header">
-                                    <h4>View Requests</h4>
+                                    <h4>Approved Requests</h4>
                                 </div>
                                 <div class="card-body">
                                     <div style="width: 100%; padding-left: -10px; ">
                                     <div class="table-responsive">
-                                        <table class="table table-striped" id="view-requests">
+                                        <table class="table table-striped" id="requests-on-status">
                                             <thead>
                                                 <tr>
                                                     <th  class="text-right">Request ID</th>
                                                     <th  class="text-right">Requested Person</th>
-                                                    <th scope="col" class="text-center">Date</th>
+                                                    <th scope="col" class="text-right">Date</th>
                                                     <th scope="col" class="text-right">Site ID</th>
                                                     <th scope="col" class="text-center">Items</th>
                                                     <th scope="col" class="text-right">Immediate</th>
-                                                    <th scope="col" class="text-right">Approval Status</th>
-                                                    <!-- <th scope="col" class="text-center">Approve</th>
-                                                    <th scope="col" class="text-center">Decline</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -145,15 +141,7 @@
                                 </div>
                                 </div>
             
-                                <!-- <input type="text" id="siteId" class="form-control" placeholder="Password" required="required"> -->
-                                <!-- <input type="text" id="orderId" class="form-control" placeholder="Password" required="required">
-                                <input type="text" id="orderId1" class="form-control" placeholder="Password" required="required">
-                                <input type="text" id="orderId2" class="form-control" placeholder="Password" required="required">
-                                <input type="text" id="orderId3" class="form-control" placeholder="Password" required="required">
-                                <textarea id="orderId5" rows="4" cols="50">
-                                        </textarea>
-                                <input type="button" value="Upload" class="btn btn-success " id ="btn-update">
-                                 -->
+                              
                             
                 </div>
                 
@@ -198,12 +186,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
-    <!--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
     <script src="js/axios.min.js"></script>
     <script src="js/site-script.js"></script>
     <script src="js/notify.min.js"></script>
     <script src="js/notify.js"></script>
- 
 </body>
 
 </html>

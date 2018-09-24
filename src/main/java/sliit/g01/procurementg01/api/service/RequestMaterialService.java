@@ -10,11 +10,18 @@ public interface RequestMaterialService {
 
 	List<RequestMaterial> getAllOrders();
 
+	List<RequestMaterial> getSiteMnagerApprovedRequests();
+
 	RequestMaterial getOrder(String orderId);
 
 	Boolean deleteOrder(String orderId);
 
 	RequestMaterial updateRequest(String id, RequestMaterial requestMaterial);
+
+
+	List<RequestMaterial> getRequestsByStatus(String isSiteManagerApproved);
+
+	List<RequestMaterial> getRequestsByImmediated(String isImmediated);
 
 
 

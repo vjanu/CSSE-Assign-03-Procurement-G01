@@ -33,40 +33,50 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                    
+
                 <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                    <a class="nav-link nav-link-collapse" href="manage-sites.html">
+                    <a class="nav-link nav-link-collapse" href="view-requests-sitemanager.html">
                         <i class="far fa-fw fa-building"></i>
-                        <span class="nav-link-text">Manage Sites</span>
+                        <span class="nav-link-text">View Requests</span>
                     </a>
                 </li>
 
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-3">
-                    <a class="nav-link nav-link-collapse" href="manage-material-requests.html">
+                    <a class="nav-link nav-link-collapse" href="make-request.html">
                         <i class="far fa-fw fa-paper-plane"></i>
-                        <span class="nav-link-text">Manage Requests</span>
+                        <span class="nav-link-text">Make Requests</span>
                     </a>
                 </li>
 
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-1">
-                    <a class="nav-link nav-link-collapse" href="manage-black-list.html">
-                        <i class="fas fa-fw fa-ban"></i>
-                        <span class="nav-link-text">BlackList</span>
-                    </a>
-                </li>
+                <li class="nav-item dropdown navbar-dark bg-dark">
+                        <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Manage Requests
+                        </a>
+                        <div class="dropdown-menu navbar-dark bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" href="approved-requests.html" style="color:white">Approved Requests</a>
+                          <a class="dropdown-item" href="rejected-requests.html" style="color:white">Rejected Requests</a>
+                          <a class="dropdown-item" href="pending-requests.html" style="color:white">Pending Requests</a>
+                          <a class="dropdown-item" href="immediate-requests.html" style="color:white">Immediate Requests</a>
+                        </div>
+                      </li>
 
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="View Ratings">
-                    <a class="nav-link nav-link-collapse" href="view-ratings.html">
-                        <i class="far fa-fw fa-star"></i>
-                        <span class="nav-link-text">View Ratings</span>
-                    </a>
-                </li>
-				
-				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Inventory">
-                    <a class="nav-link nav-link-collapse" href="add-new-item.html">
-						<i class="fa fa-university"></i>
-                        <span class="nav-link-text">Inventory</span>
-                    </a>
-                </li>
+                      <li class="nav-item dropdown navbar-dark bg-dark">
+                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Manage Ratings
+                            </a>
+                            <div class="dropdown-menu navbar-dark bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                              <a class="dropdown-item" href="rate-constructor.html" style="color:white">Rate Constructor</a>
+                              <a class="dropdown-item" href="rate-supplier.html" style="color:white">Rate Supplier</a>
+                            </div>
+                          </li>
+                          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-3">
+                                <a class="nav-link nav-link-collapse" href="#.html">
+                                    <i class="far fa-fw fa-paper-plane"></i>
+                                    <span class="nav-link-text">Request Materials</span>
+                                </a>
+                        </li>    
+
             </ul>
 
             <ul class="navbar-nav ml-auto">
@@ -98,42 +108,42 @@
             <div>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="#">Dashboard</a>
+                        <a href="sitemanager-dashboard.html">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item active">Manage Sites</li>
+                    <li class="breadcrumb-item active">Manage Requests</li>
                 </ol>
 
-
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Manage Sites
-                            <small class="float-sm-right">
-                                <a href="add-new-site.html" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Add new Site</a>
-                            </small>
-                        </h4>
-                    </div>
-                    <div class="card-body">
-
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="manage-sites">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="text-center">#</th>
-                                        <th scope="col" class="text-center">Site Name</th>
-                                        <th scope="col" class="text-center">Address</th>
-                                        <th scope="col" class="text-center">Items</th>
-                                        <th scope="col" class="text-center">Storage Capacity</th>
-                                        <th scope="col" class="text-center">Current Capacity</th>
-                                        <th scope="col" class="text-center">Site Manager</th>
-                                        <th scope="col" class="text-center">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+               
+                       
+                                <div class="card">
+                                <div class="card-header">
+                                    <h4>Rejected Requests</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div style="width: 100%; padding-left: -10px; ">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" id="requests-on-status">
+                                            <thead>
+                                                <tr>
+                                                    <th  class="text-right">Request ID</th>
+                                                    <th  class="text-right">Requested Person</th>
+                                                    <th scope="col" class="text-right">Date</th>
+                                                    <th scope="col" class="text-right">Site ID</th>
+                                                    <th scope="col" class="text-center">Items</th>
+                                                    <th scope="col" class="text-right">Immediate</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                </div>
+            
+                              
+                            
                 </div>
+                
             </div>
 
         </div>
@@ -171,14 +181,14 @@
     <!-- Bootstrap core JavaScript
 ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="js/custom-script.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/site-script.js"></script>
+    <script src="js/notify.min.js"></script>
+    <script src="js/notify.js"></script>
 </body>
 
 </html>
