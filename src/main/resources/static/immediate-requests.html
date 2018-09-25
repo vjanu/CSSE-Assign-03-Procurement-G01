@@ -24,84 +24,90 @@
 
 <body class="fixed-nav">
 
-    
-    <!-- navbar: start -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-            <a class="navbar-brand" href="#">Procurement Home</a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-                        
-    
-                    <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                        <a class="nav-link nav-link-collapse" href="view-requests-sitemanager.html">
-                            <i class="far fa-fw fa-building"></i>
-                            <span class="nav-link-text">View Requests</span>
+   <!-- navbar: start -->
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="#">Procurement Home</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                
+
+            <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <a class="nav-link nav-link-collapse" href="view-requests-sitemanager.html">
+                    <i class="far fa-fw fa-building"></i>
+                    <span class="nav-link-text">View Requests</span>
+                </a>
+            </li>
+
+            <!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-3">
+                <a class="nav-link nav-link-collapse" href="make-request.html">
+                    <i class="far fa-fw fa-paper-plane"></i>
+                    <span class="nav-link-text">Make Requests</span>
+                </a>
+            </li> -->
+
+            <li class="nav-item dropdown navbar-dark bg-dark">
+                    <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Manage Requests
+                    </a>
+                    <div class="dropdown-menu navbar-dark bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="make-request.html" style="color:white">Make Requests</a>
+                        <a class="dropdown-item" href="approved-requests.html" style="color:white">Approved Requests</a>
+                      <a class="dropdown-item" href="rejected-requests.html" style="color:white">Rejected Requests</a>
+                      <a class="dropdown-item" href="pending-requests.html" style="color:white">Pending Requests</a>
+                      <a class="dropdown-item" href="immediate-requests.html" style="color:white">Immediate Requests</a>
+                    </div>
+                  </li>
+
+                  <li class="nav-item dropdown navbar-dark bg-dark">
+                        <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Manage Ratings
                         </a>
-                    </li>
-    
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-3">
-                        <a class="nav-link nav-link-collapse" href="make-request.html">
-                            <i class="far fa-fw fa-paper-plane"></i>
-                            <span class="nav-link-text">Make Requests</span>
-                        </a>
-                    </li>
-    
-                    <li class="nav-item dropdown navbar-dark bg-dark">
-                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Manage Requests
+                        <div class="dropdown-menu navbar-dark bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" href="rate-constructor.html" style="color:white">Rate Constructor</a>
+                          <a class="dropdown-item" href="rate-supplier.html" style="color:white">Rate Supplier</a>
+                        </div>
+                      </li>
+                      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-3">
+                            <a class="nav-link nav-link-collapse" href="#.html">
+                                <i class="far fa-fw fa-paper-plane"></i>
+                                <span class="nav-link-text">Request Materials</span>
                             </a>
-                            <div class="dropdown-menu navbar-dark bg-dark" aria-labelledby="navbarDropdownMenuLink">
-                              <a class="dropdown-item" href="approved-requests.html" style="color:white">Approved Requests</a>
-                              <a class="dropdown-item" href="rejected-requests.html" style="color:white">Rejected Requests</a>
-                              <a class="dropdown-item" href="pending-requests.html" style="color:white">Pending Requests</a>
-                              <a class="dropdown-item" href="immediate-requests.html" style="color:white">Immediate Requests</a>
-                            </div>
-                          </li>
-    
-                          <li class="nav-item dropdown navbar-dark bg-dark">
-                                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Manage Ratings
-                                </a>
-                                <div class="dropdown-menu navbar-dark bg-dark" aria-labelledby="navbarDropdownMenuLink">
-                                  <a class="dropdown-item" href="rate-constructor.html" style="color:white">Rate Constructor</a>
-                                  <a class="dropdown-item" href="rate-supplier.html" style="color:white">Rate Supplier</a>
-                                </div>
-                              </li>
-                              <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-3">
-                                    <a class="nav-link nav-link-collapse" href="#.html">
-                                        <i class="far fa-fw fa-paper-plane"></i>
-                                        <span class="nav-link-text">Request Materials</span>
-                                    </a>
-                            </li>    
-    
-                </ul>
-    
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-    
-                        <form class="navbar-form" role="search">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search" name="q">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                                </div>
-                            </div>
-                        </form>
-                    </li>
-                    <li class="nav-item" data-toggle="tooltip" data-placement="left" title="Logout">
-                        <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-                            <i class="fa fa-fw fa-sign-out-alt"></i>
-                            <span class="nav-link-text">Logout</span>
+                    </li>  
+                    <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                        <a class="nav-link nav-link-collapse" href="view-orders-sitemanager.html">
+                            <i class="far fa-fw fa-building"></i>
+                            <span class="nav-link-text">Manage Orders</span>
                         </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <!-- navbar: end -->
+                    </li>  
+
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="left" title="Logout">
+                <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-fw fa-sign-out-alt"></i>
+                    <span class="nav-link-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- navbar: end -->
 
     <div class="content-wrapper">
         <div class="container-fluid">
