@@ -23,7 +23,7 @@ public class PaymentServiceImpl implements PaymentService {
 
 
 	@Override
-	public Boolean addPayment(Payment payment) {
+	public Boolean makePayment(Payment payment) {
 		return (paymentRepository.save(payment) != null);
 	}
 
