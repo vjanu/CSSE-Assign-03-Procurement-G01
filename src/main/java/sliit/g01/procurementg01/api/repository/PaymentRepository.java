@@ -5,6 +5,6 @@ import sliit.g01.procurementg01.api.model.Payment;
 import sliit.g01.procurementg01.api.model.Rating;
 
 public interface PaymentRepository extends MongoRepository<Payment, String> {
-    Payment findBySupplierID(String supplierId);
+//    Payment findBySupplierID(String supplierId);
     Payment findByPaymentID(String paymentId);
 }
