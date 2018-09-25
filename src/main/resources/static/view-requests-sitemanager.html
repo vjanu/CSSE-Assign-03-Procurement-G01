@@ -18,6 +18,7 @@
     <!-- lato font(from google fonts) -->
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
     <link href="css/custom-style.css" rel="stylesheet">
+    <link href="css/view-sitemanager-style.css" rel="stylesheet">
 
 
     <title>Procurement Home</title>
@@ -44,19 +45,20 @@
                         </a>
                     </li>
     
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-3">
+                    <!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-3">
                         <a class="nav-link nav-link-collapse" href="make-request.html">
                             <i class="far fa-fw fa-paper-plane"></i>
                             <span class="nav-link-text">Make Requests</span>
                         </a>
-                    </li>
+                    </li> -->
     
                     <li class="nav-item dropdown navbar-dark bg-dark">
                             <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               Manage Requests
                             </a>
                             <div class="dropdown-menu navbar-dark bg-dark" aria-labelledby="navbarDropdownMenuLink">
-                              <a class="dropdown-item" href="approved-requests.html" style="color:white">Approved Requests</a>
+                                <a class="dropdown-item" href="make-request.html" style="color:white">Make Requests</a>
+                                <a class="dropdown-item" href="approved-requests.html" style="color:white">Approved Requests</a>
                               <a class="dropdown-item" href="rejected-requests.html" style="color:white">Rejected Requests</a>
                               <a class="dropdown-item" href="pending-requests.html" style="color:white">Pending Requests</a>
                               <a class="dropdown-item" href="immediate-requests.html" style="color:white">Immediate Requests</a>
@@ -77,7 +79,13 @@
                                         <i class="far fa-fw fa-paper-plane"></i>
                                         <span class="nav-link-text">Request Materials</span>
                                     </a>
-                            </li>    
+                            </li>  
+                            <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                                <a class="nav-link nav-link-collapse" href="view-orders-sitemanager.html">
+                                    <i class="far fa-fw fa-building"></i>
+                                    <span class="nav-link-text">Manage Orders</span>
+                                </a>
+                            </li>  
     
                 </ul>
     
