@@ -28,7 +28,6 @@ public class RatingController {
 		} else {
 			return new ResponseEntity<>("Rating not added", HttpStatus.NOT_IMPLEMENTED);
 		}
-
 	}
 
 }
