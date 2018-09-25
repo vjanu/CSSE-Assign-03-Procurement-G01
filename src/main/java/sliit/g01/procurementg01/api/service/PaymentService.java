@@ -14,7 +14,9 @@ public interface PaymentService {
 
 	List<Payment> getAllPayments();
 
-	Payment getPaymentBySupplierID(String supplierId);
+//	Payment getPaymentBySupplierID(String supplierId);
+
+	Payment getPaymentByPaymentID(String paymentId);
 
 	Boolean deletePayment(String paymentId);
 

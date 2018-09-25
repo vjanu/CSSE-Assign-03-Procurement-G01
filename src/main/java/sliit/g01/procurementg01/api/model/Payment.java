@@ -13,7 +13,7 @@ public class Payment {
 	@Id
 	private String paymentID;
 	private String paymentMethod;
-	private String supplierId;
+//	private String supplierId;
 	private double totAmount;
 	@JsonIgnore
 	private String isDeleted;
@@ -43,13 +43,13 @@ public class Payment {
 		this.paymentMethod = paymentMethod;
 	}
 
-	public String getSupplierId() {
-		return supplierId;
-	}
-
-	public void setSupplierId(String supplierId) {
-		this.supplierId = supplierId;
-	}
+//	public String getSupplierId() {
+//		return supplierId;
+//	}
+//
+//	public void setSupplierId(String supplierId) {
+//		this.supplierId = supplierId;
+//	}
 
 	public double getTotAmount() {
 		return totAmount;

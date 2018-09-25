@@ -33,9 +33,14 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public Payment getPaymentBySupplierID(String supplierId) {
-		return paymentRepository.findBySupplierID(supplierId);
+	public Payment getPaymentByPaymentID(String paymentId) {
+		return paymentRepository.findByPaymentID(paymentId);
 	}
+
+//	@Override
+//	public Payment getPaymentBySupplierID(String supplierId) {
+//		return paymentRepository.findBySupplierID(supplierId);
+//	}
 
 	@Override
 	public Boolean deletePayment(String paymentId) {
