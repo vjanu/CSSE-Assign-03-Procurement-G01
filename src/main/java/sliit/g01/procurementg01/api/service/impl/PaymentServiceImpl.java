@@ -1,15 +1,13 @@
 package sliit.g01.procurementg01.api.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sliit.g01.procurementg01.api.model.Payment;
-import sliit.g01.procurementg01.api.model.Rating;
-import sliit.g01.procurementg01.api.repository.PaymentRepository;
-import sliit.g01.procurementg01.api.repository.RatingRepository;
-import sliit.g01.procurementg01.api.service.PaymentService;
-import sliit.g01.procurementg01.api.service.RatingService;
 
-import java.util.List;
+import sliit.g01.procurementg01.api.model.Payment;
+import sliit.g01.procurementg01.api.repository.PaymentRepository;
+import sliit.g01.procurementg01.api.service.PaymentService;
 
 /**
  * created by viraj
@@ -20,7 +18,6 @@ public class PaymentServiceImpl implements PaymentService {
 
 	@Autowired
 	private PaymentRepository paymentRepository;
-
 
 	@Override
 	public Boolean makePayment(Payment payment) {
@@ -37,10 +34,10 @@ public class PaymentServiceImpl implements PaymentService {
 		return paymentRepository.findByPaymentID(paymentId);
 	}
 
-//	@Override
-//	public Payment getPaymentBySupplierID(String supplierId) {
-//		return paymentRepository.findBySupplierID(supplierId);
-//	}
+	// @Override
+	// public Payment getPaymentBySupplierID(String supplierId) {
+	// return paymentRepository.findBySupplierID(supplierId);
+	// }
 
 	@Override
 	public Boolean deletePayment(String paymentId) {

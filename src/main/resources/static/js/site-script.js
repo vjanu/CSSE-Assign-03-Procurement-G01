@@ -450,7 +450,7 @@ function addRatings(){
            
        }
 }
-	axios.post(BASE_URL_LOCAL + '/rating', data)
+	axios.post(BASE_URL_LOCAL + '/ratings', data)
     .then(function (response) {
     	$.notify("Successfully Rated", "success");
     })

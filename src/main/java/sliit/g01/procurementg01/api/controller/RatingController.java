@@ -1,5 +1,7 @@
 package sliit.g01.procurementg01.api.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +14,10 @@ import sliit.g01.procurementg01.api.model.Rating;
 import sliit.g01.procurementg01.api.service.RatingService;
 
 /**
- * created by viraj
+ * created by viraj & Modified By Tharidnu
  **/
 @RestController
-@RequestMapping("/rating")
+@RequestMapping("/ratings")
 public class RatingController {
 
 	@Autowired
@@ -28,6 +30,16 @@ public class RatingController {
 		} else {
 			return new ResponseEntity<>("Rating not added", HttpStatus.NOT_IMPLEMENTED);
 		}
+	}
+
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public List<Rating> getAllRatings() {
+		return ratingService.getConstructorRatings();
+	}
+
+	@RequestMapping(value = "/constructor-ratings", method = RequestMethod.GET)
+	public List<Rating> getConstructorRatings() {
+		return ratingService.getConstructorRatings();
 	}
 
 }

@@ -79,8 +79,9 @@ if (CURRENT_URL.includes('manage-sites')) {
     loadAllSites();
 }
 
-if (CURRENT_URL.includes('view-ratings')) {
-    console.log("You are on View Ratings page");
+if (CURRENT_URL.includes('view-constructor-ratings')) {
+    console.log("You are on View constructor Ratings page");
+    loadConstructorRatings();
 }
 
 if (CURRENT_URL.includes('add-new-site')) {
@@ -124,6 +125,31 @@ function approveRequestedMaterial(oid){
 }
 
 
+function loadConstructorRatings(){
+	axios.get(BASE_URL_LOCAL + '/ratings/')
+    .then(function (response) {
+   	 console.log(response)
+   	 response.data.forEach(item => {
+   		var html = '<tr>';
+		 html += '<td>'+item.purchaseOrderReference+'</td>';
+		 html += '<td class="nr-fid" scope="row">' + item.supplierName + '</td>';
+		 html += '<td>' + item.constructorName + '</td>';
+		 html += '<td class="text-center">' + item.deliveryEfficiency + '</td>';
+		 html += '<td><center>' +item.supportiveness +'</td>';
+		 html += '<td><center>' +item.workOnTime +'</td>';
+		 html += '<td><center>' +item.overallRate +'</td>';
+		 html += '<td><center>' +item.feedback +'</td>';
+		 html += '<td><center>' +getBlacklistButton(false)+'</td>';
+		 html += '</tr>';
+		 
+		 $('#view-constructor-ratings tbody').append(html);
+   	 });
+   	}).catch(function (error) {
+        // handle error
+        console.log(error);
+    });
+    
+}
 
 function loadAllSuppliers(){
 	axios.get(BASE_URL_LOCAL + '/sup/')
@@ -283,7 +309,7 @@ function loadAllSites(){
                  '<td >' + getItemList(item.items) + '</td>' +
                  '<td>' + item.storageCapacity + '</td>' +
                  '<td>' + item.currentCapacity + '</td>' +
-                 '<td>' + item.siteManager + '</td>' +
+                 '<td>' + item.siteManager.employeeName + '</td>' +
                  '<td class="text-center">' +
                      '<a href="#" title="" class="btn btn-primary btn-sm">' +
                      '        <span class="fas fa-edit" aria-hidden="true"></span> Edit' +
