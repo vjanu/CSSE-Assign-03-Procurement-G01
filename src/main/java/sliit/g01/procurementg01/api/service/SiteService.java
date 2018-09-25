@@ -4,7 +4,6 @@ import java.util.List;
 
 import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.model.Site;
-import sliit.g01.procurementg01.api.model.SiteManager;
 
 /**
  * created by viraj
@@ -23,5 +22,7 @@ public interface SiteService {
 	boolean deleteSite(String siteId);
 
 	Site updateSite(String siteId, Site site);
+
+	Site getSiteUnderManager(String siteManagerId);
 
 }

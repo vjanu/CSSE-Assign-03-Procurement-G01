@@ -33,7 +33,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link nav-link-collapse" href="manage-sites.html">
                         <i class="far fa-fw fa-building"></i>
                         <span class="nav-link-text">Manage Sites</span>
@@ -47,7 +47,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item dropdown">
+                <li class="nav-item active dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-fw fa-ban"></i>
@@ -66,10 +66,10 @@
                         <span class="nav-link-text">View Ratings</span>
                     </a>
                 </li>
-				
-				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Inventory">
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Inventory">
                     <a class="nav-link nav-link-collapse" href="add-new-item.html">
-						<i class="fa fa-university"></i>
+                        <i class="fa fa-university"></i>
                         <span class="nav-link-text">Inventory</span>
                     </a>
                 </li>
@@ -106,35 +106,91 @@
                     <li class="breadcrumb-item">
                         <a href="#">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item active">Manage Sites</li>
+                    <li class="breadcrumb-item active">Manage Blacklist</li>
                 </ol>
+
+
 
 
                 <div class="card">
                     <div class="card-header">
-                        <h4>Manage Sites
-                            <small class="float-sm-right">
-                                <a href="add-new-site.html" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Add new Site</a>
-                            </small>
-                        </h4>
+                        <h4>Supplier / Constructor Blacklist</h4>
                     </div>
                     <div class="card-body">
 
+                        <div class="float-left mb-3">
+                            <div class="row">
+                                <div class="input-group col-md-12">
+                                    <select class="form-control" id="">
+                                        <option value="">Blacklisted List</option>
+                                        <option value="">Pending List</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="float-right mb-3">
+                            <div class="row">
+                                <div id="custom-search-input">
+                                    <div class="input-group col-md-12">
+                                        <input type="text" class="search-query form-control" placeholder="Search" />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-success" type="button">
+                                                <span class=" fa fa-search"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="manage-sites">
+                            <table class="table table-bordered table-hover" id="manage-black-list">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">#</th>
-                                        <th scope="col" class="text-center">Site Name</th>
-                                        <th scope="col" class="text-center">Address</th>
-                                        <th scope="col" class="text-center">Items</th>
-                                        <th scope="col" class="text-center">Storage Capacity</th>
-                                        <th scope="col" class="text-center">Current Capacity</th>
-                                        <th scope="col" class="text-center">Site Manager</th>
-                                        <th scope="col" class="text-center">Actions</th>
+                                        <th scope="col" class="text-center">Name</th>
+                                        <th scope="col" class="text-center">Email</th>
+                                        <th scope="col" class="text-center">Employee Type</th>
+                                        <th scope="col" class="text-center">Phone</th>
+                                        <th scope="col" class="text-center">Status</th>
+                                        <th scope="col" class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <!--<tr>
+                                        <td class="text-center">BL100</td>
+                                        <td>Amal Perera</td>
+                                        <td>amail@gmail.com</td>
+                                        <td>Supplier</td>
+                                        <td>0716589654</td>
+                                        <td>
+                                            <h5><span class="badge badge-pill badge-danger">Banned</span></h5>
+                                        </td>
+                                        <td class="text-center">
+                                            <button href="#" title="" class="btn btn-default btn-sm" disabled>
+                                                <span class="fas fa-ban" aria-hidden="true"></span>
+                                                <span><strong>Blacklisted</strong></span>
+                                            </button>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">BL101</td>
+                                        <td>Vira Dias (Constructor)</td>
+                                        <td>vira@gmail.com</td>
+                                        <td>Constructor</td>
+                                        <td>0766589654</td>
+                                        <td>
+                                            <h5><span class="badge badge-pill badge-primary">Pending</span></h5>
+                                        </td>
+                                        <td class="text-center">
+                                            <button href="#" title="" class="btn btn-danger btn-sm">
+                                                <span class="fas fa-ban" aria-hidden="true"></span>
+                                                <span><strong>Blacklist</strong></span>
+                                            </button>
+                                        </td>
+                                    </tr>  -->
                                 </tbody>
                             </table>
                         </div>

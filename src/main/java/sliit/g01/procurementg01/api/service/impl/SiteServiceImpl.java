@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.model.Site;
-import sliit.g01.procurementg01.api.model.SiteManager;
 import sliit.g01.procurementg01.api.repository.SiteRepository;
 import sliit.g01.procurementg01.api.service.SiteService;
 
