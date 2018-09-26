@@ -20,10 +20,14 @@ public class PurchaseOrder {
     private String orderId;
     private String requestId;   // to identify which material request resulted in this purchase order.
     private String sequentialReference;     // someone please tell me what this is. :(
-    private Map<String, String> items;   // <supplier id, list of items>
+    private List<Item> items;   // <supplier id, list of items>
     private String supplierId;  // supplier who offers the above list of items.
     private String orderStatus;
     private Date orderDate;
+    private boolean draftPurchaseOrder;
+    private boolean onHold;
+    private Date returnedDate;
+
 
     public Date getReturnedDate() {
         return returnedDate;
@@ -32,10 +36,6 @@ public class PurchaseOrder {
     public void setReturnedDate(Date returnedDate) {
         this.returnedDate = returnedDate;
     }
-
-    private Date returnedDate; //modify by site manager
-    private boolean draftPurchaseOrder;
-    private boolean onHold;
 
 
     public String getOrderId() {
@@ -54,11 +54,11 @@ public class PurchaseOrder {
         this.sequentialReference = sequentialReference;
     }
 
-    public Map<String, String> getItems() {
+    public List<Item> getItems() {
         return items;
     }
 
-    public void setItems(Map<String, String> items) {
+    public void setItems(List<Item> items) {
         this.items = items;
     }
 
