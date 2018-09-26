@@ -40,7 +40,7 @@ $(document).on('click', '#manage-material-requests .btn-primary', function(e){
     e.stopPropagation();
     var oid = $(this).closest("tr").find(".nr-oid").text();
     console.log(oid);
-    var r = confirm("Are you sure? Thi action cannot be undone");
+    var r = confirm("Are you sure? This action cannot be undone");
     if (r == true) {
         approveRequestedMaterial(oid);
     }
@@ -52,7 +52,7 @@ $(document).on('click', '#manage-material-requests .btn-danger', function(e){
     e.stopPropagation();
     var oid = $(this).closest("tr").find(".nr-oid").text();
     console.log(oid);
-    var r = confirm("Are you sure want to delete this request? Thi action cannot be undone");
+    var r = confirm("Are you sure want to delete this request? This action cannot be undone");
     if (r == true) {
         removeMaterialRequest(oid);
     }
@@ -69,9 +69,14 @@ if (CURRENT_URL.includes('manage-material-requests')) {
     loadRequestedMaterialTable();
 }
 
-if (CURRENT_URL.includes('manage-black-list')) {
+if (CURRENT_URL.includes('manage-supplier-blacklist')) {
     console.log("You are on Manage Blacklist page");
     loadAllSuppliers()
+}
+
+if (CURRENT_URL.includes('manage-constructor-blacklist')) {
+    console.log("You are on Manage Blacklist page");
+    loadAllConstructors()
 }
 
 if (CURRENT_URL.includes('manage-sites')) {
@@ -166,13 +171,37 @@ function loadAllSuppliers(){
 		 html += '<td><center>' +getBlacklistButton(item.isBanned) +'</td>';
 		 html += '</tr>';
 		 
-		 $('#manage-black-list tbody').append(html);
+		 $('#manage-supplier-black-list tbody').append(html);
    	 });
    	}).catch(function (error) {
         // handle error
         console.log(error);
     });
     
+}
+
+
+function loadAllConstructors(){
+	axios.get(BASE_URL_LOCAL + '/employee/constructor/')
+    .then(function (response) {
+   	 console.log(response)
+   	 response.data.forEach(item => {
+   		var html = '<tr>';
+		 html += '<td>'+item.employeeId+'</td>';
+		 html += '<td class="nr-fid" scope="row">' + item.employeeName + '</td>';
+		 html += '<td >' + item.email + '</td>';
+		 html += '<td>' + item.phone + '</td>';
+		 html += '<td>' + item.nic + '</td>';
+		 html += '<td class="text-center">' + getBlacklistBadge(true) + '</td>';
+		 html += '<td><center>' +getBlacklistButton(true) +'</td>';
+		 html += '</tr>';
+		 
+		 $('#manage-constructor-black-list tbody').append(html);
+   	 });
+   	}).catch(function (error) {
+        // handle error
+        console.log(error);
+    });
 }
 
 

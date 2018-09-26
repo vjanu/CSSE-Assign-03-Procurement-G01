@@ -62,7 +62,8 @@
         "Sand" : "22KG"
     },
     "isImmediated" : "0",
-    "isProcumentApproved" : "0",
+    "isSiteManagerApproved":"1",
+    "isProcumentApproved" : "0"
 }
 
 {
@@ -77,7 +78,7 @@
     },
     "isImmediated" : "1",
     "isProcumentApproved" : "1",
-    "isSiteManagerApproved" : "0"
+    "isSiteManagerApproved" : "1"
 }
 
 --------Add Item-------------

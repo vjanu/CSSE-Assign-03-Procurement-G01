@@ -1,5 +1,7 @@
 package sliit.g01.procurementg01.api.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +22,14 @@ public class ConstructorServiceImpl implements ConstructorService {
 	
 		return constructorRepository.save(constructor);
 	}
+
+
+	@Override
+	public List<Constructor> getAllConstructors() {
+		return constructorRepository.findAll();
+	}
+	
+	
+	
 
 }
