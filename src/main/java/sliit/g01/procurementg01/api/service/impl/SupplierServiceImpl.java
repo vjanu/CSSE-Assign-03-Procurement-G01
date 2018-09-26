@@ -5,11 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
+import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.model.Supplier;
 import sliit.g01.procurementg01.api.repository.SupplierRepository;
 import sliit.g01.procurementg01.api.service.SupplierService;
 
-@Service
+/**
+ * @author tharushi
+ */
+@Service("SupplierService")
 public class SupplierServiceImpl implements SupplierService{
 
 	@Autowired
@@ -35,4 +39,8 @@ public class SupplierServiceImpl implements SupplierService{
 		return null;
 	}
 
+    @Override
+    public Boolean supplierExists(String supplierId) {
+        return supplierRepository.existsSupplierBySupplierId(supplierId);
+    }
 }
