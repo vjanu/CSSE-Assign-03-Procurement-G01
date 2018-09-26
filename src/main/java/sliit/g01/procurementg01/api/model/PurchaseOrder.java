@@ -16,6 +16,7 @@ public class PurchaseOrder {
 
     @Id
     private String orderId;
+    private String requestId;   // to identify which material request resulted in this purchase order.
     private String sequentialReference;     // someone please tell me what this is. :(
     private List<Item> items;   // <supplier id, list of items>
     private String supplierId;  // supplier who offers the above list of items.
@@ -81,61 +82,19 @@ public class PurchaseOrder {
         this.onHold = onHold;
     }
 
-
-    /**
-     * the requestMaterial object contains a list of items and their quantities that we are,
-     * going to order. but these items may not always be ordered from a single supplier.
-     * in that case, we group items by each supplier to make it easy for us to forward the,
-     * correct purchase order to the supplier.
-     *
-     * @param requestMaterial: basically the request made by an employee, requesting items.
-     * @return: a map where items relevant to each supplier is listed under the supplier id.
-     */
-    private Map<String, List<Item>> groupItemaBySupplier(RequestMaterial requestMaterial) {
-        Map<String, List<Item>> itemsOrderedFromEachSupplier = new HashMap<>(); // <supplier id, list of items>
-        Map<String, String> itemCodeAndQuantity = requestMaterial.getItems();
-
-        for (String itemCode: itemCodeAndQuantity.keySet()) {
-            int quantity = Integer.parseInt(itemCodeAndQuantity.get(itemCode));
-
-            Item item = new Item();
-            item.setItemId(itemCode);
-
-            // now we are grouping.
-        }
-
-        // TODO: group items in reuqestMaterial by supplier. Preserve the quantity as well!
-
-        return itemsOrderedFromEachSupplier;
+    public String getRequestId() {
+        return requestId;
     }
 
-
-    /**
-     * since we may get a list of items provided by multiple suppliers,
-     * we need to make a purchase order for each supplier.
-     *
-     * this method will do just that.
-     *
-     * @param requestMaterial: the request made by the employee for materials. this is the base for our order.
-     * @return: a list of orders where each order is made for a specific supplier.
-     */
-    public List<PurchaseOrder> createOrders(RequestMaterial requestMaterial) {
-        List<PurchaseOrder> orders = new ArrayList<>();
-
-        // TODO: create the orders.
-
-        return orders;
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
     }
 
+    public String getSupplierId() {
+        return supplierId;
+    }
 
-    /**
-     * this will go through our list of items and change the quantity,
-     * of the item.
-     *
-     * @param itemId: id of the item in question.
-     * @param newQuantity: new quantity we are ordering.
-     */
-    public void changeQuantity(String itemId, int newQuantity) {
-
+    public void setSupplierId(String supplierId) {
+        this.supplierId = supplierId;
     }
 }
