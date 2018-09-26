@@ -106,4 +106,19 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     public List<PurchaseOrder> getOrdersUnderMaterialRequest(String requestId) {
         return purchaseOrderRepository.getPurchaseOrdersByRequestId(requestId); // request id is the order id of a material request. confusing i know!
     }
+
+    // save a single purchase order to the database.
+    // for multiple orders, call this method iteratively; LOL!
+    @Override
+    public void addPurchaseOrder(PurchaseOrder purchaseOrder) {
+        purchaseOrderRepository.save(purchaseOrder);
+    }
+
+    // save multiple orders to database.
+    @Override
+    public void addPurchaseOrders(List<PurchaseOrder> orders) {
+        for (PurchaseOrder purchaseOrder: orders) {
+            addPurchaseOrder(purchaseOrder);
+        }
+    }
 }

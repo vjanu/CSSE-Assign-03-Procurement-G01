@@ -22,4 +22,8 @@ public interface PurchaseOrderService {
     public List<PurchaseOrder> getOrdersUnderMaterialRequest(String requestId); // request id = order id of material request.
 
     public String requestApproval();
+
+    public void addPurchaseOrder(PurchaseOrder order);
+
+    public void addPurchaseOrders(List<PurchaseOrder> orders);  // same as above, but for multiple items.
 }
