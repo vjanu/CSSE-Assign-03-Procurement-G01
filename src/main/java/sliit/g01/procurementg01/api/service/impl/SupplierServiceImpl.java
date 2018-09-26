@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.stereotype.Service;
 import sliit.g01.procurementg01.api.model.Supplier;
 import sliit.g01.procurementg01.api.repository.SupplierRepository;
 import sliit.g01.procurementg01.api.service.SupplierService;
 
+@Service
 public class SupplierServiceImpl implements SupplierService{
 
 	@Autowired

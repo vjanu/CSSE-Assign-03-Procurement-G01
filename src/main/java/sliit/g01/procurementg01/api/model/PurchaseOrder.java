@@ -17,10 +17,20 @@ public class PurchaseOrder {
     @Id
     private String orderId;
     private String sequentialReference;     // someone please tell me what this is. :(
-    private List<Item> items;   // <supplier id, list of items>
+    private Map<String, String> items;   // <supplier id, list of items>
     private String supplierId;  // supplier who offers the above list of items.
     private String orderStatus;
     private Date orderDate;
+
+    public Date getReturnedDate() {
+        return returnedDate;
+    }
+
+    public void setReturnedDate(Date returnedDate) {
+        this.returnedDate = returnedDate;
+    }
+
+    private Date returnedDate; //modify by site manager
     private boolean draftPurchaseOrder;
     private boolean onHold;
 
@@ -41,11 +51,11 @@ public class PurchaseOrder {
         this.sequentialReference = sequentialReference;
     }
 
-    public List<Item> getItems() {
+    public Map<String, String> getItems() {
         return items;
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems(Map<String, String> items) {
         this.items = items;
     }
 
