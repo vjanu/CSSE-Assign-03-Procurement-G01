@@ -1,17 +1,19 @@
 package sliit.g01.procurementg01.api.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @author Tharindu
  **/
-@Document(collection = "Item")
 public class Item {
 
+    @Id
 	private String itemId;
 	private String itemName;
 	private String categoryId;
 	private float price;
+	private String unitType;	// whether a unit is a packet or so.
 	private String deliveryInformation;
 	private boolean isRestrictedItem;
 
@@ -62,4 +64,12 @@ public class Item {
 	public void setRestrictedItem(boolean isRestrictedItem) {
 		this.isRestrictedItem = isRestrictedItem;
 	}
+
+    public String getUnitType() {
+        return unitType;
+    }
+
+    public void setUnitType(String unitType) {
+        this.unitType = unitType;
+    }
 }

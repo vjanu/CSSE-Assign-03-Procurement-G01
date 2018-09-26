@@ -12,16 +12,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import sliit.g01.procurementg01.api.model.Item;
+import sliit.g01.procurementg01.api.model.Supplier;
 import sliit.g01.procurementg01.api.service.ItemService;
+import sliit.g01.procurementg01.api.service.SupplierService;
+import sliit.g01.procurementg01.api.service.impl.SupplierServiceImpl;
 
 /**
  * @author Tharindu
+ * @author Tharushi
  **/
 @RestController
 public class ItemController {
 
+
+	@Autowired
+	private SupplierServiceImpl supplierService;
+
 	@Autowired
 	private ItemService itemService;
+
+
 
 	@PostMapping("/item/add-new-item")
 	public ResponseEntity<String> addCategory(@RequestBody Item item) {
@@ -42,4 +52,10 @@ public class ItemController {
 	public Item getCategory(@PathVariable String itemId) {
 		return itemService.getItem(itemId);
 	}
+
+	// get the supplier of the given item.
+	@GetMapping("/item/{itemId}/supplier")
+    public Supplier getSupplierOfItem(@PathVariable String itemId) {
+	    return supplierService.getSupplierWhoOffersItem(itemId);
+    }
 }

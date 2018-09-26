@@ -6,5 +6,4 @@ import sliit.g01.procurementg01.api.model.Supplier;
 
 public interface SupplierRepository extends MongoRepository <Supplier, String> {
 	Supplier findBySupplierId (String supplierId);
-	
 }
