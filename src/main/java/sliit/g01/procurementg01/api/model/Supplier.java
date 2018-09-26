@@ -18,7 +18,6 @@ public class Supplier {
     private String email;
     private String phone;
     private boolean availability;
-	private List<Item> items;
 
 	public String getSupplierId() {
 		return supplierId;
@@ -76,16 +75,4 @@ public class Supplier {
 		this.availability = availability;
 	}
 
-	public List<Item> getItems() {
-		return items;
-	}
-
-	public void setItems(List<Item> items) {
-		this.items = items;
-	}
-
-	// this will add an item to already existing list of items under the given supplier.
-	public void addItem(Item item) {
-	    this.items.add(item);
-    }
 }

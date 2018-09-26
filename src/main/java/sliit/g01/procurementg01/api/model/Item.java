@@ -11,9 +11,11 @@ public class Item {
     @Id
 	private String itemId;
 	private String itemName;
+	private String supplierId;
 	private String categoryId;
 	private float price;
 	private String unitType;	// whether a unit is a packet or so.
+	private String quantity;
 	private String deliveryInformation;
 	private boolean isRestrictedItem;
 
@@ -71,5 +73,21 @@ public class Item {
 
     public void setUnitType(String unitType) {
         this.unitType = unitType;
+    }
+
+    public String getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(String supplierId) {
+        this.supplierId = supplierId;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 }

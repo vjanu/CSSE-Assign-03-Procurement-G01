@@ -45,4 +45,9 @@ public class ItemServiceImpl implements ItemService {
 		return null;
 	}
 
+	// this will make a list of items offered by the given supplier.
+	@Override
+	public List<Item> getItemsSuppliedBy(String supplierId) {
+		return itemRepository.findItemsBySupplierId(supplierId);
+	}
 }

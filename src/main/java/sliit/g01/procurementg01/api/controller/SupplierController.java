@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.model.Supplier;
 import sliit.g01.procurementg01.api.service.SupplierService;
 
@@ -40,12 +41,13 @@ public class SupplierController {
 	public Supplier getCategory(@PathVariable String supplierId) {
 		return supplierService.getSupplier(supplierId);
 	}
-	
+
 	@DeleteMapping("supplier/{supplierId}")
 	public void deleteCategory(@PathVariable String supplierId) {
 		supplierService.deleteSupplier(supplierId);
 		
 	}
+
 	
 	
 }

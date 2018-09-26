@@ -1,6 +1,7 @@
 package sliit.g01.procurementg01.api.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,13 +25,10 @@ import sliit.g01.procurementg01.api.service.impl.SupplierServiceImpl;
 @RestController
 public class ItemController {
 
-
-	@Autowired
-	private SupplierServiceImpl supplierService;
-
 	@Autowired
 	private ItemService itemService;
-
+	@Autowired
+	private SupplierServiceImpl supplierService;
 
 
 	@PostMapping("/item/add-new-item")
@@ -43,16 +41,25 @@ public class ItemController {
 
 	}
 
-	// use this in the final version.
-	@PostMapping("/item/{supplierId}")
-    public String addItemToExistingSupplier(@RequestBody Item item, @PathVariable String supplierId) {
-	    Supplier s = supplierService.getSupplier(supplierId);
+	// this should be used when a supplier is adding an item to the database.
+	@PostMapping("/item")
+	public ResponseEntity<String> addItem(@RequestBody Item item) {
+		// generate the item id on the fly.
+		item.setItemId(UUID.randomUUID().toString());
 
-	    s.addItem(item);
-	    supplierService.addSupplier(s); // this will replace the existing object in the db under the same ID.
+		if (supplierService.supplierExists(item.getSupplierId())) {
+		    itemService.addItem(item);
+            return new ResponseEntity<>("New Item Added", HttpStatus.OK);
+        }
 
-	    return " ";
+        return new ResponseEntity<>("Item Not Created", HttpStatus.NOT_IMPLEMENTED);
     }
+
+	// get all items supplied by a specific supplier.
+	@GetMapping("item/{supplierId}/items")
+	public List<Item> getItemsSuppliedBy(@PathVariable String supplierId) {
+		return itemService.getItemsSuppliedBy(supplierId);
+	}
 
 	@GetMapping("/item/")
 	public List<Item> getAllCategories() {
@@ -64,9 +71,5 @@ public class ItemController {
 		return itemService.getItem(itemId);
 	}
 
-	// get the supplier of the given item.
-	@GetMapping("/item/{itemId}/supplier")
-    public Supplier getSupplierOfItem(@PathVariable String itemId) {
-	    return supplierService.getSupplierWhoOffersItem(itemId);
-    }
+
 }

@@ -39,18 +39,8 @@ public class SupplierServiceImpl implements SupplierService{
 		return null;
 	}
 
-	@Override
-	public Supplier getSupplierWhoOffersItem(String itemId) {
-		List<Supplier> supplierList = supplierRepository.findAll();
-		// go through items list of each supplier till we find the item.
-        for (Supplier s: supplierList) {
-            for (Item i: s.getItems()) {
-                if (i.getItemId().equals(itemId)) {
-                    return s;
-                }
-            }
-        }
-
-        return new Supplier();  // if no supplier if found.
-	}
+    @Override
+    public Boolean supplierExists(String supplierId) {
+        return supplierRepository.existsSupplierBySupplierId(supplierId);
+    }
 }
