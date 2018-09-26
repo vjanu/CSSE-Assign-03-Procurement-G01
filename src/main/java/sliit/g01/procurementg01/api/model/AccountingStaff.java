@@ -4,16 +4,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-/***
+/**
  * created by viraj
- ***/
+ **/
 @Document(collection = "AccountingStaff")
 public class AccountingStaff extends AuthorizedEmployee {
 
 	@JsonIgnore
     private boolean deleted;
+	private String category;
+
     public AccountingStaff() {}
-    
+
     public boolean isDeleted() {
 		return deleted;
 	}
@@ -22,4 +24,11 @@ public class AccountingStaff extends AuthorizedEmployee {
 		this.deleted = deleted;
 	}
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 }

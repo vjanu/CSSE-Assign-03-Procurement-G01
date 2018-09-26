@@ -8,6 +8,7 @@ import sliit.g01.procurementg01.api.model.AccountingStaff;
 /***
  * created by viraj
  ***/
+
 public interface AccountingStaffRepository extends MongoRepository<AccountingStaff, String> {
 
 	AccountingStaff findByEmployeeId(String employeeId);

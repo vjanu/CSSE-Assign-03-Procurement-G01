@@ -1,0 +1,154 @@
+//add site manager
+{
+	"managedSiteId":"0",
+	"employeeId":"20",
+	"employeeType":"e0",
+	"employeeName":"ddd0",
+	"address":"ddddddssswds0",
+	"email":"dddxccdsc0",
+	"phone":"222222222222o"          
+}
+
+//add site
+
+{
+	"siteId":2,
+	"siteName":"vira",
+	"address":"guoixhasxjaxjsh",
+	"items":{"cement":2,"sand":22},
+	"storageCapacity":2,
+	"currentCapacity":2
+}
+
+{  
+   "siteId":"ST0001",
+   "siteName":"Site001",
+   "address":"Kaduwela",
+   "items":{  
+      "cemenet":"2",
+      "sand":"22"
+   },
+   "storageCapacity":"500",
+   "currentCapacity":"100"
+}
+
+
+--------------Add Request---------------
+
+{
+	"orderId":"OR0125",
+	"requestedPerson":"Amal",
+	"siteId":"S004",
+	"requestedDate":"2018-08-03",
+	"items":{
+		"cemenet":"500KG",
+		"sand":"202KG",
+		"bricks":"1000"
+	},
+	"isImmediated":"1",
+	"isSiteManagerApproved":"0",
+	"siteManagerName":"Bimal",
+	"siteManagerID":"S005",
+	"isProcumentApproved":"0"
+}
+
+{
+    "orderId" : "OR0124",
+    "requestedPerson" : "Kamal",
+    "siteId" : "S003",
+    "requestedDate" : "2018-08-03",
+    "items" : {
+        "Cemenet" : "200KG",
+        "Sand" : "22KG"
+    },
+    "isImmediated" : "0",
+    "isProcumentApproved" : "0",
+}
+
+{
+    "orderId" : "OR0126",
+    "requestedPerson" : "Amala",
+    "siteId" : "S004",
+    "requestedDate" : "2018-08-03",
+    "items" : {
+        "cemenet" : "500KG",
+        "sand" : "202KG",
+        "bricks" : "1000"
+    },
+    "isImmediated" : "1",
+    "isProcumentApproved" : "1",
+    "isSiteManagerApproved" : "0"
+}
+
+--------Add Item-------------
+
+{
+	"itemId":"I0001",
+	"itemName":"Cement",
+	"categoryId":"CAT001",
+	"price":"5000",
+	"deliveryInformation":"Bla bla",
+	"isRestrictedItem":"false"
+}
+
+{
+	"itemId":"I0002",
+	"itemName":"Bricks",
+	"categoryId":"CAT002",
+	"price":"400",
+	"deliveryInformation":"Bla bla",
+	"isRestrictedItem":"false"
+}
+
+
+
+
+---------Add request--------------
+{
+
+        "orderId":"R001",
+        "requestedPerson":"Nimal silva",
+        "requestedDate":"12-08-2018",
+        "items":"cement",
+        "quantity":"10pckt",
+        "requestingDate":"16-08-2018"
+    
+}
+
+
+------add constructor--------------
+{
+
+"employeeId":"003",
+"employeeType":"sfaaa",
+"employeeName":"llllll",
+"address":"dd",
+"email":"wwww",
+"phone":"0171111111",
+"site":"vvv"
+
+
+
+
+}
+
+
+
+--------Add Policy----------
+
+
+
+------------Add Rating--------------
+{
+	"purchaseOrderReference":null,
+	"supplierName":null,
+	"supplierId":null,
+	"constructorName":"col nod",
+	"deliveryEfficiency":0,
+	"supportiveness":2,
+	"workOnTime":5,
+	"overallRate":3,
+	"feedback":"ddddddd",
+	"constructorId":"5698"
+}
+

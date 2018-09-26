@@ -48,3 +48,25 @@ footer.sticky-footer {
   background-color: #e9ecef;
   line-height: 40px;
 }
+
+.isDisabled {
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+}
+
+
+
+
+body { padding-top:20px; }
+.panel-body .btn:not(.btn-block) { width:120px;margin-bottom:10px; }
+.b:hover {
+  color: hotpink;
+}
+
+
+.dropdown-item:hover{
+	color: #FFFFFF;
+	background:#e6e6e6;
+}

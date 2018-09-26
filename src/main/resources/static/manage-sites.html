@@ -47,17 +47,36 @@
                     </a>
                 </li>
 
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-1">
-                    <a class="nav-link nav-link-collapse" href="manage-black-list.html">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-fw fa-ban"></i>
                         <span class="nav-link-text">BlackList</span>
                     </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="manage-supplier-blacklist.html">Blacklist Supplier</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="manage-constructor-blacklist.html">Blacklist Constructors</a>
+                    </div>
                 </li>
 
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="View Ratings">
-                    <a class="nav-link nav-link-collapse" href="view-ratings.html">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
                         <i class="far fa-fw fa-star"></i>
-                        <span class="nav-link-text">View Ratings</span>
+                        <span class="nav-link-text">Ratings</span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="view-supplier-ratings.html">Supplier Ratings</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="view-constructor-ratings.html">Constructors Ratings</a>
+                    </div>
+                </li>
+				
+				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Inventory">
+                    <a class="nav-link nav-link-collapse" href="add-new-item.html">
+						<i class="fa fa-university"></i>
+                        <span class="nav-link-text">Inventory</span>
                     </a>
                 </li>
             </ul>
@@ -101,7 +120,7 @@
                     <div class="card-header">
                         <h4>Manage Sites
                             <small class="float-sm-right">
-                                <button class="btn btn-primary">Add new Site</button>
+                                <a href="add-new-site.html" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Add new Site</a>
                             </small>
                         </h4>
                     </div>
@@ -112,14 +131,13 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">#</th>
-                                        <th scope="col">Site Name</th>
-                                        <th scope="col">Address</th>
-                                        <th scope="col">Items</th>
-                                        <th scope="col">Request Date</th>
-                                        <th scope="col">Storage Capacity</th>
-                                        <th scope="col">Current Capacity</th>
-                                        <th scope="col" class="text-center">Edit</th>
-                                        <th scope="col" class="text-center">Remove</th>
+                                        <th scope="col" class="text-center">Site Name</th>
+                                        <th scope="col" class="text-center">Address</th>
+                                        <th scope="col" class="text-center">Items</th>
+                                        <th scope="col" class="text-center">Storage Capacity</th>
+                                        <th scope="col" class="text-center">Current Capacity</th>
+                                        <th scope="col" class="text-center">Site Manager</th>
+                                        <th scope="col" class="text-center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -165,14 +183,13 @@
     <!-- Bootstrap core JavaScript
 ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="js/index.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/notify.min.js"></script>
+    <script src="js/custom-script.js"></script>
 </body>
 
 </html>

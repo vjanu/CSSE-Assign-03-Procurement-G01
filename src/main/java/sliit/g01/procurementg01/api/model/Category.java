@@ -1,12 +1,13 @@
 package sliit.g01.procurementg01.api.model;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * @author Tharindu
+ **/
 @Document(collection = "Category")
 public class Category {
 
-	@Id
 	private String categoryId;
 	private String categoryName;
 

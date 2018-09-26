@@ -2,7 +2,9 @@ package sliit.g01.procurementg01.api.model;
 
 import org.springframework.data.annotation.Id;
 
-/*
+/**
+ * @author anushka
+ *
  * NOTE: This this is the parent class do not create a mongo repository for this.
  *       We only create mongo repositories for all the child classes.
  *       But make sure to implement an empty constructor and all getters and setters in,
@@ -17,6 +19,16 @@ public class AuthorizedEmployee {
 	private String address;
 	private String email;
 	private String phone;
+	private String nic;
+
+
+	public String getNic() {
+		return nic;
+	}
+
+	public void setNic(String nic) {
+		this.nic = nic;
+	}
 
 	public void addComment(String comment) {
 	}

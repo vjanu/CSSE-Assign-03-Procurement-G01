@@ -1,4 +1,4 @@
-package sliit.g01.procurementg01.api.service;
+package sliit.g01.procurementg01.api.service.impl;
 
 import java.util.List;
 
@@ -7,7 +7,11 @@ import org.springframework.stereotype.Service;
 
 import sliit.g01.procurementg01.api.model.Category;
 import sliit.g01.procurementg01.api.repository.CategoryRepository;
+import sliit.g01.procurementg01.api.service.CategoryService;
 
+/**
+ * @author Tharindu
+ **/
 @Service("categoryService")
 public class CategoryServiceImpl implements CategoryService {
 
