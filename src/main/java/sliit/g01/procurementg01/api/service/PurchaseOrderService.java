@@ -15,7 +15,11 @@ public interface PurchaseOrderService {
     // change the quantity of item in an order.
     public boolean specifyQuantity(String itemId, int quantity);
 
+    public PurchaseOrder getPurchaseOrder(String orderId);
+
     public List<PurchaseOrder> createOrder(RequestMaterial requestMaterial);
+
+    public List<PurchaseOrder> getOrdersUnderMaterialRequest(String requestId); // request id = order id of material request.
 
     public String requestApproval();
 }

@@ -1,9 +1,11 @@
 package sliit.g01.procurementg01.api.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.model.PurchaseOrder;
 import sliit.g01.procurementg01.api.model.RequestMaterial;
+import sliit.g01.procurementg01.api.repository.PurchaseOrderRepository;
 import sliit.g01.procurementg01.api.service.PurchaseOrderService;
 
 import java.util.*;
@@ -11,11 +13,16 @@ import java.util.*;
 /**
  * @author anushka
  */
-public class PurchaseOrderImpl implements PurchaseOrderService {
+@Service("PurchaseOrderService")
+public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
 
     @Autowired
     private ItemServiceImpl itemService;
+
+    @Autowired
+    private PurchaseOrderRepository purchaseOrderRepository;
+
 
     @Override
     public boolean specifyQuantity(String itemId, int quantity) {
@@ -88,5 +95,15 @@ public class PurchaseOrderImpl implements PurchaseOrderService {
     @Override
     public String requestApproval() {
         return null;
+    }
+
+    @Override
+    public PurchaseOrder getPurchaseOrder(String orderId) {
+        return purchaseOrderRepository.getPurchaseOrderByOrderId(orderId);
+    }
+
+    @Override
+    public List<PurchaseOrder> getOrdersUnderMaterialRequest(String requestId) {
+        return purchaseOrderRepository.getPurchaseOrdersByRequestId(requestId); // request id is the order id of a material request. confusing i know!
     }
 }

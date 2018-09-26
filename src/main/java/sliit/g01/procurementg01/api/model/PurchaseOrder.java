@@ -1,6 +1,7 @@
 package sliit.g01.procurementg01.api.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.*;
 
@@ -12,6 +13,7 @@ import java.util.*;
  * purchase order which will be forwarded to the supplier(s).
  *
  */
+@Document(collection = "PurchaseOrder")
 public class PurchaseOrder {
 
     @Id
