@@ -43,6 +43,17 @@ public class ItemController {
 
 	}
 
+	// use this in the final version.
+	@PostMapping("/item/{supplierId}")
+    public String addItemToExistingSupplier(@RequestBody Item item, @PathVariable String supplierId) {
+	    Supplier s = supplierService.getSupplier(supplierId);
+
+	    s.addItem(item);
+	    supplierService.addSupplier(s); // this will replace the existing object in the db under the same ID.
+
+	    return " ";
+    }
+
 	@GetMapping("/item/")
 	public List<Item> getAllCategories() {
 		return itemService.getAllItems();
