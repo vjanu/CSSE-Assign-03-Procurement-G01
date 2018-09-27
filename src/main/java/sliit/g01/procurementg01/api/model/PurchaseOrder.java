@@ -23,6 +23,7 @@ public class PurchaseOrder {
     private List<Item> items;   // <supplier id, list of items>
     private String supplierId;  // supplier who offers the above list of items.
     private String orderStatus;
+    private Site deliverySite;  // site where the order should be delivered to.
     private Date orderDate;
     private boolean draftPurchaseOrder;
     private boolean onHold;
@@ -108,5 +109,13 @@ public class PurchaseOrder {
 
     public void setSupplierId(String supplierId) {
         this.supplierId = supplierId;
+    }
+
+    public Site getDeliverySite() {
+        return deliverySite;
+    }
+
+    public void setDeliverySite(Site deliverySite) {
+        this.deliverySite = deliverySite;
     }
 }

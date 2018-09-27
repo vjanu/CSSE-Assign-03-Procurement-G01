@@ -116,110 +116,91 @@
                         <li class="breadcrumb-item">
                             <a href="#">Supplier</a>
                         </li>
-                        <li class="breadcrumb-item active">Manage orders</li>
+                        <li class="breadcrumb-item active">Payments</li>
                     </ol>
 
 
                     <div class="card">
                         <div class="card-header">
-                            <h4>Orders</h4>
+                            <h4>Payments</h4>
                         </div>
-                        <div class="card-body">
 
 
-                            <!-- main content: start -->
-                            <br>
-                            <!-- search bar with order filter filter button -->
-                            <div class="input-group col-md-6" style="margin-left:26.9em">
-                                <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-dark">Search</button>
-                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="sr-only">Toggle Dropdown</span>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">View Accepted Orders</a>
-                                        <a class="dropdown-item" href="#">View Rejected Orders</a>
-                                            <div role="separator" class="dropdown-divider"></div>
-                                    </div>
-                                </div>
+
+                        <!-- main content: start -->
+
+                        <!-- Supplier search bar-->
+                        <br><br>
+                        <div class="input-group col-md-6" style="margin-left:31.6em">
+                            <input type="text" class="form-control" aria-label="Text input">
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-dark">Search</button>
                             </div>
-
-
-                            <!-- Order details viewer table-->
-                            <br> <br>
-                            <table class="table table-striped table-bordered" style="width:80%; margin-left:6em">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Order Id</th>
-                                        <th scope="col">Items</th>
-                                        <th scope="col">Delivery address</th>
-                                        <th scope="col">Order date</th>
-                                        <!-- Order status : delivered, returned, on hold-->
-                                        <th scope="col">Order Status</th>
-                                        <!-- supplier accepts or rejects the order here-->
-                                        <th scope="col">Accept | Reject order</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-                                            <h5>
-                                                <i class="fas fa-check-circle" style="color:green"></i>
-                                                <i class="fas fa-times-circle" style="margin-left: 2em; color:red"></i>
-                                            </h5>
-
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <!-- main content: end -->
-
-
-
                         </div>
+                        <br>
+
+                        <!-- Supplier details viewer table-->
+                        <table class="table table-striped table-bordered" style="width:90%; margin-left: 3em; margin-right:3em">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Payment Id</th>
+                                    <th scope="col">Order Id</th>
+                                    <th scope="col">Payment method</th>
+                                    <th scope="col">Paid Date</th>
+                                    <th scope="col">Total Amount</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- main content: end -->
+
+
+
                     </div>
-
-
                 </div>
-            </div>
 
+
+            </div>
         </div>
 
-        <footer class="sticky-footer">
-            <div class="container">
-                <div class="text-center">
-                    <small>Copyright © Procurement Home 2018</small>
-                </div>
-            </div>
-        </footer>
+    </div>
 
-        <!-- Logout Modal-->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <button class="btn btn-primary" id="btn-logout">Logout</button>
-                    </div>
+    <footer class="sticky-footer">
+        <div class="container">
+            <div class="text-center">
+                <small>Copyright © Procurement Home 2018</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" id="btn-logout">Logout</button>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 

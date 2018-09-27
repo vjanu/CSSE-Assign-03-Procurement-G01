@@ -46,7 +46,7 @@ public class RequestMaterialController {
 		return requestMaterialService.getSiteMnagerApprovedRequests();
 	}
 
-	@GetMapping("/{orderId}")
+	@GetMapping("/{requestId}")
 	public RequestMaterial getOrder(@PathVariable String requestId) {
 		return requestMaterialService.getRequest(requestId);
 	}
