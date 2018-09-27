@@ -3,9 +3,8 @@ package sliit.g01.procurementg01.api.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
-import sliit.g01.procurementg01.api.model.Item;
+
 import sliit.g01.procurementg01.api.model.Supplier;
 import sliit.g01.procurementg01.api.repository.SupplierRepository;
 import sliit.g01.procurementg01.api.service.SupplierService;
@@ -14,11 +13,11 @@ import sliit.g01.procurementg01.api.service.SupplierService;
  * @author tharushi
  */
 @Service("SupplierService")
-public class SupplierServiceImpl implements SupplierService{
+public class SupplierServiceImpl implements SupplierService {
 
 	@Autowired
 	private SupplierRepository supplierRepository;
-	
+
 	@Override
 	public boolean addSupplier(Supplier supplier) {
 		return (supplierRepository.save(supplier) != null);
@@ -39,8 +38,17 @@ public class SupplierServiceImpl implements SupplierService{
 		return null;
 	}
 
-    @Override
-    public Boolean supplierExists(String supplierId) {
-        return supplierRepository.existsSupplierBySupplierId(supplierId);
-    }
+	@Override
+	public Boolean supplierExists(String supplierId) {
+		return supplierRepository.existsSupplierBySupplierId(supplierId);
+	}
+
+	@Override
+	public Supplier updateSupplier(String employeeId, Supplier supplier) {
+		Supplier sup = supplierRepository.findBySupplierId(employeeId);
+
+		sup.setIsBanned(supplier.getisBanned());
+
+		return supplierRepository.save(sup);
+	}
 }

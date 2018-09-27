@@ -34,21 +34,6 @@ $('#btn-add-item').on('click', function (e) {
 	addNewItem();
 });
 
-$('#btn-assign-site').on('click', function (e) {
-	e.preventDefault();
-	assignSiteManager();
-});
-
-
-
-$("#id-site-manager-select").change(function (e) {
-	e.preventDefault();
-	var siteManagerId = this.value;
-	//var firstDropVal = $('#pick').val();
-	$.notify(siteManagerId, "success");
-	loadAssignedSiteTable(siteManagerId);
-});
-
 
 $(document).on('click', '#manage-material-requests .btn-primary', function (e) {
 	e.preventDefault();
@@ -61,7 +46,9 @@ $(document).on('click', '#manage-material-requests .btn-primary', function (e) {
 	}
 });
 
-
+/**
+ * Click event in material request 
+ */
 $(document).on('click', '#manage-material-requests .btn-danger', function (e) {
 	e.preventDefault();
 	e.stopPropagation();
@@ -72,6 +59,35 @@ $(document).on('click', '#manage-material-requests .btn-danger', function (e) {
 		removeMaterialRequest(oid);
 	}
 });
+
+/**
+ * Click event in manage-constructor-black-list
+ */
+$(document).on('click', '#manage-constructor-black-list .btn-danger', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	var cid = $(this).closest("tr").find(".nr-cid").text();
+	console.log(cid);
+	var r = confirm("Are you sure want to blacklist this constructor? This action cannot be undone");
+	if (r == true) {
+		blacklistConstructor(cid);
+	}
+});
+
+/**
+ * Click event in manage-supplier-black-list
+ */
+$(document).on('click', '#manage-supplier-black-list .btn-danger', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	var sid = $(this).closest("tr").find(".nr-sid").text();
+	console.log(sid);
+	var r = confirm("Are you sure want to blacklist this Supplier? This action cannot be undone");
+	if (r == true) {
+		blacklistSupplier(sid);
+	}
+});
+
 
 
 
@@ -112,11 +128,39 @@ if (CURRENT_URL.includes('add-new-item')) {
 	generateCategoryDropdown();
 }
 
-if (CURRENT_URL.includes('assign-sites')) {
-	generateSiteManagersDropdown('site-manager-select');
-	generateSitesDropdown();
 
+
+
+
+/* * * * * FUNCTION * * * * */
+
+
+function blacklistSupplier(sid){
+	let data = {"isBanned": true}
+	axios.put(BASE_URL_LOCAL + '/supplier/update/' + sid, data)
+		.then(function (response) {
+			console.log(response);
+			$.notify("Successfully Blacklisted", "success");
+			loadAllSuppliers();
+		}).catch(function (error) {
+			console.log(error);
+		});
 }
+
+
+
+function blacklistConstructor(cid){
+	let data = {"isBanned": true}
+	axios.put(BASE_URL_LOCAL + '/employee/update/' + cid, data)
+		.then(function (response) {
+			console.log(response);
+			$.notify("Successfully Blacklisted", "success");
+			loadAllConstructors();
+		}).catch(function (error) {
+			console.log(error);
+		});
+}
+
 
 function removeMaterialRequest(rid) {
 	axios.delete(BASE_URL_LOCAL + '/requestmaterial/remove/' + rid)
@@ -130,10 +174,7 @@ function removeMaterialRequest(rid) {
 
 
 function approveRequestedMaterial(oid) {
-	console.log(oid);
-	let data = {
-		"isProcumentApproved": true
-	}
+	let data = {"isProcumentApproved": true}
 	axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + oid, data)
 		.then(function (response) {
 			console.log(response);
@@ -145,64 +186,19 @@ function approveRequestedMaterial(oid) {
 }
 
 
-function assignSiteManager(){
-	let employeeId = $('#id-site-manager-select').val();
-	let siteId = $('#op-site-select').val();
-	axios.put(BASE_URL_LOCAL + '/employee/site-manager/assign?employeeId='+employeeId+'&siteId='+siteId)
-		.then(function (response) {
-			console.log(response);
-			$.notify(response.data, "success");
-		})
-		.catch(function (error) {
-			// handle error
-			console.log(error);
-			$.notify("Site manager not assigned", "error");;
-		});
-}
-
-/**
- * This function generate assigned site table for select sitemanager
- * 
- * @param {siteManagerId} - site Manager Id 
- */
-function loadAssignedSiteTable(siteManagerId) {
-	axios.get(BASE_URL_LOCAL + '/employee/site-manager/' + siteManagerId + '/site')
-		.then(function (response) {
-			if (response.data) {
-				response.data.forEach(item => {
-					var html = '<tr>';
-					html += '<td class="text-center">' + item.purchaseOrderReference + '</td>';
-					html += '<td class="text-center">' + item.supplierName + '</td>';
-					html += '<td class="text-center">' +
-						'<a href="#" title="" class="btn btn-danger btn-sm">\n' +
-						'        <span class="far fa-trash-alt" aria-hidden="true"></span>\n' +
-						'        <span><strong>Remove</strong></span></a>' +
-						'</a>' +
-						'</td>';
-					html += '</tr>';
-
-					$('#view-constructor-rangs tbody').append(html);
-				});
-			}
-		}).catch(function (error) {
-			console.log(error);
-		});
-}
-
 function loadSupplierRatings(){
 	axios.get(BASE_URL_LOCAL + '/ratings/supplier-ratings').then(function (response) {
 		if (response.data) {
 			console.log(response)
 			response.data.forEach(item => {
 				var html = '<tr>';
-				html += '<td>' + item.purchaseOrderReference + '</td>';
-				html += '<td class="nr-fid" scope="row">' + item.supplierName + '</td>';
+				html += '<td class="text-center">' + item.purchaseOrderReference + '</td>';
+				html += '<td class="text-center">' + item.supplierName + '</td>';
 				html += '<td class="text-center">' + item.deliveryEfficiency + '</td>';
 				html += '<td class="text-center">' + item.supportiveness + '</td>';
 				html += '<td class="text-center">' + item.workOnTime + '</td>';
 				html += '<td class="text-center">' + item.overallRate + '</td>';
 				html += '<td class="text-center">' + item.feedback + '</td>';
-				html += '<td class="text-center">' + getBlacklistButton(false) + '</td>';
 				html += '</tr>';
 
 				$('#view-supplier-ratings tbody').append(html);
@@ -219,15 +215,13 @@ function loadConstructorRatings() {
 		if (response.data) {
 			response.data.forEach(item => {
 				var html = '<tr>';
-				html += '<td>' + item.purchaseOrderReference + '</td>';
-				html += '<td class="nr-fid" scope="row">' + item.supplierName + '</td>';
-				html += '<td>' + item.constructorName + '</td>';
+				html += '<td class="text-center">' + item.constructorId + '</td>';
+				html += '<td class="text-center">' + item.constructorName + '</td>';
 				html += '<td class="text-center">' + item.deliveryEfficiency + '</td>';
 				html += '<td class="text-center">' + item.supportiveness + '</td>';
 				html += '<td class="text-center">' + item.workOnTime + '</td>';
 				html += '<td class="text-center">' + item.overallRate + '</td>';
 				html += '<td class="text-center">' + item.feedback + '</td>';
-				html += '<td class="text-center">' + getBlacklistButton(false) + '</td>';
 				html += '</tr>';
 
 				$('#view-constructor-ratings tbody').append(html);
@@ -242,9 +236,11 @@ function loadAllSuppliers() {
 	axios.get(BASE_URL_LOCAL + '/supplier/')
 		.then(function (response) {
 			console.log(response)
+			$("#manage-supplier-black-list tbody").empty();
+
 			response.data.forEach(item => {
 				var html = '<tr>';
-				html += '<td>' + item.supplierId + '</td>';
+				html += '<td class="nr-sid">' + item.supplierId + '</td>';
 				html += '<td class="nr-fid" scope="row">' + item.supplierName + '</td>';
 				html += '<td >' + item.email + '</td>';
 				html += '<td>' + item.phone + '</td>';
@@ -267,10 +263,12 @@ function loadAllConstructors() {
 	axios.get(BASE_URL_LOCAL + '/employee/constructor/')
 		.then(function (response) {
 			console.log(response)
+			$("#manage-constructor-black-list tbody").empty();
+
 			response.data.forEach(item => {
 				var html = '<tr>';
-				html += '<td>' + item.employeeId + '</td>';
-				html += '<td class="nr-fid" scope="row">' + item.employeeName + '</td>';
+				html += '<td class="nr-cid">' + item.employeeId + '</td>';
+				html += '<td scope="row">' + item.employeeName + '</td>';
 				html += '<td >' + item.email + '</td>';
 				html += '<td>' + item.phone + '</td>';
 				html += '<td>' + item.nic + '</td>';
@@ -326,7 +324,6 @@ function addNewSite() {
 	}
 
 	let data = {
-		siteId: $('#site-id').val(),
 		siteName: $('#site-name').val(),
 		address: $('#address').val(),
 		items: obj,
@@ -604,27 +601,6 @@ function generateItemSelectDropdown() {
 			html += '</select>';
 			console.log(html)
 			$('#item-select').append(html);
-		}).catch(function (error) {
-			// handle error
-			console.log(error);
-		});
-}
-
-
-
-function generateSitesDropdown() {
-	axios.get(BASE_URL_LOCAL + '/site/')
-		.then(function (response) {
-			if (response.data) {
-				var html = '<select class="form-control" id="op-site-select">';
-
-				response.data.forEach(item => {
-					html += '<option value="' + item.siteId + '">' + item.siteName + '</option>';
-				});
-				html += '</select>';
-
-				$('#site-select').append(html);
-			}
 		}).catch(function (error) {
 			// handle error
 			console.log(error);

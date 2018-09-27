@@ -4,7 +4,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "Constructor")
 public class Constructor extends AuthorizedEmployee {
-	//add site
+	// add site
 	private String site;
 	private boolean isBanned;
 
@@ -16,13 +16,12 @@ public class Constructor extends AuthorizedEmployee {
 		this.site = site;
 	}
 
-	public boolean isBanned() {
+	public boolean getIsBanned() {
 		return isBanned;
 	}
 
-	public void setBanned(boolean isBanned) {
+	public void setIsBanned(boolean isBanned) {
 		this.isBanned = isBanned;
 	}
-	 
-	
-}   
+
+}
