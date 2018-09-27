@@ -3,6 +3,7 @@ package sliit.g01.procurementg01.api.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class RequestMaterialController {
 
 	@RequestMapping(value = "/add-new-request", method = RequestMethod.POST)
 	public ResponseEntity<String> addRequest(@RequestBody RequestMaterial requestMaterial) {
+		requestMaterial.setRequestId("MR" + RandomStringUtils.randomNumeric(5));
 		if (requestMaterialService.addOrder(requestMaterial)) {
 			return new ResponseEntity<>("New request Added", HttpStatus.OK);
 		} else {
