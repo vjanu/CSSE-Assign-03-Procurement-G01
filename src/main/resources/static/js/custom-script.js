@@ -595,9 +595,13 @@ function generateItemSelectDropdown() {
 			console.log(response.data)
 			var html = '<select class="form-control" id="op-item-select">';
 
-			response.data.forEach(item => {
-				html += '<option value="' + item.itemId + '">' + item.itemName + '</option>';
+			response.data.forEach(supplier => {
+				supplier.forEach(item =>{
+					html += '<option value="' + item.itemId + '">' + item.itemName + '</option>';
+				})
 			});
+
+
 			html += '</select>';
 			console.log(html)
 			$('#item-select').append(html);

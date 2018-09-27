@@ -13,13 +13,11 @@ import sliit.g01.procurementg01.api.service.RequestMaterialService;;
 @Service("requestmaterialService")
 public class RequestMaterialServiceImpl implements RequestMaterialService {
 
-    @Autowired
-    private PurchaseOrderServiceImpl purchaseOrderService;
+	@Autowired
+	private PurchaseOrderServiceImpl purchaseOrderService;
 
-    @Autowired
+	@Autowired
 	private RequestMaterialRepository requestmaterialRepository;
-
-
 
 	@Override
 	public Boolean addOrder(RequestMaterial requestmaterial) {
@@ -49,17 +47,18 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 		RequestMaterial req = requestmaterialRepository.findByRequestId(requestId);
 
 		if (requestMaterial.getIsProcumentApproved() != null)
-            req.setIsProcumentApproved(requestMaterial.getIsProcumentApproved());
+			req.setIsProcumentApproved(requestMaterial.getIsProcumentApproved());
+
 		if (requestMaterial.getItems() == null)
 			requestMaterial.setItems(req.getItems());
 
-		// if the material request is updated, we can go ahead and create the purchase orders.
+		// if the material request is updated, we can go ahead and create the
+		// purchase orders.
 		if (requestMaterial.getIsProcumentApproved()) {
-            List<PurchaseOrder> ordersForSuppliers = purchaseOrderService.createOrder(requestMaterial);
-            // save to db so the suppliers can see them.
-            purchaseOrderService.addPurchaseOrders(ordersForSuppliers);
-        }
-
+			List<PurchaseOrder> ordersForSuppliers = purchaseOrderService.createOrder(requestMaterial);
+			// save to db so the suppliers can see them.
+			purchaseOrderService.addPurchaseOrders(ordersForSuppliers);
+		}
 
 		return requestmaterialRepository.save(req);
 	}
