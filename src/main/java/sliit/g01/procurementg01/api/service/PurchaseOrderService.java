@@ -1,42 +1,47 @@
 package sliit.g01.procurementg01.api.service;
 
-import java.util.List;
-import java.util.Map;
-
+import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.model.PurchaseOrder;
 import sliit.g01.procurementg01.api.model.RequestMaterial;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author anushka
  */
 public interface PurchaseOrderService {
 
-	// change the quantity of item in an order.
-	public boolean specifyQuantity(String itemId, int quantity);
+    // change the quantity of item in an order.
+    public boolean specifyQuantity(String itemId, int quantity);
 
-	public PurchaseOrder getPurchaseOrder(String orderId);
+    public PurchaseOrder getPurchaseOrder(String orderId);
 
-	public List<PurchaseOrder> createOrder(RequestMaterial requestMaterial);
+    public List<PurchaseOrder> createOrder(RequestMaterial requestMaterial);
 
-	// request id = order id of material request.
-	public List<PurchaseOrder> getOrdersUnderMaterialRequest(String requestId);
+    public List<PurchaseOrder> getAllPurchaseOrders();
 
-	// things like pending orders of a specific supplier and stuff.
-	public List<PurchaseOrder> getOrdersOfSpecificSupplierUnderSpecificStatus(String supplierId, String orderStatus);
+    public List<PurchaseOrder> getOnHoldPurchaseOrders(String onHold);
 
-	// get all pending orders or something similar to that, grouped by supplier.
-	public Map<String, List<PurchaseOrder>> getOrdersUnderSpecificStatus(String orderStatus);
+    public List<PurchaseOrder> getOrdersUnderMaterialRequest(String requestId); // request id = order id of material request.
 
-	// get all orders of all suppliers, grouped by the supplier.
-	public Map<String, List<PurchaseOrder>> getAllOrders();
+    // things like pending orders of a specific supplier and stuff.
+    public List<PurchaseOrder> getOrdersOfSpecificSupplierUnderSpecificStatus(String supplierId, String orderStatus);
 
-	// get all orders issued for a specific supplier.
-	public List<PurchaseOrder> getOrdersofSpecificSupplier(String supplierId);
+    // get all pending orders or something similar to that, grouped by supplier.
+    public Map<String, List<PurchaseOrder>> getOrdersUnderSpecificStatus(String orderStatus);
 
-	public String requestApproval();
+    // get all orders of all suppliers, grouped by the supplier.
+    public Map<String, List<PurchaseOrder>> getAllOrders();
 
-	public void addPurchaseOrder(PurchaseOrder order);
+    // get all orders issued for a specific supplier.
+    public List<PurchaseOrder> getOrdersofSpecificSupplier(String supplierId);
 
-	// same as above, but for multiple items.
-	public void addPurchaseOrders(List<PurchaseOrder> orders);
+    public String requestApproval();
+
+    public void addPurchaseOrder(PurchaseOrder order);
+
+    public void addPurchaseOrders(List<PurchaseOrder> orders);  // same as above, but for multiple items.
+
+    PurchaseOrder updatePurchaseOrder(String orderId, PurchaseOrder purchaseOrder);
 }
