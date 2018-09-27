@@ -58,7 +58,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
         // request material object has a map of items where quantity of each item is mapped against its item code.
         // we need to get full details of the item(from the database) and group the items by the supplier.
-        for (String itemId: itemIdAndQuantities.keySet()) {
+        for (String itemId : itemIdAndQuantities.keySet()) {
             String quantity = itemIdAndQuantities.get(itemId);
             Item i = itemService.getItem(itemId);
 
@@ -95,11 +95,9 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
             p.setRequestId(requestMaterial.getRequestId());
             p.setOrderId(UUID.randomUUID().toString());
-            p.setDraftPurchaseOrder(true); // will be a draft as long as the
-            // payment isn't made.
+            p.setDraftPurchaseOrder(true); // will be a draft as long as the payment isn't made.
             p.setItems(itemsOrderedFromEachSupplier.get(supplierId));
-            p.setOnHold(true); // will stay on hold until a staff member
-            // approves this.
+            p.setOnHold(true); // will stay on hold until a staff member approves this.
             p.setOrderDate(new Date());
 //            p.setOrderStatus("Pending approval");
             p.setSequentialReference("No idea");
@@ -190,8 +188,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         return purchaseOrderRepository.getPurchaseOrdersBySupplierId(supplierId);
     }
 
-    // regardless of the status, all orders of all suppliers are retrieved and
-    // grouped by the supplier.
+    // regardless of the status, all orders of all suppliers are retrieved and grouped by the supplier.
     @Override
     public Map<String, List<PurchaseOrder>> getAllOrders() {
         Map<String, List<PurchaseOrder>> ordersOfSupplier = new HashMap<>();
