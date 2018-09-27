@@ -1,6 +1,7 @@
 package sliit.g01.procurementg01.api.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class ItemController {
             return new ResponseEntity<>("New Item Added", HttpStatus.OK);
         }
 
-        return new ResponseEntity<>("Item Not Created", HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>("Item Not Created; Check if supplier exists.", HttpStatus.NOT_IMPLEMENTED);
     }
 
 	// get all items supplied by a specific supplier.
@@ -61,9 +62,10 @@ public class ItemController {
 		return itemService.getItemsSuppliedBy(supplierId);
 	}
 
-	@GetMapping("/item/")
-	public List<Item> getAllCategories() {
-		return itemService.getAllItems();
+	// get all items offered by each supplier, grouped by the supplier.
+	@GetMapping("/item")
+	public Map<String, List<Item>> getAllCategories() {
+	    return itemService.getAllItemsGroupedBySupplier();
 	}
 
 	@GetMapping("/item/{itemId}")

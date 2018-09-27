@@ -1,11 +1,14 @@
 package sliit.g01.procurementg01.api.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sliit.g01.procurementg01.api.model.Item;
+import sliit.g01.procurementg01.api.model.Supplier;
 import sliit.g01.procurementg01.api.repository.ItemRepository;
 import sliit.g01.procurementg01.api.service.ItemService;
 
@@ -18,7 +21,11 @@ public class ItemServiceImpl implements ItemService {
 	@Autowired
 	private ItemRepository itemRepository;
 
-	@Override
+    @Autowired
+    private SupplierServiceImpl supplierService;
+
+
+    @Override
 	public Boolean addItem(Item item) {
 		return (itemRepository.save(item) != null);
 	}
@@ -49,5 +56,20 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public List<Item> getItemsSuppliedBy(String supplierId) {
 		return itemRepository.findItemsBySupplierId(supplierId);
+	}
+
+	// items, grouped by the supplier.
+	@Override
+	public Map<String, List<Item>> getAllItemsGroupedBySupplier() {
+		Map<String, List<Item>> itemsOfferedBySupplier = new HashMap<>();
+		List<Supplier> suppliers = supplierService.getAllSuppliers();
+
+		// we go through each supplier and get items offered by them.
+        for (Supplier s: suppliers) {
+            List<Item> items = itemRepository.findItemsBySupplierId(s.getSupplierId());
+            itemsOfferedBySupplier.put(s.getSupplierId(), items);
+        }
+
+        return itemsOfferedBySupplier;
 	}
 }
