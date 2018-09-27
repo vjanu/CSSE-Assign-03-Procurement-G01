@@ -42,6 +42,7 @@ public class ItemController {
 		}
 
 	}
+	
 
 	// this should be used when a supplier is adding an item to the database.
 	@PostMapping("/item")

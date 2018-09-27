@@ -95,6 +95,10 @@ if (CURRENT_URL.includes('manage-sites')) {
 	loadAllSites();
 }
 
+if (CURRENT_URL.includes('view-supplier-ratings')) {
+	loadSupplierRatings();
+}
+
 if (CURRENT_URL.includes('view-constructor-ratings')) {
 	loadConstructorRatings();
 }
@@ -185,9 +189,33 @@ function loadAssignedSiteTable(siteManagerId) {
 		});
 }
 
+function loadSupplierRatings(){
+	axios.get(BASE_URL_LOCAL + '/ratings/supplier-ratings').then(function (response) {
+		if (response.data) {
+			console.log(response)
+			response.data.forEach(item => {
+				var html = '<tr>';
+				html += '<td>' + item.purchaseOrderReference + '</td>';
+				html += '<td class="nr-fid" scope="row">' + item.supplierName + '</td>';
+				html += '<td class="text-center">' + item.deliveryEfficiency + '</td>';
+				html += '<td class="text-center">' + item.supportiveness + '</td>';
+				html += '<td class="text-center">' + item.workOnTime + '</td>';
+				html += '<td class="text-center">' + item.overallRate + '</td>';
+				html += '<td class="text-center">' + item.feedback + '</td>';
+				html += '<td class="text-center">' + getBlacklistButton(false) + '</td>';
+				html += '</tr>';
+
+				$('#view-supplier-ratings tbody').append(html);
+			});
+		}
+	}).catch(function (error) {
+		console.log(error);
+	});
+}
+
 
 function loadConstructorRatings() {
-	axios.get(BASE_URL_LOCAL + '/ratings/').then(function (response) {
+	axios.get(BASE_URL_LOCAL + '/ratings/constructor-ratings').then(function (response) {
 		if (response.data) {
 			response.data.forEach(item => {
 				var html = '<tr>';
@@ -211,16 +239,16 @@ function loadConstructorRatings() {
 }
 
 function loadAllSuppliers() {
-	axios.get(BASE_URL_LOCAL + '/sup/')
+	axios.get(BASE_URL_LOCAL + '/supplier/')
 		.then(function (response) {
 			console.log(response)
 			response.data.forEach(item => {
 				var html = '<tr>';
-				html += '<td>' + item.supId + '</td>';
-				html += '<td class="nr-fid" scope="row">' + item.supName + '</td>';
-				html += '<td >' + item.supName + '</td>';
-				html += '<td>Supplier</td>';
-				html += '<td>' + item.supName + '</td>';
+				html += '<td>' + item.supplierId + '</td>';
+				html += '<td class="nr-fid" scope="row">' + item.supplierName + '</td>';
+				html += '<td >' + item.email + '</td>';
+				html += '<td>' + item.phone + '</td>';
+				html += '<td>' + item.address + '</td>';
 				html += '<td class="text-center">' + getBlacklistBadge(item.isBanned) + '</td>';
 				html += '<td><center>' + getBlacklistButton(item.isBanned) + '</td>';
 				html += '</tr>';
@@ -246,8 +274,8 @@ function loadAllConstructors() {
 				html += '<td >' + item.email + '</td>';
 				html += '<td>' + item.phone + '</td>';
 				html += '<td>' + item.nic + '</td>';
-				html += '<td class="text-center">' + getBlacklistBadge(true) + '</td>';
-				html += '<td><center>' + getBlacklistButton(true) + '</td>';
+				html += '<td class="text-center">' + getBlacklistBadge(item.isBanned) + '</td>';
+				html += '<td><center>' + getBlacklistButton(item.isBanned) + '</td>';
 				html += '</tr>';
 
 				$('#manage-constructor-black-list tbody').append(html);
