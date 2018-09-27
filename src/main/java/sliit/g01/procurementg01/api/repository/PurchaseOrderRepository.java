@@ -9,5 +9,7 @@ public interface PurchaseOrderRepository extends MongoRepository<PurchaseOrder, 
 
     PurchaseOrder getPurchaseOrderByOrderId(String orderId);
     List<PurchaseOrder> getPurchaseOrdersByRequestId(String requestId); // orders which belong to the same material request.
-
+    List<PurchaseOrder> getPurchaseOrdersBySupplierId(String supplierId);   // all orders under a specific supplier.
+    List<PurchaseOrder> getPurchaseOrdersByOrderStatus(String orderStatus); // ongoing orders and things like that.
+    List<PurchaseOrder> getPurchaseOrdersBySupplierIdAndOrderStatus(String supplierId, String orderStatus); // you get the idea ;)
 }

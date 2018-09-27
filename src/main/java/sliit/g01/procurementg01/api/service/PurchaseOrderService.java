@@ -21,6 +21,18 @@ public interface PurchaseOrderService {
 
     public List<PurchaseOrder> getOrdersUnderMaterialRequest(String requestId); // request id = order id of material request.
 
+    // things like pending orders of a specific supplier and stuff.
+    public List<PurchaseOrder> getOrdersOfSpecificSupplierUnderSpecificStatus(String supplierId, String orderStatus);
+
+    // get all pending orders or something similar to that, grouped by supplier.
+    public Map<String, List<PurchaseOrder>> getOrdersUnderSpecificStatus(String orderStatus);
+
+    // get all orders of all suppliers, grouped by the supplier.
+    public Map<String, List<PurchaseOrder>> getAllOrders();
+
+    // get all orders issued for a specific supplier.
+    public List<PurchaseOrder> getOrdersofSpecificSupplier(String supplierId);
+
     public String requestApproval();
 
     public void addPurchaseOrder(PurchaseOrder order);

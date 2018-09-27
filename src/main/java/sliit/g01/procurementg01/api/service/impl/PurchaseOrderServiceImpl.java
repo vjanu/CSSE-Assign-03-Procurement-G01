@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.model.PurchaseOrder;
 import sliit.g01.procurementg01.api.model.RequestMaterial;
+import sliit.g01.procurementg01.api.model.Supplier;
 import sliit.g01.procurementg01.api.repository.PurchaseOrderRepository;
 import sliit.g01.procurementg01.api.service.PurchaseOrderService;
 
@@ -22,6 +23,9 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     @Autowired
     private PurchaseOrderRepository purchaseOrderRepository;
+
+    @Autowired
+    private SupplierServiceImpl supplierService;
 
 
     @Override
@@ -120,5 +124,44 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         for (PurchaseOrder purchaseOrder: orders) {
             addPurchaseOrder(purchaseOrder);
         }
+    }
+
+    // for the given supplier, get the orders that are pending or something similar to that.
+    @Override
+    public List<PurchaseOrder> getOrdersOfSpecificSupplierUnderSpecificStatus(String supplierId, String orderStatus) {
+        return purchaseOrderRepository.getPurchaseOrdersBySupplierIdAndOrderStatus(supplierId, orderStatus);
+    }
+
+    // regardless of the supplier get all orders that are pending or something similar to that.
+    @Override
+    public Map<String, List<PurchaseOrder>> getOrdersUnderSpecificStatus(String orderStatus) {
+        Map<String, List<PurchaseOrder>> ordersOfSupplier = new HashMap<>();
+        List<Supplier> suppliers = supplierService.getAllSuppliers();
+
+        // now for each supplier we find orders that has the specified status.
+        for (Supplier s: suppliers) {
+            ordersOfSupplier.put(s.getSupplierId(), purchaseOrderRepository.getPurchaseOrdersBySupplierIdAndOrderStatus(s.getSupplierId(), orderStatus));
+        }
+
+        return ordersOfSupplier;
+    }
+
+    // regardless of the status, get all orders issued to a specific supplier.
+    @Override
+    public List<PurchaseOrder> getOrdersofSpecificSupplier(String supplierId) {
+        return purchaseOrderRepository.getPurchaseOrdersBySupplierId(supplierId);
+    }
+
+    // regardless of the status, all orders of all suppliers are retrieved and grouped by the supplier.
+    @Override
+    public Map<String, List<PurchaseOrder>> getAllOrders() {
+        Map<String, List<PurchaseOrder>> ordersOfSupplier = new HashMap<>();
+        List<Supplier> suppliers = supplierService.getAllSuppliers();
+
+        for (Supplier s: suppliers) {
+            ordersOfSupplier.put(s.getSupplierId(), purchaseOrderRepository.getPurchaseOrdersBySupplierId(s.getSupplierId()));
+        }
+
+        return ordersOfSupplier;
     }
 }
