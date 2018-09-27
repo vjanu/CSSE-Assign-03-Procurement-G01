@@ -17,7 +17,7 @@ public class Supplier {
     private String address;
     private String email;
     private String phone;
-    private boolean availability;
+    private boolean isBanned;
 
 	public String getSupplierId() {
 		return supplierId;
@@ -67,12 +67,12 @@ public class Supplier {
 		this.phone = phone;
 	}
 
-	public boolean isAvailability() {
-		return availability;
+	public boolean getisBanned() {
+		return isBanned;
 	}
 
-	public void setAvailability(boolean availability) {
-		this.availability = availability;
+	public void setIsBanned(boolean isBanned) {
+		this.isBanned = isBanned;
 	}
 
 }

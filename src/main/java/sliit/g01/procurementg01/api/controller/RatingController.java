@@ -41,5 +41,10 @@ public class RatingController {
 	public List<Rating> getConstructorRatings() {
 		return ratingService.getConstructorRatings();
 	}
+	
+	@RequestMapping(value = "/supplier-ratings", method = RequestMethod.GET)
+	public List<Rating> getSupplierRatings() {
+		return ratingService.getSupplierRatings();
+	}
 
 }
