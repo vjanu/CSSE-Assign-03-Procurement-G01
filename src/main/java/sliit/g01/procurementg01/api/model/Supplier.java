@@ -1,23 +1,19 @@
 package sliit.g01.procurementg01.api.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend.Prop;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.List;
 
 @Document(collection = "Supplier")
 public class Supplier {
 
 	@Id
-    private String supplierId;
-    private String supplierName;
-    private int bankAccountNo;
-    private String address;
-    private String email;
-    private String phone;
-    private boolean availability;
+	private String supplierId;
+	private String supplierName;
+	private int bankAccountNo;
+	private String address;
+	private String email;
+	private String phone;
+	private boolean isBanned;
 
 	public String getSupplierId() {
 		return supplierId;
@@ -67,12 +63,12 @@ public class Supplier {
 		this.phone = phone;
 	}
 
-	public boolean isAvailability() {
-		return availability;
+	public boolean getisBanned() {
+		return isBanned;
 	}
 
-	public void setAvailability(boolean availability) {
-		this.availability = availability;
+	public void setIsBanned(boolean isBanned) {
+		this.isBanned = isBanned;
 	}
 
 }

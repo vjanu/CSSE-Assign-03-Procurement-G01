@@ -5,7 +5,8 @@ import java.util.List;
 import sliit.g01.procurementg01.api.model.Rating;
 
 /**
- * created by viraj
+ * @author viraj
+ * @author Tharindu TCJ
  **/
 
 public interface RatingService {
@@ -13,5 +14,7 @@ public interface RatingService {
 	boolean addRatings(Rating rating);
 
 	List<Rating> getConstructorRatings();
+
+	List<Rating> getSupplierRatings();
 
 }

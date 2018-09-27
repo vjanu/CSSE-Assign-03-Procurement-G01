@@ -82,17 +82,6 @@
             </ul>
 
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-
-                    <form class="navbar-form" role="search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" name="q">
-                            <div class="input-group-btn">
-                                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
-                </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="left" title="Logout">
                     <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
                         <i class="fa fa-fw fa-sign-out-alt"></i>
@@ -123,46 +112,20 @@
                     <div class="card-body">
 
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="view-ratings">
+                            <table class="table table-bordered table-hover" id="view-supplier-ratings">
                                 <thead>
                                     <tr>
-                                        <th scope="col" class="text-center">#</th>
-                                        <th scope="col" class="text-center">Rated By</th>
-                                        <th scope="col" class="text-center">Person Name</th>
-                                        <th scope="col" class="text-center">Rate</th>
-                                        <th scope="col" class="text-center">Comments</th>
-                                        <th scope="col" class="text-center">Rated Date</th>
-                                        <th scope="col" class="text-center">Action</th>
+                                        <th scope="col" class="text-center">Order Reference</th>
+                                        <th scope="col" class="text-center">supplier Name</th>
+                                        <th scope="col" class="text-center">Delivery Efficiency</th>
+                                        <th scope="col" class="text-center">Supportiveness</th>
+                                        <th scope="col" class="text-center">Work OnTime</th>
+                                        <th scope="col" class="text-center">Overall Rate</th>
+                                        <th scope="col" class="text-center">Feedback</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="text-center">RT100</td>
-                                        <td>Amal Perera (Supervisor)</td>
-                                        <td>Vira Dias (Constructor)</td>
-                                        <td>****</td>
-                                        <td>Bla bla bla</td>
-                                        <td>2018-08-08</td>
-                                        <td class="text-center">
-                                            <a href="#" title="" class="btn btn-danger btn-sm">
-                                            <span class="fas fa-ban" aria-hidden="true"></span>
-                                            <span><strong>Blacklist</strong></span></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">RT101</td>
-                                        <td>Amal Perera (Supervisor)</td>
-                                        <td>Vira Dias (Constructor)</td>
-                                        <td>****</td>
-                                        <td>Bla bla bla</td>
-                                        <td>2018-08-08</td>
-                                        <td class="text-center">
-                                            <button href="#" title="" class="btn btn-default btn-sm" disabled>
-                                                <span class="fas fa-ban" aria-hidden="true"></span>
-                                                <span><strong>Blacklisted</strong></span>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                    <!-- Body will inject by JS -->
                                 </tbody>
                             </table>
                         </div>

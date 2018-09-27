@@ -2,18 +2,20 @@ package sliit.g01.procurementg01.api.model;
 
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Document(collection = "RequestMaterial")
 public class RequestMaterial {
 
 	@Id
-	private String orderId;
+	private String requestId;
 	private String requestedPerson;
 	private String siteId;
 	private String quantity;
+
 	public String getQuantity() {
 		return quantity;
 	}
@@ -34,13 +36,12 @@ public class RequestMaterial {
 	private String requestedDate;
 	private Map<String, String> items;
 	private String isImmediated;
-	private String isProcumentApproved;
+	private Boolean isProcumentApproved;
 	private String isSiteManagerApproved;
 	private String siteManagerName;
 	private String siteManagerID;
 	@JsonIgnore
 	private String isDeclinedBySiteManager;
-
 
 	public String getIsDeclinedBySiteManager() {
 		return isDeclinedBySiteManager;
@@ -84,12 +85,12 @@ public class RequestMaterial {
 
 	// private String status;
 
-	public String getOrderId() {
-		return orderId;
+	public String getRequestId() {
+		return requestId;
 	}
 
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
+	public void setRequestId(String requestId) {
+		this.requestId = requestId;
 	}
 
 	public String getRequestedPerson() {
@@ -132,11 +133,11 @@ public class RequestMaterial {
 		this.isImmediated = isImmediated;
 	}
 
-	public String getIsProcumentApproved() {
+	public Boolean getIsProcumentApproved() {
 		return isProcumentApproved;
 	}
 
-	public void setIsProcumentApproved(String isProcumentApproved) {
+	public void setIsProcumentApproved(Boolean isProcumentApproved) {
 		this.isProcumentApproved = isProcumentApproved;
 	}
 

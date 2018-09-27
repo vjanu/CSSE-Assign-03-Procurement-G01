@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import sliit.g01.procurementg01.api.model.Item;
-import sliit.g01.procurementg01.api.model.Supplier;
 import sliit.g01.procurementg01.api.service.ItemService;
-import sliit.g01.procurementg01.api.service.SupplierService;
 import sliit.g01.procurementg01.api.service.impl.SupplierServiceImpl;
 
 /**
@@ -31,10 +29,9 @@ public class ItemController {
 	@Autowired
 	private SupplierServiceImpl supplierService;
 
-
 	@PostMapping("/item/add-new-item")
 	public ResponseEntity<String> addCategory(@RequestBody Item item) {
-	    item.setItemId(UUID.randomUUID().toString());
+		item.setItemId(UUID.randomUUID().toString());
 		if (itemService.addItem(item)) {
 			return new ResponseEntity<>("New Item Added", HttpStatus.OK);
 		} else {
@@ -50,12 +47,12 @@ public class ItemController {
 		item.setItemId(UUID.randomUUID().toString());
 
 		if (supplierService.supplierExists(item.getSupplierId())) {
-		    itemService.addItem(item);
-            return new ResponseEntity<>("New Item Added", HttpStatus.OK);
-        }
+			itemService.addItem(item);
+			return new ResponseEntity<>("New Item Added", HttpStatus.OK);
+		}
 
-        return new ResponseEntity<>("Item Not Created; Check if supplier exists.", HttpStatus.NOT_IMPLEMENTED);
-    }
+		return new ResponseEntity<>("Item Not Created; Check if supplier exists.", HttpStatus.NOT_IMPLEMENTED);
+	}
 
 	// get all items supplied by a specific supplier.
 	@GetMapping("item/{supplierId}/items")
@@ -66,13 +63,12 @@ public class ItemController {
 	// get all items offered by each supplier, grouped by the supplier.
 	@GetMapping("/item")
 	public Map<String, List<Item>> getAllCategories() {
-	    return itemService.getAllItemsGroupedBySupplier();
+		return itemService.getAllItemsGroupedBySupplier();
 	}
 
 	@GetMapping("/item/{itemId}")
 	public Item getCategory(@PathVariable String itemId) {
 		return itemService.getItem(itemId);
 	}
-
 
 }

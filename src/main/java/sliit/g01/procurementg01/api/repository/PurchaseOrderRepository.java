@@ -12,4 +12,5 @@ public interface PurchaseOrderRepository extends MongoRepository<PurchaseOrder, 
     List<PurchaseOrder> getPurchaseOrdersBySupplierId(String supplierId);   // all orders under a specific supplier.
     List<PurchaseOrder> getPurchaseOrdersByOrderStatus(String orderStatus); // ongoing orders and things like that.
     List<PurchaseOrder> getPurchaseOrdersBySupplierIdAndOrderStatus(String supplierId, String orderStatus); // you get the idea ;)
+    List<PurchaseOrder> getPurchaseOrdersByOnHold(String onHold);
 }

@@ -67,7 +67,7 @@ function loadRequestsFromConstructor(){
 
 
              var html = '<tr>';
-             html +='<td align="right">'+request.orderId+'</td>' ;
+             html +='<td align="right">'+request.requestId+'</td>' ;
              html +='<td align="right">' + request.requestedPerson +'</td>' ;
              html +='<td align="right">' + request.requestedDate + '</td>' ;
              html +='<td align="right">' + request.siteId + '</td>' ;
@@ -102,7 +102,7 @@ window.getConfirmation = function(ele) {
         // alert('TR first cell: ' + row.find('td:first').text());
         // alert('TR first cell: ' + row.find('td:nth-child(3)').text());
         let form3Data = {
-            orderId: row.find('td:first').text(),
+            requestId: row.find('td:first').text(),
             requestedPerson: row.find('td:nth-child(2)').text(),   
             siteId: row.find('td:nth-child(4)').text(),  
             requestedDate: row.find('td:nth-child(3)').text(),     
@@ -111,7 +111,7 @@ window.getConfirmation = function(ele) {
             isSiteManagerApproved: 1
             
         }
-            axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + form3Data.orderId, form3Data, {
+            axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + form3Data.requestId, form3Data, {
             headers: headers
         })
             .then(response => {
@@ -316,17 +316,18 @@ $(document).ready(function(){
     //site manager approving the request from the constructor
     function approveRequest(){
         let data = {
-            orderId : $('#request-id').val(),
+            requestId : $('#request-id').val(),
             siteId : $('#site-id').val(),
             siteManagerID : $('#site-manager-id').val(),
             siteManagerName : $('#site-manager-name').val(),
             requestedPerson : $('#requested-person').val(),
             isImmediated : $("[name='type']:checked").val(),
             requestedDate : $('#date').val(),
-            isSiteManagerApproved : "1"
+            isSiteManagerApproved : "1",
+            isProcumentApproved:false
         }
         
-        axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + data.orderId, data, {
+        axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + data.requestId, data, {
             headers: headers
         })
         .then(function (response) {
@@ -341,17 +342,18 @@ $(document).ready(function(){
      //site manager declining the request from the constructor
      function declineRequest(){
         let data = {
-            orderId : $('#request-id').val(),
+            requestId : $('#request-id').val(),
             siteId : $('#site-id').val(),
             siteManagerID : $('#site-manager-id').val(),
             siteManagerName : $('#site-manager-name').val(),
             requestedPerson : $('#requested-person').val(),
             isImmediated : $("[name='type']:checked").val(),
             requestedDate : $('#date').val(),
-            isSiteManagerApproved : "2"
+            isSiteManagerApproved : "2",
+            isProcumentApproved:false
         }
         
-        axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + data.orderId, data, {
+        axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + data.requestId, data, {
             headers: headers
         })
         .then(function (response) {
@@ -383,7 +385,7 @@ $(document).ready(function(){
    
    
                 var html = '<tr>';
-                html +='<td align="right">'+request.orderId+'</td>' ;
+                html +='<td align="right">'+request.requestId+'</td>' ;
                 html +='<td align="right">' + request.requestedPerson +'</td>' ;
                 html +='<td align="right">' + request.requestedDate + '</td>' ;
                 html +='<td align="right">' + request.siteId + '</td>' ;
@@ -408,7 +410,7 @@ $(document).ready(function(){
 
 
             var html = '<tr>';
-            html +='<td align="right">'+request.orderId+'</td>' ;
+            html +='<td align="right">'+request.requestId+'</td>' ;
             html +='<td align="right">' + request.requestedPerson +'</td>' ;
             html +='<td align="right">' + request.requestedDate + '</td>' ;
             html +='<td align="right">' + request.siteId + '</td>' ;
@@ -496,17 +498,18 @@ function clearRatings(){
 
 /***********  View Purchased Orders Starts ******************/
 function loadPurchasedOrders(){
-    axios.get(BASE_URL_LOCAL + '/blabla/')//todo
+    axios.get(BASE_URL_LOCAL + '/order/all')//todo
     .then(function (response) {
         console.log(response)
         response.data.forEach(request => {
 
 
             var html = '<tr>';
-            html +='<td align="right">'+request.orderId+'</td>' ;
+            html +='<td align="right">'+request.requestId+'</td>' ;
             html +='<td align="center">' + getItemList(request.items) + '</td>' ;
-            html +='<td align="right">'+request.orderDate+'</td>' ;
-            html +='<td align="right">'+request.returnedDate+'</td>' ;
+            html +='<td align="right">'+formatDate(request.orderDate)+'</td>' ;
+            html +='<td align="right">'+formatDate(request.returnedDate)+'</td>' ;
+            html +='<td align="right">'+'<input type = "date" id="returnedDate"/>'+'</td>' ;
             html +='<td align="right">' + getOrderStatusLabels(request.orderStatus) + '</td>';
              html +='<td align="right">' +
            '<a href="#" title="" class="btn btn-primary btn-sm" onclick="getOrderPurchasedFullyDelivered(this)">\n' +
@@ -515,13 +518,13 @@ function loadPurchasedOrders(){
             '</a>' +
            '</td>' ;
              html +='<td align="right">' +
-            '<a href="pay-for-pending-payments.html" title="" class="btn btn-danger btn-sm" onclick="getOrderPurchasedPartiallyDelivered(this)">\n' +
+            '<a href="#" title="" class="btn btn-danger btn-sm" onclick="getOrderPurchasedPartiallyDelivered(this)">\n' +
            '        <span class="fa fa-hourglass-end" aria-hidden="true"></span>\n' +
            '        <span><strong>Partially Delivered</strong></span></a>'+
             '</a>' +
            '</td>' ;
             html +='</tr>';
-           $('#view-requests tbody').append(html);
+           $('#view-purchased-orders tbody').append(html);
         });
     })
     .catch(function (error) {
@@ -533,11 +536,11 @@ function loadPurchasedOrders(){
 function getOrderStatusLabels(status){
     var badgeClass ='';
     var badgeText='';
-    if(status == 1){
+    if(status == "Complete"){
         badgeClass = "badge badge-success";
         badgeText = "Complete";
     }
-    else if(status == 2){
+    else if(status == "Partial"){
         badgeClass = "badge badge-warning";
         badgeText = "Partial";
     }
@@ -553,14 +556,14 @@ function getOrderStatusLabels(status){
 window.getOrderPurchasedFullyDelivered = function(ele) {
     var row = $(ele).closest('tr');
     let orderPurchased = {
-        orderId: row.find('td:first').text(),
+        requestId: row.find('td:first').text(),
         orderDate: row.find('td:nth-child(2)').text(),   
         returnedDate: $('#returnedDate').val(),  
-        orderStatus: 1,   
-        onHold:0  
+        orderStatus: "Complete",   
+        onHold:false
         
     }
-        axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + orderPurchased.orderId, orderPurchased, {
+        axios.put(BASE_URL_LOCAL + '/order/' + orderPurchased.requestId, orderPurchased, {
         headers: headers
     })
         .then(response => {
@@ -581,14 +584,14 @@ window.getOrderPurchasedFullyDelivered = function(ele) {
 window.getOrderPurchasedPartiallyDelivered = function(ele) {
     var row = $(ele).closest('tr');
     let orderPurchased = {
-        orderId: row.find('td:first').text(),
+        requestId: row.find('td:first').text(),
         orderDate: row.find('td:nth-child(2)').text(),   
         returnedDate: $('#returnedDate').val(),  
-        orderStatus: 2,
-        onHold:0
+        orderStatus: "Partial",
+        onHold:false
         
     }
-        axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + orderPurchased.orderId, orderPurchased, {
+        axios.put(BASE_URL_LOCAL + '/order/' + orderPurchased.requestId, orderPurchased, {
         headers: headers
     })
         .then(response => {
@@ -605,3 +608,15 @@ window.getOrderPurchasedPartiallyDelivered = function(ele) {
 
 }
 /***********  View Purchased Orders Ends ******************/
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}

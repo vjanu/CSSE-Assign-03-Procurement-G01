@@ -1,5 +1,6 @@
 package sliit.g01.procurementg01.api.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,25 @@ public class RatingServiceImpl implements RatingService {
 
 	@Override
 	public List<Rating> getConstructorRatings() {
-		return ratingRepository.findAll();
+		ArrayList<Rating> r =  new ArrayList<Rating>();
+		
+		for (Rating rating : ratingRepository.findAll()) {
+			if(rating.getConstructorId() != null){
+				r.add(rating);
+			}
+		}
+		return r;
+	}
+
+	@Override
+	public List<Rating> getSupplierRatings() {
+		ArrayList<Rating> r =  new ArrayList<Rating>();
+		
+		for (Rating rating : ratingRepository.findAll()) {
+			if(rating.getSupplierId() != null){
+				r.add(rating);
+			}
+		}
+		return r;
 	}
 }

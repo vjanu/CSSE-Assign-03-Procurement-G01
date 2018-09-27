@@ -2,6 +2,7 @@ package sliit.g01.procurementg01.api.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,18 +28,24 @@ public class SiteController {
 	@Autowired
 	private SiteService siteService;
 
-    @Autowired
-    private SiteManagerServiceImpl siteManagerService;
+	@Autowired
+	private SiteManagerServiceImpl siteManagerService;
 
-
-    @RequestMapping(value = "/add-new-site", method = RequestMethod.POST)
+	@RequestMapping(value = "/add-new-site", method = RequestMethod.POST)
 	public ResponseEntity<String> addSite(@Validated @RequestBody Site site) {
+		site.setSiteId("ST" + RandomStringUtils.randomNumeric(5));
 		if (siteService.addSite(site)) {
-            // update the site with its new site manager's details.
-            // when sending data, we only send site manager's employeeId enclosed in siteManager attribute.
-            // assignSiteToSiteManager method will take care of adding all details of the site manager to the,
-            // site's record while updating the managed site id in the site manager's entry in the database.
-            siteManagerService.assignSiteToSiteManager(site.getSiteId(), site.getSiteManager().getEmployeeId());    // in site object, we have included a site manager object which has the employee id.
+			// update the site with its new site manager's details.
+			// when sending data, we only send site manager's employeeId
+			// enclosed in siteManager attribute.
+			// assignSiteToSiteManager method will take care of adding all
+			// details of the site manager to the,
+			// site's record while updating the managed site id in the site
+			// manager's entry in the database.
+
+			// in site object, we have included a site manager object which has
+			// the employee id.
+			siteManagerService.assignSiteToSiteManager(site.getSiteId(), site.getSiteManager().getEmployeeId());
 			return new ResponseEntity<>("New Site Added", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Not Created", HttpStatus.NOT_IMPLEMENTED);

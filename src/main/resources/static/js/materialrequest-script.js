@@ -29,7 +29,7 @@ $('#btn-add-request').on('click', function (e) {
 /* * * * *     Page Activities     * * * * */
 if (CURRENT_URL.includes('request-order')) {
     console.log("You are on Request material page");
-   loadRequestMaterials();
+ //  loadRequestMaterials();
 }
 
 
@@ -38,44 +38,54 @@ if (CURRENT_URL.includes('request-order')) {
    
 }
 
-
+if (CURRENT_URL.includes('view-requests')) {
+    console.log("You are on view-requests page")
+    loadConstructorRequests();
+    
+}
 
 
 function addRequest(){
 	let data = {
-		 orderId : $('#orderId').val(),
-		 requestedPerson : $('#constructorname').val(),
-		 requestedDate : $('#requesteddate').val(),
-		 items : $('#menu').val(),
-		 quantity : $('#qty').val(),
-		 requestingDate : $('#requestingdate').val()
+			orderId : $('#orderId').val(),
+			requestedPerson : $('#constructorname').val(),
+			requestedDate : $('#requesteddate').val(),
+			items : $('#menu').val(),
+			quantity : $('#qty').val(),
+			requestingDate : $('#requestingdate').val()
 	}
 	axios.post(BASE_URL_LOCAL + '/requestmaterial/add-new-order', data)
     .then(function (response) {
-    	alert(response.data)
+    	alert(response.data);
+    	$.notify(response.data, "success");
     })
     .catch(function (error) {
         // handle error
         console.log(error);
+        $.notify("Request not added", "error");;    
     });
 }
 
-function loadRequestMaterials(){
-	 axios.get(BASE_URL_LOCAL + '/requestmaterial/add-new-order')
+
+
+function loadConstructorRequests(){
+	 axios.get(BASE_URL_LOCAL + '/requestmaterial/')
     .then(function (response) {
    	 console.log(response)
-   	 response.data.forEach(item => {
-   		 
-   		 var html = '<tr>';
-   		 html += '<td>'+item.orderId+'</td>';
-   		 html += '<td class="nr-fid" scope="row">' + item.requestedPerson + '</td>';
-   		 html += '<td >' + item.requestedDate + '</td>';
-   		 html += '<td >' + getItemList(item.items) + '</td>';
-   		 html += '<td>' + item.quantity + '</td>';
-   		 html += '<td >' + item.requestingDate + '</td>';
-   		 html += '</tr>';
-   		 
-   		 $('#manage-site tbody').append(html);
+   	 response.data.forEach(request => {
+
+
+            var html = '<tr>';
+            html +='<td align="right">'+request.orderId+'</td>' ;
+            html +='<td align="right">' + request.requestedPerson +'</td>' ;
+            html +='<td align="right">' + request.requestedDate + '</td>' ;
+            html +='<td align="right">' + request.item + '</td>' ;
+            html +='<td align="right">' + request.quantity + '</td>' ;
+            html +='<td align="right">' + request.requestingDate + '</td>' ;
+//            html +='<td align="center">' + getItemList(request.items) + '</td>' ;
+        
+            html +='</tr>';
+           $('#view-requests tbody').append(html);
    	 });
     })
     .catch(function (error) {
@@ -83,13 +93,6 @@ function loadRequestMaterials(){
         console.log(error);
     });
 }
-
-
-
-
-
-
-
 
 
 function formatDate(date) {
