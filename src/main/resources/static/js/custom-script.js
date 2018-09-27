@@ -266,11 +266,11 @@ function loadAllSuppliers() {
 
 			response.data.forEach(item => {
 				var html = '<tr>';
-				html += '<td class="nr-sid">' + item.supplierId + '</td>';
-				html += '<td class="nr-fid" scope="row">' + item.supplierName + '</td>';
-				html += '<td >' + item.email + '</td>';
-				html += '<td>' + item.phone + '</td>';
-				html += '<td>' + item.address + '</td>';
+				html += '<td class="nr-sid"><center>' + item.supplierId + '</center></td>';
+				html += '<td class="text-center">' + item.supplierName + '</td>';
+				html += '<td class="text-center">' + item.email + '</td>';
+				html += '<td class="text-center">' + item.phone + '</td>';
+				html += '<td class="text-center">' + item.address + '</td>';
 				html += '<td class="text-center">' + getBlacklistBadge(item.isBanned) + '</td>';
 				html += '<td><center>' + getBlacklistButton(item.isBanned) + '</td>';
 				html += '</tr>';
@@ -293,13 +293,13 @@ function loadAllConstructors() {
 
 			response.data.forEach(item => {
 				var html = '<tr>';
-				html += '<td class="nr-cid">' + item.employeeId + '</td>';
-				html += '<td scope="row">' + item.employeeName + '</td>';
-				html += '<td >' + item.email + '</td>';
-				html += '<td>' + item.phone + '</td>';
-				html += '<td>' + item.nic + '</td>';
+				html += '<td class="nr-cid"><center>' + item.employeeId + '</center></td>';
+				html += '<td class="text-center">' + item.employeeName + '</td>';
+				html += '<td class="text-center">' + item.email + '</td>';
+				html += '<td class="text-center">' + item.phone + '</td>';
+				html += '<td class="text-center">' + item.address + '</td>';
 				html += '<td class="text-center">' + getBlacklistBadge(item.isBanned) + '</td>';
-				html += '<td><center>' + getBlacklistButton(item.isBanned) + '</td>';
+				html += '<td class="text-center">' + getBlacklistButton(item.isBanned) + '</td>';
 				html += '</tr>';
 
 				$('#manage-constructor-black-list tbody').append(html);
@@ -319,7 +319,7 @@ function loadRequestedMaterialTable() {
 			response.data.forEach(item => {
 
 				var html = '<tr>';
-				html += '<td class="nr-oid" scope="row">' + item.requestId + '</td>';
+				html += '<td class="nr-oid" scope="row"><center>' + item.requestId + '</center></td>';
 				html += '<td class="text-center">' + item.requestedPerson + '</td>';
 				html += '<td class="text-center">' + item.siteId + '</td>';
 				html += '<td >' + getItemList(item.items) + '</td>';
@@ -439,17 +439,18 @@ function loadAllSites() {
 			response.data.forEach(item => {
 				let tr =
 					'<tr>' +
-					'<td class="nr-siteId">' + item.siteId + '</td>' +
-					'<td scope="row">' + item.siteName + '</td>' +
-					'<td >' + item.address + '</td>' +
-					'<td >' + getItemList(item.items) + '</td>' +
-					'<td>' + item.storageCapacity + '</td>' +
-					'<td>' + item.currentCapacity + '</td>' +
-					'<td>' + item.siteManager.employeeName + '</td>' +
+					'<td class="nr-siteId"><center>' + item.siteId + '</center></td>' +
+					'<td class="text-center">' + item.siteName + '</td>' +
+					'<td class="text-center">' + item.address + '</td>' +
+					'<td>' + getItemList(item.items) + '</td>' +
+					'<td class="text-center">' + item.storageCapacity + '</td>' +
+					'<td class="text-center">' + item.currentCapacity + '</td>' +
+					'<td class="text-center">' + item.siteManager.employeeName + '</td>' +
 					'<td class="text-center">' +
 					'<a href="#" title="" class="btn btn-primary btn-sm">' +
 					'        <span class="fas fa-edit" aria-hidden="true"></span> Edit' +
-					'</a>' +
+					'</a></td>' +
+					'<td class="text-center">'+
 					'<a href="#" title="" class="btn btn-danger btn-sm">' +
 					'        <span class="far fa-trash-alt" aria-hidden="true"></span> Remove' +
 					'</a>' +
