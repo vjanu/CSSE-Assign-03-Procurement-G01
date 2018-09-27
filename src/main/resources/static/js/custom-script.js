@@ -577,7 +577,7 @@ function generateCategoryDropdown() {
 			console.log(response.data)
 			var html = '<select class="form-control" id="item-category-id">';
 
-			response.data.forEach(item => {
+			response.data.forEach(supplier => {
 				html += '<option value="' + item.categoryId + '">' + item.categoryName + '</option>';
 			});
 			html += '</select>';
@@ -595,11 +595,11 @@ function generateItemSelectDropdown() {
 			console.log(response.data)
 			var html = '<select class="form-control" id="op-item-select">';
 
-			response.data.forEach(supplier => {
-				supplier.forEach(item =>{
-					html += '<option value="' + item.itemId + '">' + item.itemName + '</option>';
-				})
-			});
+			Object.keys(response.data).forEach(supplierAsKey => {
+			    response.data[supplierAsKey].forEach(item => {
+                    html += '<option value="' + item.itemId + '">' + item.itemName + '</option>';
+                });
+            });
 
 
 			html += '</select>';
