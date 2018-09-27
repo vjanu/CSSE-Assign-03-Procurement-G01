@@ -31,6 +31,7 @@ if (CURRENT_URL.includes('accountingstaff-dashboard')) {
 
 if (CURRENT_URL.includes('onhold-payments')) {
     console.log("You are on onhold-payments")
+    loadOnHoldPurchasedOrders();
 }
 
 if (CURRENT_URL.includes('approved-requests')) {
@@ -44,6 +45,7 @@ if (CURRENT_URL.includes('pending-payments')) {
 
 if (CURRENT_URL.includes('successfull-payments')) {
     console.log("You are on successfull-payments page")
+    loadSuccessfullPurchasedOrders();
 }
 
 if (CURRENT_URL.includes('view-employee-acc')) {
@@ -59,31 +61,31 @@ if (CURRENT_URL.includes('view-supplier-acc')) {
 
 /***********  View Purchased Orders Starts ******************/
 function loadPurchasedOrders(){
-    axios.get(BASE_URL_LOCAL + '/blabla/')//todo
+    axios.get(BASE_URL_LOCAL + '/order/all')
     .then(function (response) {
         console.log(response)
         response.data.forEach(request => {
             var html = '<tr>';
-            html +='<td align="right">'+request.orderId+'</td>' ;
-            html +='<td align="center">' + getItemList(request.items) + '</td>' ;
-            html +='<td align="right">'+request.orderDate+'</td>' ;
-            html +='<td align="right">'+request.returnedDate+'</td>' ;
-            html +='<td align="right">' + getOrderStatusLabels(request.orderStatus) + '</td>';
-            html +='<td align="right">' + getOrderHoldLabels(request.orderStatus) + '</td>';
-             html +='<td align="right">' +
+            html +='<td align="center">'+request.orderId+'</td>' ;
+           
+            html +='<td align="center">'+formatDate(request.orderDate)+'</td>' ;
+            html +='<td align="center">'+formatDate(request.returnedDate)+'</td>' ;
+            html +='<td align="center">' + getOrderStatusLabels(request.orderStatus) + '</td>';
+            html +='<td align="center">' + getOrderHoldLabels(request.onHold) + '</td>';
+             html +='<td align="center">' +
            '<a href="#" title="" class="btn btn-primary btn-sm" onclick="makeOrderHold(this)">\n' +
-           '        <span class="fa fa-hourglass" aria-hidden="true"></span>\n' +
+           '        <span class="fa fa-ban" aria-hidden="true"></span>\n' +
            '        <span><strong>Hold</strong></span></a>'+
             '</a>' +
            '</td>' ;
-             html +='<td align="right">' +
-            '<a href="#" title="" class="btn btn-danger btn-sm" onclick="payOrder(this)">\n' +
-           '        <span class="fa fa-hourglass-end" aria-hidden="true"></span>\n' +
+             html +='<td align="center">' +
+            '<a href="pay-for-pending-payments.html" title="" class="btn btn-danger btn-sm">\n' +
+           '        <span class="fa fa-money" aria-hidden="true"></span>\n' +
            '        <span><strong>Pay Now</strong></span></a>'+
             '</a>' +
            '</td>' ;
             html +='</tr>';
-           $('#view-requests tbody').append(html);
+           $('#view-pending-orders-acc tbody').append(html);
         });
     })
     .catch(function (error) {
@@ -95,11 +97,11 @@ function loadPurchasedOrders(){
 function getOrderStatusLabels(status){
     var badgeClass ='';
     var badgeText='';
-    if(status == 1){
+    if(status == "Complete"){
         badgeClass = "badge badge-success";
         badgeText = "Complete";
     }
-    else if(status == 2){
+    else if(status == "Partial"){
         badgeClass = "badge badge-warning";
         badgeText = "Partial";
     }
@@ -115,7 +117,7 @@ function getOrderStatusLabels(status){
 function getOrderHoldLabels(status){
     var badgeClass ='';
     var badgeText='';
-    if(status == 1){
+    if(status == true){
         badgeClass = "badge badge-secondary";
         badgeText = "Hold";
     }
@@ -135,14 +137,14 @@ window.makeOrderHold = function(ele) {
         orderDate: row.find('td:nth-child(2)').text(),   
         returnedDate:  row.find('td:nth-child(3)').text(),   
         orderStatus: row.find('td:nth-child(4)').text(),    
-        onHold:1
+        onHold: true
     }
     //change
-        axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + orderPurchased.orderId, orderPurchased, {
+        axios.put(BASE_URL_LOCAL + '/order/' + orderPurchased.orderId, orderPurchased, {
         headers: headers
     })
         .then(response => {
-            console.log(response.form3Data);
+            console.log(response.orderPurchased);
                    $.notify("Order Marked as on Hold", "warn");
                    
         })
@@ -156,31 +158,6 @@ window.makeOrderHold = function(ele) {
 }
 
 
-window.payOrder = function(ele) {
-    var row = $(ele).closest('tr');
-    let orderPurchased = {
-        orderId: row.find('td:first').text(),
-        orderDate: row.find('td:nth-child(2)').text(),   
-        returnedDate: $('#returnedDate').val(),  
-        orderStatus: 2,
-        
-    }
-        axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + orderPurchased.orderId, orderPurchased, {
-        headers: headers
-    })
-        .then(response => {
-            console.log(response.form3Data);
-                   $.notify("Order Marked as Partially Delivered", "success");
-                   
-        })
-        .catch(error => {
-            console.log(error);
-            $.notify("Order Marking Error", "error");  
-        })
-
-
-
-}
 /***********  View Purchased Orders Ends ******************/
 
 
@@ -201,4 +178,61 @@ function clearPayments(){
    
 }
 
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
 
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+
+function loadOnHoldPurchasedOrders(){
+    axios.get(BASE_URL_LOCAL + '/order/onhold/true')
+    .then(function (response) {
+        console.log(response)
+        response.data.forEach(request => {
+            var html = '<tr>';
+            html +='<td align="center">'+request.orderId+'</td>' ;
+           
+            html +='<td align="center">'+formatDate(request.orderDate)+'</td>' ;
+            html +='<td align="center">'+formatDate(request.returnedDate)+'</td>' ;
+            html +='<td align="center">' + getOrderStatusLabels(request.orderStatus) + '</td>';
+            html +='<td align="center">' + getOrderHoldLabels(request.onHold) + '</td>';
+           
+            html +='</tr>';
+           $('#view-onhold-orders-acc tbody').append(html);
+        });
+    })
+    .catch(function (error) {
+        // handle error
+        console.log(error);
+    });
+}
+
+function loadSuccessfullPurchasedOrders(){
+    axios.get(BASE_URL_LOCAL + '/order/onhold/false')
+    .then(function (response) {
+        console.log(response)
+        response.data.forEach(request => {
+            var html = '<tr>';
+            html +='<td align="center">'+request.orderId+'</td>' ;
+           
+            html +='<td align="center">'+formatDate(request.orderDate)+'</td>' ;
+            html +='<td align="center">'+formatDate(request.returnedDate)+'</td>' ;
+            html +='<td align="center">' + getOrderStatusLabels(request.orderStatus) + '</td>';
+            html +='<td align="center">' + getOrderHoldLabels(request.onHold) + '</td>';
+           
+            html +='</tr>';
+           $('#view-successfull-orders-acc tbody').append(html);
+        });
+    })
+    .catch(function (error) {
+        // handle error
+        console.log(error);
+    });
+}

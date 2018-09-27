@@ -40,6 +40,23 @@ public class PurchaseOrderController {
         return purchaseOrderService.getPurchaseOrder(orderId);
     }
 
+    @GetMapping("/order/onhold/{onHold}")
+    public List<PurchaseOrder> getOnHoldPurchaseOrders(@PathVariable String onHold) {
+        return purchaseOrderService.getOnHoldPurchaseOrders(onHold);
+    }
+
+
+    // retrieve the purchase orders
+    @GetMapping("/order/all")
+    public List<PurchaseOrder> getAllPurchaseOrder() {
+        return purchaseOrderService.getAllPurchaseOrders();
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/order/{orderId}")
+    public PurchaseOrder update(@PathVariable String orderId, @RequestBody PurchaseOrder purchaseOrder) {
+        return purchaseOrderService.updatePurchaseOrder(orderId, purchaseOrder);
+    }
+
     // retrieve all purchase orders made for a single material request.
     // request should include the query parameter "requestId".
     // possible url:

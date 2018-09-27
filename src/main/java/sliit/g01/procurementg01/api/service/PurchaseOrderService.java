@@ -19,6 +19,10 @@ public interface PurchaseOrderService {
 
     public List<PurchaseOrder> createOrder(RequestMaterial requestMaterial);
 
+    public List<PurchaseOrder> getAllPurchaseOrders();
+
+    public List<PurchaseOrder> getOnHoldPurchaseOrders(String onHold);
+
     public List<PurchaseOrder> getOrdersUnderMaterialRequest(String requestId); // request id = order id of material request.
 
     // things like pending orders of a specific supplier and stuff.
@@ -38,4 +42,6 @@ public interface PurchaseOrderService {
     public void addPurchaseOrder(PurchaseOrder order);
 
     public void addPurchaseOrders(List<PurchaseOrder> orders);  // same as above, but for multiple items.
+
+    PurchaseOrder updatePurchaseOrder(String orderId, PurchaseOrder purchaseOrder);
 }

@@ -44,7 +44,7 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 
 		if (requestMaterial.getIsProcumentApproved() != null)
 			req.setIsProcumentApproved(requestMaterial.getIsProcumentApproved());
-		if (requestMaterial.getItems() != null)
+		if (requestMaterial.getItems() == null)
 			requestMaterial.setItems(req.getItems());
 
 		return requestmaterialRepository.save(requestMaterial);

@@ -89,11 +89,42 @@
             <div>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="accountingstaff-dashboard.html.html">Dashboard</a>
+                        <a href="accountingstaff-dashboard.html">Dashboard</a>
                     </li>
+                    <li class="breadcrumb-item active">View On-Hold Orders</li>
                    
                 </ol>
-<!-- code -->
+                <div class="card">
+                    <div class="card-header">
+                        <h4>View On-Hold Orders</h4>
+                    </div>
+                    <div class="card-body">
+                        <div style="width: 100%; padding-left: -10px; ">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="view-onhold-orders-acc">
+                                <thead>
+                                    <tr>
+                                        <th  class="text-center">Order ID</th>
+                                
+                                        <th scope="col" class="text-center">Order Requested Date</th>
+                                        <th scope="col" class="text-center">Order Returned Date</th>
+                                      
+                                        <th  class="text-center">Order Status</th>
+                                    <!-- initially status = pending then partially/fully delivered -->
+                                    <th scope="col" class="text-center">On Hold Status</th>
+                                 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
+
+                
+                
+    </div>
             
         </div>
     </div></div>
@@ -135,7 +166,7 @@
         crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/axios.min.js"></script>
-    <script src="js/site-script.js"></script>
+    <script src="js/accountingstaff-script.js"></script>
     <script src="js/notify.min.js"></script>
     <script src="js/notify.js"></script>
   

@@ -84,9 +84,9 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             p.setOrderId(UUID.randomUUID().toString());
             p.setDraftPurchaseOrder(true);  // will be a draft as long as the payment isn't made.
             p.setItems(itemsOrderedFromEachSupplier.get(supplierId));
-            p.setOnHold(true);  // will stay on hold until a staff member approves this.
+            p.setOnHold(false);  // will not stay on hold until an acc staff member holds this.
             p.setOrderDate(new Date());
-            p.setOrderStatus("Pending approval");
+            p.setOrderStatus("Pending");
             p.setSequentialReference("No idea");
             p.setSupplierId(supplierId);
 
@@ -94,6 +94,16 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         }
 
         return orders;
+    }
+
+    @Override
+    public List<PurchaseOrder> getAllPurchaseOrders() {
+        return purchaseOrderRepository.findAll();
+    }
+
+    @Override
+    public List<PurchaseOrder> getOnHoldPurchaseOrders(String onHold) {
+        return purchaseOrderRepository.getPurchaseOrdersByOnHold(onHold);
     }
 
     @Override
@@ -124,6 +134,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         for (PurchaseOrder purchaseOrder: orders) {
             addPurchaseOrder(purchaseOrder);
         }
+    }
+
+    @Override
+    public PurchaseOrder updatePurchaseOrder(String orderId, PurchaseOrder purchaseOrder) {
+        return purchaseOrderRepository.save(purchaseOrder);
     }
 
     // for the given supplier, get the orders that are pending or something similar to that.
