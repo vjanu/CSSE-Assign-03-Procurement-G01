@@ -110,7 +110,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             p.setOnHold(true); // will stay on hold until a staff member
             // approves this.
             p.setOrderDate(new Date());
-            p.setOrderStatus("Pending approval");
+//            p.setOrderStatus("Pending approval");
             p.setSequentialReference("No idea");
             p.setSupplierId(supplierId);
             p.setOrderStatus("Pending");
