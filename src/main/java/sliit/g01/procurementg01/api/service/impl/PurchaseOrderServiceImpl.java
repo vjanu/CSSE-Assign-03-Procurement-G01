@@ -2,10 +2,7 @@ package sliit.g01.procurementg01.api.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sliit.g01.procurementg01.api.model.Item;
-import sliit.g01.procurementg01.api.model.PurchaseOrder;
-import sliit.g01.procurementg01.api.model.RequestMaterial;
-import sliit.g01.procurementg01.api.model.Supplier;
+import sliit.g01.procurementg01.api.model.*;
 import sliit.g01.procurementg01.api.repository.PurchaseOrderRepository;
 import sliit.g01.procurementg01.api.service.PurchaseOrderService;
 
@@ -27,6 +24,9 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     @Autowired
     private SupplierServiceImpl supplierService;
 
+    @Autowired
+    private SiteServiceImpl siteService;
+
 
     @Override
     public boolean specifyQuantity(String itemId, int quantity) {
@@ -44,6 +44,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         List<PurchaseOrder> orders = new ArrayList<>(); // holds the purchase orders(one order per supplier).
         Map<String, List<Item>> itemsOrderedFromEachSupplier = new HashMap<>(); // list of items mapped against the supplier.
         Map<String, String> itemIdAndQuantities = requestMaterial.getItems(); // quantity required, mapped against item id.
+        Site deliverySite = siteService.getSite(requestMaterial.getSiteId()); // this is where the order is headed.
 
         // request material object has a map of items where quantity of each item is mapped against its item code.
         // we need to get full details of the item(from the database) and group the items by the supplier.
@@ -89,6 +90,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             p.setOrderStatus("Pending approval");
             p.setSequentialReference("No idea");
             p.setSupplierId(supplierId);
+            p.setDeliverySite(deliverySite);
 
             orders.add(p);
         }
