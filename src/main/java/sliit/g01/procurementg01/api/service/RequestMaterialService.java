@@ -8,21 +8,20 @@ public interface RequestMaterialService {
 
 	Boolean addOrder(RequestMaterial requestmaterial);
 
-	List<RequestMaterial> getAllOrders();
+	List<RequestMaterial> getAllrequests();
 
 	List<RequestMaterial> getSiteMnagerApprovedRequests();
 
-	RequestMaterial getOrder(String orderId);
+	RequestMaterial getRequest(String requestId);
 
-	Boolean deleteOrder(String orderId);
+	Boolean deleteRequest(String requestId);
 
-	RequestMaterial updateRequest(String id, RequestMaterial requestMaterial);
+	RequestMaterial updateRequest(String requestId, RequestMaterial requestMaterial);
 
+	Boolean setProcumentStaffApproved(String requestId, String isProcumentApproved);
 
 	List<RequestMaterial> getRequestsByStatus(String isSiteManagerApproved);
 
 	List<RequestMaterial> getRequestsByImmediated(String isImmediated);
-
-
 
 }

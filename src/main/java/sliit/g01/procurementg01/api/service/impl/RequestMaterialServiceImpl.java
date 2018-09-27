@@ -22,32 +22,32 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 	}
 
 	@Override
-	public List<RequestMaterial> getAllOrders() {
+	public List<RequestMaterial> getAllrequests() {
 		return requestmaterialRepository.findAll();
 
 	}
 
 	@Override
-	public RequestMaterial getOrder(String orderId) {
-		return requestmaterialRepository.findByOrderId(orderId);
+	public RequestMaterial getRequest(String requestId) {
+		return requestmaterialRepository.findByRequestId(requestId);
 	}
 
 	@Override
-	public Boolean deleteOrder(String orderId) {
-		requestmaterialRepository.delete(requestmaterialRepository.findByOrderId(orderId));
+	public Boolean deleteRequest(String requestId) {
+		requestmaterialRepository.delete(requestmaterialRepository.findByRequestId(requestId));
 		return true;
 	}
 
 	@Override
-	public RequestMaterial updateRequest(String orderId, RequestMaterial requestMaterial) {
-		RequestMaterial req = requestmaterialRepository.findByOrderId(orderId);
+	public RequestMaterial updateRequest(String requestId, RequestMaterial requestMaterial) {
+		RequestMaterial req = requestmaterialRepository.findByRequestId(requestId);
 
-		if (requestMaterial.getIsProcumentApproved() != null)
-			req.setIsProcumentApproved(requestMaterial.getIsProcumentApproved());
-		if (requestMaterial.getItems() != null)
-			requestMaterial.setItems(req.getItems());
+		// if (requestMaterial.getIsProcumentApproved() != null)
+		req.setIsProcumentApproved(requestMaterial.getIsProcumentApproved());
+		// if (requestMaterial.getItems() != null)
+		// requestMaterial.setItems(req.getItems());
 
-		return requestmaterialRepository.save(requestMaterial);
+		return requestmaterialRepository.save(req);
 	}
 
 	@Override
@@ -65,6 +65,12 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 		return requestmaterialRepository.findByisSiteManagerApproved("1");
 	}
 
-	
+	@Override
+	public Boolean setProcumentStaffApproved(String requestId, String isProcumentApproved) {
+		RequestMaterial req = requestmaterialRepository.findByRequestId(requestId);
+		req.setIsProcumentApproved(isProcumentApproved);
+
+		return (requestmaterialRepository.save(req) != null);
+	}
 
 }

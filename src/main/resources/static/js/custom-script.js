@@ -295,7 +295,7 @@ function loadRequestedMaterialTable() {
 			response.data.forEach(item => {
 
 				var html = '<tr>';
-				html += '<td class="nr-oid" scope="row">' + item.orderId + '</td>';
+				html += '<td class="nr-oid" scope="row">' + item.requestId + '</td>';
 				html += '<td class="text-center">' + item.requestedPerson + '</td>';
 				html += '<td class="text-center">' + item.siteId + '</td>';
 				html += '<td >' + getItemList(item.items) + '</td>';
