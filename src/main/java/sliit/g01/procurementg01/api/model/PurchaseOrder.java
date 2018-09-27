@@ -26,6 +26,16 @@ public class PurchaseOrder {
     private Date orderDate;
     private boolean draftPurchaseOrder;
     private boolean onHold;
+    private Date returnedDate;
+
+
+    public Date getReturnedDate() {
+        return returnedDate;
+    }
+
+    public void setReturnedDate(Date returnedDate) {
+        this.returnedDate = returnedDate;
+    }
 
 
     public String getOrderId() {

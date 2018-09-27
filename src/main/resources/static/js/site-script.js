@@ -494,119 +494,114 @@ function clearRatings(){
 /***********  Rate Supplier/Constructor Ends ******************/
 
 
-//todo uncomment later
 /***********  View Purchased Orders Starts ******************/
-// function loadPurchasedOrders(){
-//     axios.get(BASE_URL_LOCAL + '/blabla/')//todo
-//     .then(function (response) {
-//         console.log(response)
-//         response.data.forEach(request => {
+function loadPurchasedOrders(){
+    axios.get(BASE_URL_LOCAL + '/blabla/')//todo
+    .then(function (response) {
+        console.log(response)
+        response.data.forEach(request => {
 
 
-//             var html = '<tr>';
-//             html +='<td align="right">'+request.orderId+'</td>' ;
-//             html +='<td align="center">' + getItemList(request.items) + '</td>' ;
-//             html +='<td align="right">'+request.orderId+'</td>' ;
-//             html +='<td align="right">'+request.orderId+'</td>' ;
-//             html +='<td align="right">' + getOrderStatusLabels(request.isImmediated) + '</td>';
-//              html +='<td align="right">' +
-//            '<a href="#" title="" class="btn btn-primary btn-sm" onclick="getOrderPurchasedFullyDelivered(this)">\n' +
-//            '        <span class="fa fa-hourglass" aria-hidden="true"></span>\n' +
-//            '        <span><strong>Fully Delivered</strong></span></a>'+
-//             '</a>' +
-//            '</td>' ;
-//              html +='<td align="right">' +
-//             '<a href="#" title="" class="btn btn-danger btn-sm" onclick="getOrderPurchasedPartiallyDelivered(this)">\n' +
-//            '        <span class="fa fa-hourglass-end" aria-hidden="true"></span>\n' +
-//            '        <span><strong>Partially Delivered</strong></span></a>'+
-//             '</a>' +
-//            '</td>' ;
-//             html +='</tr>';
-//            $('#view-requests tbody').append(html);
-//         });
-//     })
-//     .catch(function (error) {
-//         // handle error
-//         console.log(error);
-//     });
-// }
+            var html = '<tr>';
+            html +='<td align="right">'+request.orderId+'</td>' ;
+            html +='<td align="center">' + getItemList(request.items) + '</td>' ;
+            html +='<td align="right">'+request.orderDate+'</td>' ;
+            html +='<td align="right">'+request.returnedDate+'</td>' ;
+            html +='<td align="right">' + getOrderStatusLabels(request.orderStatus) + '</td>';
+             html +='<td align="right">' +
+           '<a href="#" title="" class="btn btn-primary btn-sm" onclick="getOrderPurchasedFullyDelivered(this)">\n' +
+           '        <span class="fa fa-hourglass" aria-hidden="true"></span>\n' +
+           '        <span><strong>Fully Delivered</strong></span></a>'+
+            '</a>' +
+           '</td>' ;
+             html +='<td align="right">' +
+            '<a href="pay-for-pending-payments.html" title="" class="btn btn-danger btn-sm" onclick="getOrderPurchasedPartiallyDelivered(this)">\n' +
+           '        <span class="fa fa-hourglass-end" aria-hidden="true"></span>\n' +
+           '        <span><strong>Partially Delivered</strong></span></a>'+
+            '</a>' +
+           '</td>' ;
+            html +='</tr>';
+           $('#view-requests tbody').append(html);
+        });
+    })
+    .catch(function (error) {
+        // handle error
+        console.log(error);
+    });
+}
 
-// function getOrderStatusLabels(status){
-//     var badgeClass ='';
-//     var badgeText='';
-//     if(status == 1){
-//         badgeClass = "badge badge-success";
-//         badgeText = "Complete";
-//     }
-//     else if(status == 2){
-//         badgeClass = "badge badge-warning";
-//         badgeText = "Partial";
-//     }
-//     else{
-//         badgeClass = "badge badge-secondary";
-//         badgeText = "Pending";
-//     }
+function getOrderStatusLabels(status){
+    var badgeClass ='';
+    var badgeText='';
+    if(status == 1){
+        badgeClass = "badge badge-success";
+        badgeText = "Complete";
+    }
+    else if(status == 2){
+        badgeClass = "badge badge-warning";
+        badgeText = "Partial";
+    }
+    else{
+        badgeClass = "badge badge-secondary";
+        badgeText = "Pending";
+    }
 
-// 	var html = '<h4><span class="'+badgeClass+'">'+badgeText+'</span></h4>';
-// 	return html;
-// }
+	var html = '<h4><span class="'+badgeClass+'">'+badgeText+'</span></h4>';
+	return html;
+}
 
-// window.getOrderPurchasedFullyDelivered = function(ele) {
-//     var row = $(ele).closest('tr');
-//     let orderPurchased = {
-//         orderId: row.find('td:first').text(),
-//         requestedPerson: row.find('td:nth-child(2)').text(),   
-//         siteId: row.find('td:nth-child(4)').text(),  
-//         requestedDate: row.find('td:nth-child(3)').text(),     
-//         // items: row.find('td:nth-child(5)').text(), 
-//         isImmediated: row.find('td:nth-child(6)').text(),  
-//         isSiteManagerApproved: 1
+window.getOrderPurchasedFullyDelivered = function(ele) {
+    var row = $(ele).closest('tr');
+    let orderPurchased = {
+        orderId: row.find('td:first').text(),
+        orderDate: row.find('td:nth-child(2)').text(),   
+        returnedDate: $('#returnedDate').val(),  
+        orderStatus: 1,   
+        onHold:0  
         
-//     }
-//         axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + orderPurchased.orderId, orderPurchased, {
-//         headers: headers
-//     })
-//         .then(response => {
-//             console.log(response.form3Data);
-//                    $.notify("Successfully Approved", "success");
+    }
+        axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + orderPurchased.orderId, orderPurchased, {
+        headers: headers
+    })
+        .then(response => {
+            console.log(response.form3Data);
+                   $.notify("Order Marked as Fully Delivered", "success");
                    
-//         })
-//         .catch(error => {
-//             console.log(error);
-//                     $.notify("Approval Declined", "error");;           
-//         })
+        })
+        .catch(error => {
+            console.log(error);
+                    $.notify("Order Marking Error", "error");           
+        })
 
 
 
-// }
+}
 
 
-// window.getOrderPurchasedPartiallyDelivered = function(ele) {
-//     var row = $(ele).closest('tr');
-//     let orderPurchased = {
-//         orderId: row.find('td:first').text(),
-//         requestedPerson: row.find('td:nth-child(2)').text(),   
-//         siteId: row.find('td:nth-child(4)').text(),  
-//         requestedDate: row.find('td:nth-child(3)').text(),     
-//         // items: row.find('td:nth-child(5)').text(), 
-//         isImmediated: row.find('td:nth-child(6)').text(),  
-//         isSiteManagerApproved: 1
+window.getOrderPurchasedPartiallyDelivered = function(ele) {
+    var row = $(ele).closest('tr');
+    let orderPurchased = {
+        orderId: row.find('td:first').text(),
+        orderDate: row.find('td:nth-child(2)').text(),   
+        returnedDate: $('#returnedDate').val(),  
+        orderStatus: 2,
+        onHold:0
         
-//     }
-//         axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + orderPurchased.orderId, orderPurchased, {
-//         headers: headers
-//     })
-//         .then(response => {
-//             console.log(response.form3Data);
-//                    $.notify("Successfully Approved", "success");
+    }
+        axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + orderPurchased.orderId, orderPurchased, {
+        headers: headers
+    })
+        .then(response => {
+            console.log(response.form3Data);
+                   $.notify("Order Marked as Partially Delivered", "success");
                    
-//         })
-//         .catch(error => {
-//             console.log(error);
-//                     $.notify("Approval Declined", "error");;           
-//         })
+        })
+        .catch(error => {
+            console.log(error);
+            $.notify("Order Marking Error", "error");  
+        })
 
 
 
-// }
+}
 /***********  View Purchased Orders Ends ******************/
