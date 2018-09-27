@@ -153,3 +153,63 @@
 	"constructorId":"5698"
 }
 
+
+-------- Add Suppliers ----------
+// we are adding two suppliers so that we can check if grouping works.
+{
+  "address": "Yakkala",
+  "availability": true,
+  "bankAccountNo": 1233214567,
+  "email": "tharinduhardware@gmail.com",
+  "phone": 713456547,
+  "supplierId": "leave this empty if you want, it will be auto-generated",
+  "supplierName": "Tharindu Hardware"
+}
+{
+  "address": "Kalutara",
+  "availability": true,
+  "bankAccountNo": 66632145,
+  "email": "anushkahardware@gmail.com",
+  "phone": 773234454,
+  "supplierId": "leave this empty if you want, it will be auto-generated",
+  "supplierName": "Anushka Hardware"
+}
+
+-------- Add Items ----------
+// we add two items to each supplier.
+// for supplier ﻿257d2b90-ada2-4140-b695-31e145d22b1c
+{
+  "categoryId": 1,
+  "deliveryInformation": "Delivery within 2 days",
+  "isRestrictedItem": "",
+  "itemId": "leave this empty if you want, anyhow this will be replaced in the backend by an auto-generated one",
+  "itemName": "Holcim Cement ",
+  "price": 1250,
+  "quantity": 1000,
+  "supplierId": "257d2b90-ada2-4140-b695-31e145d22b1c",
+  "unitType": "10kg pack"
+}
+{
+  "categoryId": 1,
+  "deliveryInformation": "Delivery within 2 days",
+  "isRestrictedItem": "",
+  "itemId": "leave this empty if you want, anyhow this will be replaced in the backend by an auto-generated one",
+  "itemName": "Tokyo Cement",
+  "price": 1275,
+  "quantity": 1000,
+  "supplierId": "257d2b90-ada2-4140-b695-31e145d22b1c",
+  "unitType": "10kg pack"
+}
+
+// for supplier ﻿ac86b0a0-31ce-4033-8773-88941ca42828
+{
+  "categoryId": 2,
+  "deliveryInformation": "Delivery within 1 day",
+  "isRestrictedItem": "",
+  "itemId": "leave this empty if you want, anyhow this will be replaced in the backend by an auto-generated one",
+  "itemName": "Zlon Pipe 2cm diameter",
+  "price": 100,
+  "quantity": 1000,
+  "supplierId": "ac86b0a0-31ce-4033-8773-88941ca42828",
+  "unitType": "1m pipe"
+}
