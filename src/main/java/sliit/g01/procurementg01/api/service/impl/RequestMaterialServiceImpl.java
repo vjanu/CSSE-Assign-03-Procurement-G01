@@ -66,7 +66,7 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 	}
 
 	@Override
-	public Boolean setProcumentStaffApproved(String requestId, String isProcumentApproved) {
+	public Boolean setProcumentStaffApproved(String requestId, Boolean isProcumentApproved) {
 		RequestMaterial req = requestmaterialRepository.findByRequestId(requestId);
 		req.setIsProcumentApproved(isProcumentApproved);
 

@@ -18,7 +18,7 @@ public interface RequestMaterialService {
 
 	RequestMaterial updateRequest(String requestId, RequestMaterial requestMaterial);
 
-	Boolean setProcumentStaffApproved(String requestId, String isProcumentApproved);
+	Boolean setProcumentStaffApproved(String requestId, Boolean isProcumentApproved);
 
 	List<RequestMaterial> getRequestsByStatus(String isSiteManagerApproved);
 

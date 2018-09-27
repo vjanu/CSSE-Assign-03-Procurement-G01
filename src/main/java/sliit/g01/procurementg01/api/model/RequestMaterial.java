@@ -36,7 +36,7 @@ public class RequestMaterial {
 	private String requestedDate;
 	private Map<String, String> items;
 	private String isImmediated;
-	private String isProcumentApproved;
+	private Boolean isProcumentApproved;
 	private String isSiteManagerApproved;
 	private String siteManagerName;
 	private String siteManagerID;
@@ -133,11 +133,11 @@ public class RequestMaterial {
 		this.isImmediated = isImmediated;
 	}
 
-	public String getIsProcumentApproved() {
+	public Boolean getIsProcumentApproved() {
 		return isProcumentApproved;
 	}
 
-	public void setIsProcumentApproved(String isProcumentApproved) {
+	public void setIsProcumentApproved(Boolean isProcumentApproved) {
 		this.isProcumentApproved = isProcumentApproved;
 	}
 

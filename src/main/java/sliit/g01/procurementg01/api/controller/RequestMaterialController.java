@@ -66,7 +66,7 @@ public class RequestMaterialController {
 
 		if (query.containsKey("requestId") && query.containsKey("isProcumentApproved")) {
 			String requestId = query.get("requestId");
-			String isProcumentApproved = query.get("isProcumentApproved");
+			Boolean isProcumentApproved = Boolean.valueOf(query.get("isProcumentApproved"));
 			status = requestMaterialService.setProcumentStaffApproved(requestId, isProcumentApproved);
 		}
 

@@ -132,7 +132,7 @@ function removeMaterialRequest(rid) {
 function approveRequestedMaterial(oid) {
 	console.log(oid);
 	let data = {
-		"isProcumentApproved": "1"
+		"isProcumentApproved": true
 	}
 	axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + oid, data)
 		.then(function (response) {
