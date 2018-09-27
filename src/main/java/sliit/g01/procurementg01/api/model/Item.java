@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * @author Tharindu
  **/
+@Document(collection = "Item")
 public class Item {
 
     @Id

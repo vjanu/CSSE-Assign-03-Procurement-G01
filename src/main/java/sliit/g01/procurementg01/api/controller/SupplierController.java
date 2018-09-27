@@ -1,6 +1,7 @@
 package sliit.g01.procurementg01.api.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ public class SupplierController {
 
 	@PostMapping("/supplier/addNewSupplier")
 	public ResponseEntity<String> addCategory(@RequestBody Supplier supplier) {
+	    supplier.setSupplierId(UUID.randomUUID().toString());
 		if (supplierService.addSupplier(supplier)) {
 			return new ResponseEntity<>("New Supplier Added!", HttpStatus.OK);
 		} else {
