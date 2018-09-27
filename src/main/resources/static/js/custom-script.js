@@ -61,6 +61,20 @@ $(document).on('click', '#manage-material-requests .btn-danger', function (e) {
 });
 
 /**
+ * Delete Click event in manage-sites
+ */
+$(document).on('click', '#manage-sites .btn-danger', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	var siteId = $(this).closest("tr").find(".nr-siteId").text();
+	console.log(siteId);
+	var r = confirm("Are you sure want to delete this Site? This action cannot be undone");
+	if (r == true) {
+		removeSite(siteId);
+	}
+});
+
+/**
  * Click event in manage-constructor-black-list
  */
 $(document).on('click', '#manage-constructor-black-list .btn-danger', function (e) {
@@ -87,6 +101,8 @@ $(document).on('click', '#manage-supplier-black-list .btn-danger', function (e) 
 		blacklistSupplier(sid);
 	}
 });
+
+
 
 
 
@@ -167,6 +183,16 @@ function removeMaterialRequest(rid) {
 		.then(function (response) {
 			console.log(response);
 			loadRequestedMaterialTable();
+		}).catch(function (error) {
+			console.log(error);
+		});
+}
+
+function removeSite(siteId) {
+	axios.delete(BASE_URL_LOCAL + '/site/' + siteId)
+		.then(function (response) {
+			console.log(response);
+			loadAllSites();
 		}).catch(function (error) {
 			console.log(error);
 		});
@@ -409,12 +435,12 @@ function addItemToSite() {
 function loadAllSites() {
 	axios.get(BASE_URL_LOCAL + '/site/')
 		.then(function (response) {
-			console.log(response.data[0].siteManager);
+			$("#manage-sites tbody").empty();
 			response.data.forEach(item => {
 				let tr =
 					'<tr>' +
-					'<td>' + item.siteId + '</td>' +
-					'<td class="nr-fid" scope="row">' + item.siteName + '</td>' +
+					'<td class="nr-siteId">' + item.siteId + '</td>' +
+					'<td scope="row">' + item.siteName + '</td>' +
 					'<td >' + item.address + '</td>' +
 					'<td >' + getItemList(item.items) + '</td>' +
 					'<td>' + item.storageCapacity + '</td>' +

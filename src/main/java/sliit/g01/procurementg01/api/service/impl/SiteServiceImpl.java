@@ -38,8 +38,8 @@ public class SiteServiceImpl implements SiteService {
 
 	@Override
 	public boolean deleteSite(String siteId) {
-		// TODO Auto-generated method stub
-		return false;
+		siteRepository.delete(siteRepository.findBySiteId(siteId));
+		return true;
 	}
 
 	@Override
