@@ -23,7 +23,7 @@ public class SupplierController {
 	@Autowired
 	private SupplierService supplierService;
 
-	@PostMapping("/supplier/addNewSupplier")
+	@PostMapping("/supplier")
 	public ResponseEntity<String> addCategory(@RequestBody Supplier supplier) {
 		supplier.setSupplierId("SP" + RandomStringUtils.randomNumeric(5));
 		if (supplierService.addSupplier(supplier)) {
