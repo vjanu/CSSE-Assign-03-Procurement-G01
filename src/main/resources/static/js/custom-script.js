@@ -103,6 +103,40 @@ $(document).on('click', '#manage-supplier-black-list .btn-danger', function (e) 
 });
 
 
+/**
+ * Click event in site-item-table
+ */
+$(document).on('click', '#site-item-table .btn-danger', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	var itemId = $(this).closest("tr").find(".nr-itemId").text();
+	console.log(itemId);
+	var r = confirm("Are you sure want to remove this item from this site? This action cannot be undone");
+	if (r == true) {
+
+
+		let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+
+		var index = storedItems.findIndex(function (item, i) {
+			return item.itemId === itemId
+		});
+
+		console.log("Index : " + index);
+		if (index != -1) {
+			storedItems.splice(index, 1);
+		}
+
+		localStorage.setItem('items', JSON.stringify(storedItems));
+		$("#item-list tbody").empty();
+
+		loadItemTable();
+
+
+		$.notify(itemId, "success");
+	}
+});
+
+
 
 
 
@@ -151,8 +185,10 @@ if (CURRENT_URL.includes('add-new-item')) {
 /* * * * * FUNCTION * * * * */
 
 
-function blacklistSupplier(sid){
-	let data = {"isBanned": true}
+function blacklistSupplier(sid) {
+	let data = {
+		"isBanned": true
+	}
 	axios.put(BASE_URL_LOCAL + '/supplier/update/' + sid, data)
 		.then(function (response) {
 			console.log(response);
@@ -165,8 +201,10 @@ function blacklistSupplier(sid){
 
 
 
-function blacklistConstructor(cid){
-	let data = {"isBanned": true}
+function blacklistConstructor(cid) {
+	let data = {
+		"isBanned": true
+	}
 	axios.put(BASE_URL_LOCAL + '/employee/update/' + cid, data)
 		.then(function (response) {
 			console.log(response);
@@ -200,7 +238,9 @@ function removeSite(siteId) {
 
 
 function approveRequestedMaterial(oid) {
-	let data = {"isProcumentApproved": true}
+	let data = {
+		"isProcumentApproved": true
+	}
 	axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + oid, data)
 		.then(function (response) {
 			console.log(response);
@@ -212,7 +252,7 @@ function approveRequestedMaterial(oid) {
 }
 
 
-function loadSupplierRatings(){
+function loadSupplierRatings() {
 	axios.get(BASE_URL_LOCAL + '/ratings/supplier-ratings').then(function (response) {
 		if (response.data) {
 			console.log(response)
@@ -395,7 +435,7 @@ function addNewItem() {
 		.catch(function (error) {
 			// handle error
 			console.log(error);
-			$.notify("Item not added", "error");;
+			$.notify("Item not added", "error");
 		});
 }
 
@@ -408,24 +448,36 @@ function addItemToSite() {
 			itemName: $('#op-item-select :selected').text(),
 			itemQty: $('#item-qty').val()
 		}
-
 		itemsArray.push(data);
 		localStorage.setItem('items', JSON.stringify(itemsArray));
 
-		let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
-
-		for (var i of storedItems) {
-			var html = '<tr>';
-			html += '	<td>' + i.itemId + '</td>';
-			html += '	<td class="nr-fid" scope="row">' + i.itemName + '</td>';
-			html += '	<td >' + i.itemQty + '</td>';
-			html += '</tr>';
-		}
-
-		$('#item-list tbody').append(html);
+		loadItemTable();
 	} else {
-		alert("Quantity cannot be empty")
+		$.notify("Quantity cannot be empty", "error");
 	}
+}
+
+
+function loadItemTable() {
+	let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+	console.log(storedItems)
+
+	for (var i of storedItems) {
+		console.log(i.itemId+" | "+i.itemName);
+		var html = '<tr>';
+		html += '	<td class="nr-itemId"><center>' + i.itemId + '</center></td>';
+		html += '	<td class="text-center">' + i.itemName + '</td>';
+		html += '	<td class="text-center">' + i.itemQty + '</td>';
+		html += '	<td class="text-center">' +
+			'		<a href="#" title="" class="btn btn-danger btn-sm">\n' +
+			'        	<span class="far fa-trash-alt" aria-hidden="true"></span>\n' +
+			'        	<span><strong>Remove</strong></span></a>' +
+			'		</a>' +
+			'	</td>';
+		html += '</tr>';
+	}
+
+	$('#site-item-table tbody').append(html);
 }
 
 
@@ -450,7 +502,7 @@ function loadAllSites() {
 					'<a href="#" title="" class="btn btn-primary btn-sm">' +
 					'        <span class="fas fa-edit" aria-hidden="true"></span> Edit' +
 					'</a></td>' +
-					'<td class="text-center">'+
+					'<td class="text-center">' +
 					'<a href="#" title="" class="btn btn-danger btn-sm">' +
 					'        <span class="far fa-trash-alt" aria-hidden="true"></span> Remove' +
 					'</a>' +
@@ -623,14 +675,13 @@ function generateItemSelectDropdown() {
 			var html = '<select class="form-control" id="op-item-select">';
 
 			Object.keys(response.data).forEach(supplierAsKey => {
-			    response.data[supplierAsKey].forEach(item => {
-                    html += '<option value="' + item.itemId + '">' + item.itemName + '</option>';
-                });
-            });
+				response.data[supplierAsKey].forEach(item => {
+					html += '<option value="' + item.itemId + '">' + item.itemName + '</option>';
+				});
+			});
 
 
 			html += '</select>';
-			console.log(html)
 			$('#item-select').append(html);
 		}).catch(function (error) {
 			// handle error
