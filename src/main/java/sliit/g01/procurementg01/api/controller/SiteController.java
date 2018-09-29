@@ -19,7 +19,8 @@ import sliit.g01.procurementg01.api.service.SiteService;
 import sliit.g01.procurementg01.api.service.impl.SiteManagerServiceImpl;
 
 /**
- * created by viraj
+ * @author viraj
+ * @author Tharindu TCJ
  **/
 @RestController
 @RequestMapping("/site")
