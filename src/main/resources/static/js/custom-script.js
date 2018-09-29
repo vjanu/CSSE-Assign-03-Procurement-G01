@@ -186,6 +186,7 @@ if (CURRENT_URL.includes('add-new-item')) {
 
 
 function blacklistSupplier(sid) {
+
 	let data = {
 		"isBanned": true
 	}
@@ -202,6 +203,7 @@ function blacklistSupplier(sid) {
 
 
 function blacklistConstructor(cid) {
+
 	let data = {
 		"isBanned": true
 	}
@@ -238,6 +240,7 @@ function removeSite(siteId) {
 
 
 function approveRequestedMaterial(oid) {
+
 	let data = {
 		"isProcumentApproved": true
 	}
