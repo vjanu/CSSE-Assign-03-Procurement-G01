@@ -186,7 +186,6 @@ if (CURRENT_URL.includes('add-new-item')) {
 
 
 function blacklistSupplier(sid) {
-
 	let data = {
 		"isBanned": true
 	}
@@ -203,7 +202,6 @@ function blacklistSupplier(sid) {
 
 
 function blacklistConstructor(cid) {
-
 	let data = {
 		"isBanned": true
 	}
@@ -240,7 +238,6 @@ function removeSite(siteId) {
 
 
 function approveRequestedMaterial(oid) {
-
 	let data = {
 		"isProcumentApproved": true
 	}
@@ -466,7 +463,7 @@ function loadItemTable() {
 	console.log(storedItems)
 
 	for (var i of storedItems) {
-		console.log(i.itemId+" | "+i.itemName);
+		console.log(i.itemId + " | " + i.itemName);
 		var html = '<tr>';
 		html += '	<td class="nr-itemId"><center>' + i.itemId + '</center></td>';
 		html += '	<td class="text-center">' + i.itemName + '</td>';

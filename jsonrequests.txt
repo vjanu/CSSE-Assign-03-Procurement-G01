@@ -1,4 +1,4 @@
-//add site manager
+﻿//add site manager
 {
 	"managedSiteId":"0",
 	"employeeId":"20",
@@ -119,15 +119,13 @@
 
 ------add constructor--------------
 {
-
-"employeeId":"003",
-"employeeType":"sfaaa",
-"employeeName":"llllll",
-"address":"dd",
-"email":"wwww",
+"employeeId":"CT00002",
+"employeeType":"Constructor",
+"employeeName":"Athrie",
+"address":"Gampaha",
+"email":"ath@gmail.com",
 "phone":"0171111111",
-"site":"vvv"
-
+"site":"ST0002"
 }
 
 
