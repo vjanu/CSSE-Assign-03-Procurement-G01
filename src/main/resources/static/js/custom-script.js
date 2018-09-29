@@ -84,7 +84,18 @@ $(document).on('click', '#manage-constructor-black-list .btn-danger', function (
 	console.log(cid);
 	var r = confirm("Are you sure want to blacklist this constructor? This action cannot be undone");
 	if (r == true) {
-		blacklistConstructor(cid);
+		blacklistConstructor(cid ,true);
+	}
+});
+
+$(document).on('click', '#manage-constructor-black-list .btn-warning', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	var cid = $(this).closest("tr").find(".nr-cid").text();
+	console.log(cid);
+	var r = confirm("Are you sure want to Unbanned this constructor? This action cannot be undone");
+	if (r == true) {
+		blacklistConstructor(cid ,false);
 	}
 });
 
@@ -201,14 +212,14 @@ function blacklistSupplier(sid) {
 
 
 
-function blacklistConstructor(cid) {
+function blacklistConstructor(cid, isBanned) {
 	let data = {
-		"isBanned": true
+		"isBanned": isBanned
 	}
 	axios.put(BASE_URL_LOCAL + '/employee/update/' + cid, data)
 		.then(function (response) {
 			console.log(response);
-			$.notify("Successfully Blacklisted", "success");
+			$.notify((isBanned)?"Successfully Blacklisted":"Successfully Unbanned", "success");
 			loadAllConstructors();
 		}).catch(function (error) {
 			console.log(error);
@@ -312,7 +323,7 @@ function loadAllSuppliers() {
 				html += '<td class="text-center">' + item.phone + '</td>';
 				html += '<td class="text-center">' + item.address + '</td>';
 				html += '<td class="text-center">' + getBlacklistBadge(item.isBanned) + '</td>';
-				html += '<td><center>' + getBlacklistButton(item.isBanned) + '</td>';
+				html += '<td><center>' + getBlacklistButton(item.isBanned, false) + '</td>';
 				html += '</tr>';
 
 				$('#manage-supplier-black-list tbody').append(html);
@@ -339,7 +350,7 @@ function loadAllConstructors() {
 				html += '<td class="text-center">' + item.phone + '</td>';
 				html += '<td class="text-center">' + item.address + '</td>';
 				html += '<td class="text-center">' + getBlacklistBadge(item.isBanned) + '</td>';
-				html += '<td class="text-center">' + getBlacklistButton(item.isBanned) + '</td>';
+				html += '<td class="text-center">' + getBlacklistButton(item.isBanned, false) + '</td>';
 				html += '</tr>';
 
 				$('#manage-constructor-black-list tbody').append(html);
@@ -631,10 +642,11 @@ function getImmediateButton(status) {
 	return html;
 }
 
-function getBlacklistButton(status) {
-	var btnClass = (status) ? "btn btn-default btn-sm" : "btn btn-danger btn-sm";
-	var btnText = (status) ? "Blacklisted" : "Blacklist";
-	var isDisabled = (status) ? "disabled" : "";
+function getBlacklistButton(isBanned, isbtnDisabled) {
+
+	var btnClass = (isBanned) ? ( (isbtnDisabled) ? "btn btn-default btn-sm" : "btn btn-warning btn-sm") : "btn btn-danger btn-sm";
+	var btnText = (isBanned) ? ((isbtnDisabled) ? "Blacklisted" : "Unbanned") : "Blacklist";
+	var isDisabled = (isBanned) ? ((isbtnDisabled) ? "disabled" : "") : "";
 
 	var html = '<button type="button" title="" class="' + btnClass + '" ' + isDisabled + '>' +
 		'        <span class="fas fa-ban" aria-hidden="true"></span>' +
@@ -645,7 +657,7 @@ function getBlacklistButton(status) {
 
 function getBlacklistBadge(status) {
 	var badgeClass = (status) ? "badge badge-pill badge-danger" : "badge badge-pill badge-primary";
-	var badgeText = (status) ? "Banned" : "Pending";
+	var badgeText = (status) ? "Banned" : "Active";
 
 	return '<h5><span class="' + badgeClass + '">' + badgeText + '</span></h5>';
 }
