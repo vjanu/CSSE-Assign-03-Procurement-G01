@@ -82,9 +82,9 @@ $(document).on('click', '#manage-constructor-black-list .btn-danger', function (
 	e.stopPropagation();
 	var cid = $(this).closest("tr").find(".nr-cid").text();
 	console.log(cid);
-	var r = confirm("Are you sure want to blacklist this constructor? This action cannot be undone");
+	var r = confirm("Are you sure want to blacklist this constructor?");
 	if (r == true) {
-		blacklistConstructor(cid ,true);
+		blacklistConstructor(cid, true);
 	}
 });
 
@@ -93,9 +93,9 @@ $(document).on('click', '#manage-constructor-black-list .btn-warning', function 
 	e.stopPropagation();
 	var cid = $(this).closest("tr").find(".nr-cid").text();
 	console.log(cid);
-	var r = confirm("Are you sure want to Unbanned this constructor? This action cannot be undone");
+	var r = confirm("Are you sure want to Unbanned this constructor?");
 	if (r == true) {
-		blacklistConstructor(cid ,false);
+		blacklistConstructor(cid, false);
 	}
 });
 
@@ -107,9 +107,21 @@ $(document).on('click', '#manage-supplier-black-list .btn-danger', function (e) 
 	e.stopPropagation();
 	var sid = $(this).closest("tr").find(".nr-sid").text();
 	console.log(sid);
-	var r = confirm("Are you sure want to blacklist this Supplier? This action cannot be undone");
+	var r = confirm("Are you sure want to blacklist this Supplier?");
 	if (r == true) {
-		blacklistSupplier(sid);
+		blacklistSupplier(sid, true);
+	}
+});
+
+
+$(document).on('click', '#manage-supplier-black-list .btn-warning', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	var sid = $(this).closest("tr").find(".nr-sid").text();
+	console.log(sid);
+	var r = confirm("Are you sure want to Unbanned this Supplier?");
+	if (r == true) {
+		blacklistSupplier(sid, false);
 	}
 });
 
@@ -191,6 +203,7 @@ if (CURRENT_URL.includes('add-new-item')) {
 
 if (CURRENT_URL.includes('edit-site')) {
 	populateSiteDetails();
+	populateSiteItems();
 }
 
 
@@ -198,14 +211,11 @@ if (CURRENT_URL.includes('edit-site')) {
 
 /* * * * * FUNCTION * * * * */
 
-function populateSiteDetails(){
-    if (CURRENT_URL.includes('#')) {
+function populateSiteItems() {
+	if (CURRENT_URL.includes('#')) {
 		let siteId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
-		console.log(siteId);
 		$("#site-id").val(siteId);
-
-
-		axios.get(BASE_URL_LOCAL + '/site/'+siteId).then(function (response) {
+		axios.get(BASE_URL_LOCAL + '/site/' + siteId).then(function (response) {
 			if (response.data) {
 				console.log(response);
 				$('#site-name').val(response.data.siteName);
@@ -217,20 +227,38 @@ function populateSiteDetails(){
 		}).catch(function (error) {
 			console.log(error);
 		});
+	}
 
+}
 
+function populateSiteDetails() {
+	if (CURRENT_URL.includes('#')) {
+		let siteId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
+		$("#site-id").val(siteId);
+		axios.get(BASE_URL_LOCAL + '/site/' + siteId).then(function (response) {
+			if (response.data) {
+				console.log(response);
+				$('#site-name').val(response.data.siteName);
+				$('#address').val(response.data.address);
+				$('#storage-capacity').val(response.data.storageCapacity);
+				$('#current-capacity').val(response.data.currentCapacity);
+				// $('#site-managers').val(response.data.siteName)
+			}
+		}).catch(function (error) {
+			console.log(error);
+		});
 	}
 }
 
 
-function blacklistSupplier(sid) {
+function blacklistSupplier(sid, isBanned) {
 	let data = {
-		"isBanned": true
+		"isBanned": isBanned
 	}
 	axios.put(BASE_URL_LOCAL + '/supplier/update/' + sid, data)
 		.then(function (response) {
 			console.log(response);
-			$.notify("Successfully Blacklisted", "success");
+			$.notify((isBanned) ? sid+" Successfully Blacklisted" : sid+" Successfully Unbanned", "success");
 			loadAllSuppliers();
 		}).catch(function (error) {
 			console.log(error);
@@ -246,7 +274,7 @@ function blacklistConstructor(cid, isBanned) {
 	axios.put(BASE_URL_LOCAL + '/employee/update/' + cid, data)
 		.then(function (response) {
 			console.log(response);
-			$.notify((isBanned)?"Successfully Blacklisted":"Successfully Unbanned", "success");
+			$.notify((isBanned) ? cid+" Successfully Blacklisted" : cid+" Successfully Unbanned", "success");
 			loadAllConstructors();
 		}).catch(function (error) {
 			console.log(error);
@@ -537,7 +565,7 @@ function loadAllSites() {
 					'<td class="text-center">' + item.currentCapacity + '</td>' +
 					'<td class="text-center">' + item.siteManager.employeeName + '</td>' +
 					'<td class="text-center">' +
-					'<a href="edit-site.html#'+item.siteId+'" title="" class="btn btn-primary btn-sm">' +
+					'<a href="edit-site.html#' + item.siteId + '" title="" class="btn btn-primary btn-sm">' +
 					'        <span class="fas fa-edit" aria-hidden="true"></span> Edit' +
 					'</a></td>' +
 					'<td class="text-center">' +
@@ -671,7 +699,7 @@ function getImmediateButton(status) {
 
 function getBlacklistButton(isBanned, isbtnDisabled) {
 
-	var btnClass = (isBanned) ? ( (isbtnDisabled) ? "btn btn-default btn-sm" : "btn btn-warning btn-sm") : "btn btn-danger btn-sm";
+	var btnClass = (isBanned) ? ((isbtnDisabled) ? "btn btn-default btn-sm" : "btn btn-warning btn-sm") : "btn btn-danger btn-sm";
 	var btnText = (isBanned) ? ((isbtnDisabled) ? "Blacklisted" : "Unbanned") : "Blacklist";
 	var isDisabled = (isBanned) ? ((isbtnDisabled) ? "disabled" : "") : "";
 

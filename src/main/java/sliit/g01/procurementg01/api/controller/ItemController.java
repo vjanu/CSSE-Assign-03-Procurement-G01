@@ -33,7 +33,6 @@ public class ItemController {
 	@PostMapping("/item/add-new-item")
 	public ResponseEntity<String> addCategory(@RequestBody Item item) {
 		item.setItemId("IT" + RandomStringUtils.randomNumeric(5));
-		// item.setItemId(UUID.randomUUID().toString());
 		if (itemService.addItem(item)) {
 			return new ResponseEntity<>("New Item Added", HttpStatus.OK);
 		} else {
