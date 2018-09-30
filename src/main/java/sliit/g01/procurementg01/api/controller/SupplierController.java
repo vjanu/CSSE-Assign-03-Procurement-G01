@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import sliit.g01.procurementg01.api.model.Supplier;
 import sliit.g01.procurementg01.api.service.SupplierService;
 
+/**
+ *
+ * @author Tharushi
+ */
 @RestController
 public class SupplierController {
 
