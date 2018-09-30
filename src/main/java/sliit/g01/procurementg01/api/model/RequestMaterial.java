@@ -15,6 +15,17 @@ public class RequestMaterial {
 	private String requestedPerson;
 	private String siteId;
 	private String quantity;
+	private String requestingDate;
+	private String requestedDate;
+	private Map<String, String> items; //itemcode, quantity
+	private String isImmediated;
+	private Boolean isProcumentApproved;
+	private String isSiteManagerApproved;
+	private String siteManagerName;
+	private String siteManagerID;
+	@JsonIgnore
+	private String isDeclinedBySiteManager;
+
 
 	public String getQuantity() {
 		return quantity;
@@ -31,17 +42,6 @@ public class RequestMaterial {
 	public void setRequestingDate(String requestingDate) {
 		this.requestingDate = requestingDate;
 	}
-
-	private String requestingDate;
-	private String requestedDate;
-	private Map<String, String> items;
-	private String isImmediated;
-	private Boolean isProcumentApproved;
-	private String isSiteManagerApproved;
-	private String siteManagerName;
-	private String siteManagerID;
-	@JsonIgnore
-	private String isDeclinedBySiteManager;
 
 	public String getIsDeclinedBySiteManager() {
 		return isDeclinedBySiteManager;
