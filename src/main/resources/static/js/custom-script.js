@@ -82,7 +82,7 @@ $(document).on('click', '#manage-constructor-black-list .btn-danger', function (
 	e.stopPropagation();
 	var cid = $(this).closest("tr").find(".nr-cid").text();
 	console.log(cid);
-	var r = confirm("Are you sure want to blacklist this constructor? This action cannot be undone");
+	var r = confirm("Are you sure want to blacklist this constructor?");
 	if (r == true) {
 		blacklistConstructor(cid, true);
 	}
@@ -93,7 +93,7 @@ $(document).on('click', '#manage-constructor-black-list .btn-warning', function 
 	e.stopPropagation();
 	var cid = $(this).closest("tr").find(".nr-cid").text();
 	console.log(cid);
-	var r = confirm("Are you sure want to Unbanned this constructor? This action cannot be undone");
+	var r = confirm("Are you sure want to Unbanned this constructor?");
 	if (r == true) {
 		blacklistConstructor(cid, false);
 	}
@@ -107,9 +107,21 @@ $(document).on('click', '#manage-supplier-black-list .btn-danger', function (e) 
 	e.stopPropagation();
 	var sid = $(this).closest("tr").find(".nr-sid").text();
 	console.log(sid);
-	var r = confirm("Are you sure want to blacklist this Supplier? This action cannot be undone");
+	var r = confirm("Are you sure want to blacklist this Supplier?");
 	if (r == true) {
-		blacklistSupplier(sid);
+		blacklistSupplier(sid, true);
+	}
+});
+
+
+$(document).on('click', '#manage-supplier-black-list .btn-warning', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	var sid = $(this).closest("tr").find(".nr-sid").text();
+	console.log(sid);
+	var r = confirm("Are you sure want to Unbanned this Supplier?");
+	if (r == true) {
+		blacklistSupplier(sid, false);
 	}
 });
 
@@ -239,14 +251,14 @@ function populateSiteDetails() {
 }
 
 
-function blacklistSupplier(sid) {
+function blacklistSupplier(sid, isBanned) {
 	let data = {
-		"isBanned": true
+		"isBanned": isBanned
 	}
 	axios.put(BASE_URL_LOCAL + '/supplier/update/' + sid, data)
 		.then(function (response) {
 			console.log(response);
-			$.notify("Successfully Blacklisted", "success");
+			$.notify((isBanned) ? sid+" Successfully Blacklisted" : sid+" Successfully Unbanned", "success");
 			loadAllSuppliers();
 		}).catch(function (error) {
 			console.log(error);
@@ -262,7 +274,7 @@ function blacklistConstructor(cid, isBanned) {
 	axios.put(BASE_URL_LOCAL + '/employee/update/' + cid, data)
 		.then(function (response) {
 			console.log(response);
-			$.notify((isBanned) ? "Successfully Blacklisted" : "Successfully Unbanned", "success");
+			$.notify((isBanned) ? cid+" Successfully Blacklisted" : cid+" Successfully Unbanned", "success");
 			loadAllConstructors();
 		}).catch(function (error) {
 			console.log(error);
