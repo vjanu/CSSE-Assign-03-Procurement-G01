@@ -17,6 +17,8 @@
 
     <!-- lato font(from google fonts) -->
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link href="css/dataTables.bootstrap.css" rel="stylesheet">
+
     <link href="css/custom-style.css" rel="stylesheet">
 
     <title>Procurement Home</title>
@@ -104,16 +106,13 @@
                     <li class="breadcrumb-item active">Manage Supplier Blacklist</li>
                 </ol>
 
-
-
-
                 <div class="card">
                     <div class="card-header">
                         <h4>Supplier Blacklist</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="manage-supplier-black-list">
+                            <table class="table table-striped table-bordered table-hover" id="manage-supplier-black-list">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">#</th>
@@ -126,39 +125,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!--<tr>
-                                        <td class="text-center">BL100</td>
-                                        <td>Amal Perera</td>
-                                        <td>amail@gmail.com</td>
-                                        <td>Supplier</td>
-                                        <td>0716589654</td>
-                                        <td>
-                                            <h5><span class="badge badge-pill badge-danger">Banned</span></h5>
-                                        </td>
-                                        <td class="text-center">
-                                            <button href="#" title="" class="btn btn-default btn-sm" disabled>
-                                                <span class="fas fa-ban" aria-hidden="true"></span>
-                                                <span><strong>Blacklisted</strong></span>
-                                            </button>
 
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">BL101</td>
-                                        <td>Vira Dias (Constructor)</td>
-                                        <td>vira@gmail.com</td>
-                                        <td>Constructor</td>
-                                        <td>0766589654</td>
-                                        <td>
-                                            <h5><span class="badge badge-pill badge-primary">Pending</span></h5>
-                                        </td>
-                                        <td class="text-center">
-                                            <button href="#" title="" class="btn btn-danger btn-sm">
-                                                <span class="fas fa-ban" aria-hidden="true"></span>
-                                                <span><strong>Blacklist</strong></span>
-                                            </button>
-                                        </td>
-                                    </tr>  -->
                                 </tbody>
                             </table>
                         </div>
@@ -197,17 +164,24 @@
         </div>
     </div>
 
-
     <!-- Bootstrap core JavaScript
 ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
+
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/axios.min.js"></script>
     <script src="js/notify.min.js"></script>
     <script src="js/custom-script.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#manage-supplier-black-list').DataTable();
+        });
+    </script>
 </body>
 
 </html>

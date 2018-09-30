@@ -3,6 +3,7 @@ package sliit.g01.procurementg01.api.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,8 @@ public class SiteManagerController {
 	// this is different from adding an existing manager to a site.
 	@PostMapping("/employee/site-manager")
 	public SiteManager addSiteManager(@Validated @RequestBody SiteManager siteManager) {
+		siteManager.setEmployeeId("SM" + RandomStringUtils.randomNumeric(5));
+
 		return siteManagerService.addSiteManager(siteManager);
 	}
 

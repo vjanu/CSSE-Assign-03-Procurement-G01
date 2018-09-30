@@ -2,6 +2,7 @@ package sliit.g01.procurementg01.api.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ public class AccountingStaffController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public AccountingStaff createAccountingStaff(@Validated @RequestBody final AccountingStaff accountingStaff) {
+		accountingStaff.setEmployeeId("AS" + RandomStringUtils.randomNumeric(5));
 		return accountingStaffService.addAccountingStaff(accountingStaff);
 	}
 

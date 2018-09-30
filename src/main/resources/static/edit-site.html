@@ -82,17 +82,6 @@
             </ul>
 
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-
-                    <form class="navbar-form" role="search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" name="q">
-                            <div class="input-group-btn">
-                                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
-                </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="left" title="Logout">
                     <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
                         <i class="fa fa-fw fa-sign-out-alt"></i>
@@ -137,7 +126,8 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="site-id">Site Id</label>
-                                                <input type="text" class="form-control" id="site-id" placeholder="Site Id" disabled>
+                                                <input type="text" class="form-control" id="site-id" placeholder="Site Id"
+                                                    disabled>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="site-name">Site Name</label>
@@ -156,16 +146,25 @@
                                         <!-- Storage Capacity -->
                                         <div class="form-group">
                                             <label for="storage-capacity">Storage Capacity</label>
-                                            <input type="text" class="form-control" id="storage-capacity" placeholder="Storage Capacity">
+                                            <input type="number" class="form-control" id="storage-capacity" placeholder="Storage Capacity">
                                         </div>
                                         <!-- Storage Capacity -->
 
                                         <!-- Current Capacity -->
                                         <div class="form-group">
                                             <label for="current-capacity">Current Capacity</label>
-                                            <input type="text" class="form-control" id="current-capacity" placeholder="Current Capacity">
+                                            <input type="number" class="form-control" id="current-capacity" placeholder="Current Capacity">
                                         </div>
                                         <!-- Current Capacity -->
+
+                                        <!-- Site Manager -->
+                                        <div class="form-group">
+                                            <label for="site-managers">Site Manager</label>
+                                            <select type="text" class="form-control" id="site-managers" name="site-managers">
+                                                <!-- options will be inserted by JS -->
+                                            </select>
+                                        </div>
+                                        <!-- Site Manager -->
 
                                         <button type="button" class="btn btn-primary" id="btn-add-site">Add Site</button>
                                     </form>
@@ -177,10 +176,13 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="item-qty">Quantity</label>
-                                            <input type="text" class="form-control" id="item-qty" placeholder="Quantity">
+
+                                            <input type="number" class="form-control" id="item-qty" placeholder="Quantity">
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <button type="button" class="btn btn-primary" id="btn-add-item-to-site">Add Item</button>
+
+                                        <div class="form-group col-md-4 mt-4">
+                                            <button type="button" class="btn btn-primary" id="btn-add-item-to-site">Add
+                                                Item</button>
                                         </div>
 
                                         <div class="table-responsive" id="item-list">
@@ -190,6 +192,7 @@
                                                         <th scope="col" class="text-center">Item ID</th>
                                                         <th scope="col" class="text-center">Item Name</th>
                                                         <th scope="col" class="text-center">Quantity</th>
+                                                        <th scope="col" class="text-center">Remove</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -217,7 +220,8 @@
         </footer>
 
         <!-- Logout Modal-->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
