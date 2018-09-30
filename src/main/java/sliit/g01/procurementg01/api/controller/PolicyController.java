@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,6 +31,8 @@ public class PolicyController {
 	// add new policy.
 	@PostMapping("/policy")
 	public Policy addPolicy(@RequestBody @Validated Policy policy) {
+		policy.setPolicyId("PC" + RandomStringUtils.randomNumeric(5));
+
 		System.out.println(policy.getDescription());
 		return policyService.addPolicy(policy);
 	}
