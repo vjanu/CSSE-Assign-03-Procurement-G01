@@ -48,7 +48,7 @@ function addSupplier() {
 
 /**
  * Retrieve available suppliers from the database.
- * API call: http:<base_url>/supplier/
+ * API call: http://<base_url>/supplier/
  * Response:
  *  [
  *      { supplier object },
@@ -73,6 +73,35 @@ function getSuppliers() {
 }
 
 /**
+ * Retrieve all orders for a specific supplier.
+ * API call: http://<base_url>/order?supplier=<supplier_id>
+ * Response:
+ *  {
+ *      <supplier id>: [
+ *          { purchase order object },
+ *          { purchase order object }
+ *      ]
+ *  }
+ */
+function getPurchaseOrders() {
+    let supplierId = 'SP10980';
+    axios.get(BASE_URL_LOCAL+'/order?supplier=' + supplierId + '')
+        .then(response => {
+            if (response.status == 200) {
+                console.log(response.data);
+                $('#order-table-container').append(renderPurchaseOrderTable('order-table', response.data[supplierId]));
+
+                // apply data-tables transformation; note that since we dynamically insert this,
+                // table, we need to bind it before calling datatables on the table.
+                window.$('#order-table').DataTable();
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
+/**
  * view all suppliers in a searchable table.(using data-tables library for interactivity)
  *
  * @param suppliers: list of suppliers(i.e: response from the backend). this has the following structure:-
@@ -86,7 +115,7 @@ function getSuppliers() {
 function renderSupplierTable(tagId, suppliers) {
     // render the table as a bootstrap table and use data tables to,
     // make it interactive.
-    console.log(suppliers);
+
     // table header.
     let html =
         '<table class="table" id="'+ tagId +'">' +
@@ -127,6 +156,74 @@ function renderSupplierTable(tagId, suppliers) {
     html += '</tbody></table>'; // closing tags.
 
     return html;
-
 }
 
+
+/**
+ *
+ * @param tagId: id of the table.
+ * @param purchaseOrders: list of purcahse orders for a given supplier. the response is in following,
+ *                          format:-
+ *                              {
+ *                                  "supplier id": [
+ *                                      { purchase order object },
+ *                                      { purchase order object },
+ *                                      { purchase order object }
+ *                                  ]
+ *                              }
+ */
+function renderPurchaseOrderTable(tagId, purchaseOrders) {
+// render the table as a bootstrap table and use data tables to,
+    // make it interactive.
+
+    // table header.
+    let html =
+        '<table class="table" id="'+ tagId +'">' +
+        '<thead>' +
+        '<tr>' +
+        '<th scope="col">Order Id</th>' +
+        '<th scope="col">Items</th>' +
+        '<th scope="col">Delivery Address</th>' +
+        '<th scope="col">Order Date</th>' +
+        '<th scope="col">Order Status</th>' +
+        '<th scope="col">Operations</th>' +
+        '</tr>' +
+        '</thead>' +
+        '<tbody>';  // be sure to end this tag in the end.
+
+    // add the rows(a row per supplier).
+    purchaseOrders.forEach(order => {
+        html +=
+            '<tr>'+
+                '<td>' + order.orderId + '</td>' +
+                '<td>' + getItemsFromList(order.items) + '</td>' +
+                '<td>' + order.deliverySite.address + '</td>' +
+                '<td>' + order.orderDate  + '</td>' +
+                '<td>' + order.orderStatus  + '</td>' +
+                '<td>' + 'operations'  + '</td>' +
+            '</tr>';
+    });
+
+    html += '</tbody></table>'; // closing tags.
+
+    return html;
+}
+
+
+/**
+ * this will take an arry that has item objects and will put,
+ * item names into one string to be shown in a table or something.
+ *
+ * @param itemsList: an array where each element is a item object.(refer item.java in model package).
+ */
+function getItemsFromList(itemsList) {
+    let str = '';
+
+    itemsList.forEach(item => {
+        str += item.itemName + ',\n';
+    });
+
+    // remove the last comma which is not needed.
+
+    return str;
+}
