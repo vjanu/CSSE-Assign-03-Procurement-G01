@@ -189,11 +189,38 @@ if (CURRENT_URL.includes('add-new-item')) {
 	generateCategoryDropdown();
 }
 
+if (CURRENT_URL.includes('edit-site')) {
+	populateSiteDetails();
+}
 
 
 
 
 /* * * * * FUNCTION * * * * */
+
+function populateSiteDetails(){
+    if (CURRENT_URL.includes('#')) {
+		let siteId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
+		console.log(siteId);
+		$("#site-id").val(siteId);
+
+
+		axios.get(BASE_URL_LOCAL + '/site/'+siteId).then(function (response) {
+			if (response.data) {
+				console.log(response);
+				$('#site-name').val(response.data.siteName);
+				$('#address').val(response.data.address);
+				$('#storage-capacity').val(response.data.storageCapacity);
+				$('#current-capacity').val(response.data.currentCapacity);
+				// $('#site-managers').val(response.data.siteName)
+			}
+		}).catch(function (error) {
+			console.log(error);
+		});
+
+
+	}
+}
 
 
 function blacklistSupplier(sid) {
@@ -510,7 +537,7 @@ function loadAllSites() {
 					'<td class="text-center">' + item.currentCapacity + '</td>' +
 					'<td class="text-center">' + item.siteManager.employeeName + '</td>' +
 					'<td class="text-center">' +
-					'<a href="#" title="" class="btn btn-primary btn-sm">' +
+					'<a href="edit-site.html#'+item.siteId+'" title="" class="btn btn-primary btn-sm">' +
 					'        <span class="fas fa-edit" aria-hidden="true"></span> Edit' +
 					'</a></td>' +
 					'<td class="text-center">' +

@@ -18,16 +18,14 @@ public interface SiteManagerService {
 
 	String getManagedSite(String siteManagerId);
 
-	List<SiteManager> getSiteManagersOfSite(String managedSiteId); // use this
-																	// if you
-																	// believe
-																	// there are
-																	// multiple
-																	// managers
-																	// per site.
+	// use this if you believe there are multiple managers per site.
+	List<SiteManager> getSiteManagersOfSite(String managedSiteId);
 
-	List<SiteManager> getAllSiteManagers(); // basically everyone in the db.
+	// basically everyone in the db.
+	List<SiteManager> getAllSiteManagers();
 
 	boolean assignSiteToSiteManager(String siteId, String employeeId);
+
+	List<SiteManager> getUnAssignedSiteManagers();
 
 }

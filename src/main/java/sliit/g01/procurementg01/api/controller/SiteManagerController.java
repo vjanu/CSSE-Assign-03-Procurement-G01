@@ -74,4 +74,14 @@ public class SiteManagerController {
 
 		return "Success:" + Boolean.toString(status);
 	}
+
+	/**
+	 * Retrieve unassigned site manager list
+	 * 
+	 * @return
+	 */
+	@GetMapping("/employee/site-manager/unassign")
+	public List<SiteManager> unassignedSiteManagers() {
+		return siteManagerService.getUnAssignedSiteManagers();
+	}
 }

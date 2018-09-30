@@ -1,5 +1,6 @@
 package sliit.g01.procurementg01.api.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,5 +91,23 @@ public class SiteManagerServiceImpl implements SiteManagerService {
 	@Override
 	public List<SiteManager> getAllSiteManagers() {
 		return siteManagerRepository.findAll();
+	}
+
+	@Override
+	public List<SiteManager> getUnAssignedSiteManagers() {
+		List<SiteManager> siteManagerList = siteManagerRepository.findAll();
+		List<Site> siteList = siteRepository.findAll();
+
+		List<SiteManager> unassignedList = new ArrayList<SiteManager>();
+
+		for (SiteManager sm : siteManagerList) {
+			for (Site s : siteList) {
+				if (!sm.getEmployeeId().equals(s.getSiteManager().getEmployeeId())) {
+					unassignedList.add(sm);
+				}
+			}
+		}
+
+		return unassignedList;
 	}
 }

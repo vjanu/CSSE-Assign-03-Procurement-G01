@@ -34,10 +34,12 @@ function addSupplier() {
     };
 
     axios.post(BASE_URL + '/supplier', data)
-    .then((result) => {
-        
+    .then((response) => {
+        if (response) {
+            console.log(response);
+        }
     }).catch((err) => {
-        
+        console.log(err);
     });
 
     console.log(data);
