@@ -49,8 +49,11 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 		if (requestMaterial.getIsProcumentApproved() != null)
 			req.setIsProcumentApproved(requestMaterial.getIsProcumentApproved());
 
-		if (requestMaterial.getItems() == null)
-			requestMaterial.setItems(req.getItems());
+		if (requestMaterial.getIsSiteManagerApproved() != null)
+			req.setIsSiteManagerApproved(requestMaterial.getIsSiteManagerApproved());
+
+//		if (requestMaterial.getItems() == null)
+//			requestMaterial.setItems(req.getItems());
 
 		// if the material request is updated, we can go ahead and create the
 		// purchase orders.

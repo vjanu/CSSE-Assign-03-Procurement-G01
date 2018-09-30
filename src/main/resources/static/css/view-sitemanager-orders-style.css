@@ -55,7 +55,8 @@ only screen and (max-width: 760px),
 	td:nth-of-type(2):before { content: "Items"; }
 	td:nth-of-type(3):before { content: "Order Requested Date"; }
 	td:nth-of-type(4):before { content: "Order Recieved Date"; }
-	td:nth-of-type(5):before { content: "Order Status"; }
-	td:nth-of-type(6):before { content: "Fully Delivered"; }
-	td:nth-of-type(7):before { content: "Partially Delivered"; }
+	td:nth-of-type(5):before { content: "Change Returned Date"; }
+	td:nth-of-type(6):before { content: "Order Status"; }
+	td:nth-of-type(7):before { content: "Fully Delivered"; }
+	td:nth-of-type(8):before { content: "Partially Delivered"; }
 }

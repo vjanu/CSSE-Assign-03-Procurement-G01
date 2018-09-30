@@ -7,7 +7,7 @@
 let BASE_URL_LOCAL = 'http://localhost:9000';
 let USER_INFO = 'user-info';
 let CURRENT_URL = window.location.href;
-
+let itemsArray = [];
 
 /* * * * *     Event Triggers     * * * * */
 $('#btn-logout').on('click', function (e) {
@@ -136,8 +136,32 @@ window.getConfirmation = function(ele) {
 
 
 function getItemList(items){
-	var html = '';
+    var html = '';
+    // // var count = 0;
+    // console.log(items)
+    // // console.log(items.length)
+  
+    // // console.log(items.data.length)
+  
+    
+    // for(var count in items){
+    // axios.get(BASE_URL_LOCAL + '/item/'+count)
+    //  .then(response => {
+    // 	 console.log(response.data)
+    	
+    //         var i = response.data.itemName;
+    //         console.log("name: "+i)
+    //         itemsArray.push(i);
+    	 
+    //  })
+    
+    //  .catch(function (error) {
+    //      // handle error
+    //      console.log(error);
+    //  });
+    // }
 	for (var key in items) {
+
 		if (items.hasOwnProperty(key)) {
 			html += key +' : '+items[key]+'<br/>';
 		}
@@ -150,12 +174,12 @@ function getApprovedLabels(status){
     var btnClass='';
     var btnText = '';
     var isDisabled = '';
-    if(status==1){
+    if(status=="1"){
         btnClass = "btn btn-success btn-sm";
         btnText = "Approved";
         isDisabled = "disabled";
     }
-    else if(status==2){
+    else if(status=="2"){
         btnClass = "btn btn-danger btn-sm";
         btnText = "Declined";
         isDisabled = "disabled";
@@ -506,7 +530,7 @@ function loadPurchasedOrders(){
 
             var html = '<tr>';
             html +='<td align="right">'+request.requestId+'</td>' ;
-            html +='<td align="center">' + getItemList(request.items) + '</td>' ;
+            html +='<td align="center">' + getOrderList(request.items) + '</td>' ;
             html +='<td align="right">'+formatDate(request.orderDate)+'</td>' ;
             html +='<td align="right">'+formatDate(request.returnedDate)+'</td>' ;
             html +='<td align="right">'+'<input type = "date" id="returnedDate"/>'+'</td>' ;
@@ -533,6 +557,15 @@ function loadPurchasedOrders(){
     });
 }
 
+function getOrderList(items){
+	var html = '';
+	for (var key = 0; key < items.length; key++) {
+			html += items[key].itemName +' : '+items[key].quantity+'<br/>';	
+	}
+	
+	return html;
+}
+
 function getOrderStatusLabels(status){
     var badgeClass ='';
     var badgeText='';
@@ -557,7 +590,7 @@ window.getOrderPurchasedFullyDelivered = function(ele) {
     var row = $(ele).closest('tr');
     let orderPurchased = {
         requestId: row.find('td:first').text(),
-        orderDate: row.find('td:nth-child(2)').text(),   
+        orderDate: row.find('td:nth-child(3)').text(),   
         returnedDate: $('#returnedDate').val(),  
         orderStatus: "Complete",   
         onHold:false
@@ -567,7 +600,7 @@ window.getOrderPurchasedFullyDelivered = function(ele) {
         headers: headers
     })
         .then(response => {
-            console.log(response.form3Data);
+            console.log(response.orderPurchased);
                    $.notify("Order Marked as Fully Delivered", "success");
                    
         })
@@ -585,7 +618,7 @@ window.getOrderPurchasedPartiallyDelivered = function(ele) {
     var row = $(ele).closest('tr');
     let orderPurchased = {
         requestId: row.find('td:first').text(),
-        orderDate: row.find('td:nth-child(2)').text(),   
+        orderDate: row.find('td:nth-child(3)').text(),   
         returnedDate: $('#returnedDate').val(),  
         orderStatus: "Partial",
         onHold:false
@@ -595,7 +628,7 @@ window.getOrderPurchasedPartiallyDelivered = function(ele) {
         headers: headers
     })
         .then(response => {
-            console.log(response.form3Data);
+            console.log(response.orderPurchased);
                    $.notify("Order Marked as Partially Delivered", "success");
                    
         })
