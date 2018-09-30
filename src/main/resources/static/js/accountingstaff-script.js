@@ -58,6 +58,11 @@ if (CURRENT_URL.includes('view-supplier-acc')) {
    
 }
 
+if (CURRENT_URL.includes('pay-for-pending-payments')) {
+    populatePaymentDetails();
+   
+}
+
 
 /***********  View Purchased Orders Starts ******************/
 function loadPurchasedOrders(){
@@ -67,9 +72,9 @@ function loadPurchasedOrders(){
         response.data.forEach(request => {
             var html = '<tr>';
             html +='<td align="center">'+request.orderId+'</td>' ;
-           
             html +='<td align="center">'+formatDate(request.orderDate)+'</td>' ;
             html +='<td align="center">'+formatDate(request.returnedDate)+'</td>' ;
+            html +='<td align="center">'+request.orderId+'</td>' ; //todo
             html +='<td align="center">' + getOrderStatusLabels(request.orderStatus) + '</td>';
             html +='<td align="center">' + getOrderHoldLabels(request.onHold) + '</td>';
              html +='<td align="center">' +
@@ -79,7 +84,7 @@ function loadPurchasedOrders(){
             '</a>' +
            '</td>' ;
              html +='<td align="center">' +
-            '<a href="pay-for-pending-payments.html" title="" class="btn btn-danger btn-sm">\n' +
+            '<a href="pay-for-pending-payments.html#'+request.supplierId+'" title="" class="btn btn-danger btn-sm">\n' +
            '        <span class="fa fa-money" aria-hidden="true"></span>\n' +
            '        <span><strong>Pay Now</strong></span></a>'+
             '</a>' +
@@ -161,8 +166,32 @@ window.makeOrderHold = function(ele) {
 /***********  View Purchased Orders Ends ******************/
 
 
-function payNow(){
-    $.notify("Paid Successfully", "success");
+// function payNow(){
+//     $.notify("Paid Successfully", "success");
+// }
+
+function populatePaymentDetails(){
+    if (CURRENT_URL.includes('#')) {
+		let supplierId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
+		console.log(supplierId);
+		$("#supplier-id").val(supplierId);
+
+
+		axios.get(BASE_URL_LOCAL + '/supplier/'+supplierId).then(function (response) {
+			if (response.data) {
+				console.log(response);
+				// $('#order-id').val(response.data.siteName);//orderid
+				$('#supplier-name').val(response.data.supplierName);
+				$('#bank-acc-id').val(response.data.bankAccountNo);
+				$('#bank-acc-name').val(response.data.bankName);
+				// $('#amount').val(response.data.siteName)
+			}
+		}).catch(function (error) {
+			console.log(error);
+		});
+
+
+	}
 }
 
 function clearPayments(){

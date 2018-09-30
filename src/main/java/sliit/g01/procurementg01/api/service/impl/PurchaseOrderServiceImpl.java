@@ -50,7 +50,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
      *                         employee.
      */
     @Override
-    public List<PurchaseOrder> createOrder(RequestMaterial requestMaterial) {
+    public List<PurchaseOrder>createOrder(RequestMaterial requestMaterial) {
         List<PurchaseOrder> orders = new ArrayList<>(); // holds the purchase orders(one order per supplier).
         Map<String, List<Item>> itemsOrderedFromEachSupplier = new HashMap<>(); // list of items mapped against the supplier.
         Map<String, String> itemIdAndQuantities = requestMaterial.getItems(); // quantity required, mapped against item id.
@@ -179,9 +179,13 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     @Override
     public PurchaseOrder updatePurchaseOrder(String orderId, PurchaseOrder purchaseOrder) {
         PurchaseOrder order = purchaseOrderRepository.getPurchaseOrderByOrderId(orderId);
-        if (purchaseOrder.getItems() == null)
-            purchaseOrder.setItems(order.getItems());
-        return purchaseOrderRepository.save(purchaseOrder);
+        if (purchaseOrder.getReturnedDate() != null)
+            order.setReturnedDate(purchaseOrder.getReturnedDate());
+        if (purchaseOrder.getOrderStatus() != null)
+            order.setOrderStatus(purchaseOrder.getOrderStatus());
+        if (purchaseOrder.isOnHold() != false)
+            order.setOnHold(purchaseOrder.isOnHold());
+        return purchaseOrderRepository.save(order);
     }
 
 

@@ -13,7 +13,17 @@ public class Supplier {
 	private String address;
 	private String email;
 	private String phone;
+	private String bankName;
 	private boolean isBanned;
+
+
+	public String getBankName() {
+		return bankName;
+	}
+
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
 
 	public String getSupplierId() {
 		return supplierId;
