@@ -24,16 +24,6 @@ public class PurchaseOrderController {
     private PurchaseOrderServiceImpl purchaseOrderService;
 
 
-    // add new purchase order or orders depending on number of suppliers.
-    @PostMapping("/order")
-    public ResponseEntity<String> addPurcahseOrders(@RequestBody RequestMaterial requestMaterial) {
-        List<PurchaseOrder> purchaseOrderList = purchaseOrderService.createOrder(requestMaterial);
-        purchaseOrderService.addPurchaseOrders(purchaseOrderList);
-
-        return new ResponseEntity<>("Order(s) added.", HttpStatus.OK);
-
-    }
-
     // retrieve the purchase order under the order id..
     @GetMapping("/order/{orderId}")
     public PurchaseOrder getPurchaseOrder(@PathVariable String orderId) {
@@ -76,7 +66,8 @@ public class PurchaseOrderController {
     // ex: pending orders of all suppliers, pending orders of supplier SUP001, all pending orders, all orders.
     // possible urls:
     // <hostname>:<port>/order?supplier=<supplierId>&status=<orderStatus>
-    public Map<String, List<PurchaseOrder>> getOrdersWithCriteria(@RequestBody Map<String, String> query) {
+    @GetMapping("/order")
+    public Map<String, List<PurchaseOrder>> getOrdersWithCriteria(@RequestParam Map<String, String> query) {
         Map<String, List<PurchaseOrder>> ordersForSuppliers = new HashMap<>();
 
         // possible scenarions:-
