@@ -58,4 +58,5 @@ only screen and (max-width: 760px),
 	td:nth-of-type(5):before { content: "Items"; }
 	td:nth-of-type(6):before { content: "Immediate"; }
 	td:nth-of-type(7):before { content: "Approval Status"; }
+	td:nth-of-type(8):before { content: "Grant Request"; }
 }

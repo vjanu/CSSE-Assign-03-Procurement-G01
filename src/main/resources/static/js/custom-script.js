@@ -82,9 +82,20 @@ $(document).on('click', '#manage-constructor-black-list .btn-danger', function (
 	e.stopPropagation();
 	var cid = $(this).closest("tr").find(".nr-cid").text();
 	console.log(cid);
-	var r = confirm("Are you sure want to blacklist this constructor? This action cannot be undone");
+	var r = confirm("Are you sure want to blacklist this constructor?");
 	if (r == true) {
-		blacklistConstructor(cid);
+		blacklistConstructor(cid, true);
+	}
+});
+
+$(document).on('click', '#manage-constructor-black-list .btn-warning', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	var cid = $(this).closest("tr").find(".nr-cid").text();
+	console.log(cid);
+	var r = confirm("Are you sure want to Unbanned this constructor?");
+	if (r == true) {
+		blacklistConstructor(cid, false);
 	}
 });
 
@@ -96,9 +107,55 @@ $(document).on('click', '#manage-supplier-black-list .btn-danger', function (e) 
 	e.stopPropagation();
 	var sid = $(this).closest("tr").find(".nr-sid").text();
 	console.log(sid);
-	var r = confirm("Are you sure want to blacklist this Supplier? This action cannot be undone");
+	var r = confirm("Are you sure want to blacklist this Supplier?");
 	if (r == true) {
-		blacklistSupplier(sid);
+		blacklistSupplier(sid, true);
+	}
+});
+
+
+$(document).on('click', '#manage-supplier-black-list .btn-warning', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	var sid = $(this).closest("tr").find(".nr-sid").text();
+	console.log(sid);
+	var r = confirm("Are you sure want to Unbanned this Supplier?");
+	if (r == true) {
+		blacklistSupplier(sid, false);
+	}
+});
+
+
+/**
+ * Click event in site-item-table
+ */
+$(document).on('click', '#site-item-table .btn-danger', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	var itemId = $(this).closest("tr").find(".nr-itemId").text();
+	console.log(itemId);
+	var r = confirm("Are you sure want to remove this item from this site? This action cannot be undone");
+	if (r == true) {
+
+
+		let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+
+		var index = storedItems.findIndex(function (item, i) {
+			return item.itemId === itemId
+		});
+
+		console.log("Index : " + index);
+		if (index != -1) {
+			storedItems.splice(index, 1);
+		}
+
+		localStorage.setItem('items', JSON.stringify(storedItems));
+		$("#item-list tbody").empty();
+
+		loadItemTable();
+
+
+		$.notify(itemId, "success");
 	}
 });
 
@@ -144,19 +201,64 @@ if (CURRENT_URL.includes('add-new-item')) {
 	generateCategoryDropdown();
 }
 
+if (CURRENT_URL.includes('edit-site')) {
+	populateSiteDetails();
+	populateSiteItems();
+}
 
 
 
 
 /* * * * * FUNCTION * * * * */
 
+function populateSiteItems() {
+	if (CURRENT_URL.includes('#')) {
+		let siteId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
+		$("#site-id").val(siteId);
+		axios.get(BASE_URL_LOCAL + '/site/' + siteId).then(function (response) {
+			if (response.data) {
+				console.log(response);
+				$('#site-name').val(response.data.siteName);
+				$('#address').val(response.data.address);
+				$('#storage-capacity').val(response.data.storageCapacity);
+				$('#current-capacity').val(response.data.currentCapacity);
+				// $('#site-managers').val(response.data.siteName)
+			}
+		}).catch(function (error) {
+			console.log(error);
+		});
+	}
 
-function blacklistSupplier(sid){
-	let data = {"isBanned": true}
+}
+
+function populateSiteDetails() {
+	if (CURRENT_URL.includes('#')) {
+		let siteId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
+		$("#site-id").val(siteId);
+		axios.get(BASE_URL_LOCAL + '/site/' + siteId).then(function (response) {
+			if (response.data) {
+				console.log(response);
+				$('#site-name').val(response.data.siteName);
+				$('#address').val(response.data.address);
+				$('#storage-capacity').val(response.data.storageCapacity);
+				$('#current-capacity').val(response.data.currentCapacity);
+				// $('#site-managers').val(response.data.siteName)
+			}
+		}).catch(function (error) {
+			console.log(error);
+		});
+	}
+}
+
+
+function blacklistSupplier(sid, isBanned) {
+	let data = {
+		"isBanned": isBanned
+	}
 	axios.put(BASE_URL_LOCAL + '/supplier/update/' + sid, data)
 		.then(function (response) {
 			console.log(response);
-			$.notify("Successfully Blacklisted", "success");
+			$.notify((isBanned) ? sid+" Successfully Blacklisted" : sid+" Successfully Unbanned", "success");
 			loadAllSuppliers();
 		}).catch(function (error) {
 			console.log(error);
@@ -165,12 +267,14 @@ function blacklistSupplier(sid){
 
 
 
-function blacklistConstructor(cid){
-	let data = {"isBanned": true}
+function blacklistConstructor(cid, isBanned) {
+	let data = {
+		"isBanned": isBanned
+	}
 	axios.put(BASE_URL_LOCAL + '/employee/update/' + cid, data)
 		.then(function (response) {
 			console.log(response);
-			$.notify("Successfully Blacklisted", "success");
+			$.notify((isBanned) ? cid+" Successfully Blacklisted" : cid+" Successfully Unbanned", "success");
 			loadAllConstructors();
 		}).catch(function (error) {
 			console.log(error);
@@ -200,7 +304,9 @@ function removeSite(siteId) {
 
 
 function approveRequestedMaterial(oid) {
-	let data = {"isProcumentApproved": true}
+	let data = {
+		"isProcumentApproved": true
+	}
 	axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + oid, data)
 		.then(function (response) {
 			console.log(response);
@@ -212,7 +318,7 @@ function approveRequestedMaterial(oid) {
 }
 
 
-function loadSupplierRatings(){
+function loadSupplierRatings() {
 	axios.get(BASE_URL_LOCAL + '/ratings/supplier-ratings').then(function (response) {
 		if (response.data) {
 			console.log(response)
@@ -272,7 +378,7 @@ function loadAllSuppliers() {
 				html += '<td class="text-center">' + item.phone + '</td>';
 				html += '<td class="text-center">' + item.address + '</td>';
 				html += '<td class="text-center">' + getBlacklistBadge(item.isBanned) + '</td>';
-				html += '<td><center>' + getBlacklistButton(item.isBanned) + '</td>';
+				html += '<td><center>' + getBlacklistButton(item.isBanned, false) + '</td>';
 				html += '</tr>';
 
 				$('#manage-supplier-black-list tbody').append(html);
@@ -299,7 +405,7 @@ function loadAllConstructors() {
 				html += '<td class="text-center">' + item.phone + '</td>';
 				html += '<td class="text-center">' + item.address + '</td>';
 				html += '<td class="text-center">' + getBlacklistBadge(item.isBanned) + '</td>';
-				html += '<td class="text-center">' + getBlacklistButton(item.isBanned) + '</td>';
+				html += '<td class="text-center">' + getBlacklistButton(item.isBanned, false) + '</td>';
 				html += '</tr>';
 
 				$('#manage-constructor-black-list tbody').append(html);
@@ -395,7 +501,7 @@ function addNewItem() {
 		.catch(function (error) {
 			// handle error
 			console.log(error);
-			$.notify("Item not added", "error");;
+			$.notify("Item not added", "error");
 		});
 }
 
@@ -408,24 +514,36 @@ function addItemToSite() {
 			itemName: $('#op-item-select :selected').text(),
 			itemQty: $('#item-qty').val()
 		}
-
 		itemsArray.push(data);
 		localStorage.setItem('items', JSON.stringify(itemsArray));
 
-		let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
-
-		for (var i of storedItems) {
-			var html = '<tr>';
-			html += '	<td>' + i.itemId + '</td>';
-			html += '	<td class="nr-fid" scope="row">' + i.itemName + '</td>';
-			html += '	<td >' + i.itemQty + '</td>';
-			html += '</tr>';
-		}
-
-		$('#item-list tbody').append(html);
+		loadItemTable();
 	} else {
-		alert("Quantity cannot be empty")
+		$.notify("Quantity cannot be empty", "error");
 	}
+}
+
+
+function loadItemTable() {
+	let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+	console.log(storedItems)
+
+	for (var i of storedItems) {
+		console.log(i.itemId + " | " + i.itemName);
+		var html = '<tr>';
+		html += '	<td class="nr-itemId"><center>' + i.itemId + '</center></td>';
+		html += '	<td class="text-center">' + i.itemName + '</td>';
+		html += '	<td class="text-center">' + i.itemQty + '</td>';
+		html += '	<td class="text-center">' +
+			'		<a href="#" title="" class="btn btn-danger btn-sm">\n' +
+			'        	<span class="far fa-trash-alt" aria-hidden="true"></span>\n' +
+			'        	<span><strong>Remove</strong></span></a>' +
+			'		</a>' +
+			'	</td>';
+		html += '</tr>';
+	}
+
+	$('#site-item-table tbody').append(html);
 }
 
 
@@ -447,10 +565,10 @@ function loadAllSites() {
 					'<td class="text-center">' + item.currentCapacity + '</td>' +
 					'<td class="text-center">' + item.siteManager.employeeName + '</td>' +
 					'<td class="text-center">' +
-					'<a href="#" title="" class="btn btn-primary btn-sm">' +
+					'<a href="edit-site.html#' + item.siteId + '" title="" class="btn btn-primary btn-sm">' +
 					'        <span class="fas fa-edit" aria-hidden="true"></span> Edit' +
 					'</a></td>' +
-					'<td class="text-center">'+
+					'<td class="text-center">' +
 					'<a href="#" title="" class="btn btn-danger btn-sm">' +
 					'        <span class="far fa-trash-alt" aria-hidden="true"></span> Remove' +
 					'</a>' +
@@ -579,10 +697,11 @@ function getImmediateButton(status) {
 	return html;
 }
 
-function getBlacklistButton(status) {
-	var btnClass = (status) ? "btn btn-default btn-sm" : "btn btn-danger btn-sm";
-	var btnText = (status) ? "Blacklisted" : "Blacklist";
-	var isDisabled = (status) ? "disabled" : "";
+function getBlacklistButton(isBanned, isbtnDisabled) {
+
+	var btnClass = (isBanned) ? ((isbtnDisabled) ? "btn btn-default btn-sm" : "btn btn-warning btn-sm") : "btn btn-danger btn-sm";
+	var btnText = (isBanned) ? ((isbtnDisabled) ? "Blacklisted" : "Unbanned") : "Blacklist";
+	var isDisabled = (isBanned) ? ((isbtnDisabled) ? "disabled" : "") : "";
 
 	var html = '<button type="button" title="" class="' + btnClass + '" ' + isDisabled + '>' +
 		'        <span class="fas fa-ban" aria-hidden="true"></span>' +
@@ -593,7 +712,7 @@ function getBlacklistButton(status) {
 
 function getBlacklistBadge(status) {
 	var badgeClass = (status) ? "badge badge-pill badge-danger" : "badge badge-pill badge-primary";
-	var badgeText = (status) ? "Banned" : "Pending";
+	var badgeText = (status) ? "Banned" : "Active";
 
 	return '<h5><span class="' + badgeClass + '">' + badgeText + '</span></h5>';
 }
@@ -623,14 +742,13 @@ function generateItemSelectDropdown() {
 			var html = '<select class="form-control" id="op-item-select">';
 
 			Object.keys(response.data).forEach(supplierAsKey => {
-			    response.data[supplierAsKey].forEach(item => {
-                    html += '<option value="' + item.itemId + '">' + item.itemName + '</option>';
-                });
-            });
+				response.data[supplierAsKey].forEach(item => {
+					html += '<option value="' + item.itemId + '">' + item.itemName + '</option>';
+				});
+			});
 
 
 			html += '</select>';
-			console.log(html)
 			$('#item-select').append(html);
 		}).catch(function (error) {
 			// handle error

@@ -26,7 +26,7 @@
 
     <!-- navbar: start -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="#">Procurement Home</a>
+        <a class="navbar-brand" href="procurement-staff-dashboard.html">Procurement Home</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
             aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -67,17 +67,25 @@
                         <span class="nav-link-text">Ratings</span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="view-supplier-ratings.html">Supplier Ratings</a>
+                        <a class="dropdown-item" href="pages/supplier/view-supplier-ratings.html">Supplier Ratings</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="view-constructor-ratings.html">Constructors Ratings</a>
                     </div>
                 </li>
-				
-				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Inventory">
-                    <a class="nav-link nav-link-collapse" href="add-new-item.html">
-						<i class="fa fa-university"></i>
-                        <span class="nav-link-text">Inventory</span>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="far fa-fw fa-user"></i>
+                        <span class="nav-link-text">Manage Employee</span>
                     </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="pages/supplier/view-suppliers.html">Manage Suppliers</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Manage Site Mangers</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="add-new-constructor.html">Manage Constructors</a>
+                    </div>
                 </li>
             </ul>
 
@@ -109,7 +117,8 @@
                     <div class="card-header">
                         <h4>Manage Sites
                             <small class="float-sm-right">
-                                <a href="add-new-site.html" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Add new Site</a>
+                                <a href="add-new-site.html" class="btn btn-primary"><i class="fas fa-plus-circle"></i>
+                                    Add new Site</a>
                             </small>
                         </h4>
                     </div>

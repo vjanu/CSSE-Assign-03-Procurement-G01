@@ -55,8 +55,15 @@ if (CURRENT_URL.includes('view-employee-acc')) {
 
 if (CURRENT_URL.includes('view-supplier-acc')) {
     console.log("You are on view-supplier-acc page")
+    getSuppliers();
+}
+
+if (CURRENT_URL.includes('pay-for-pending-payments')) {
+    populatePaymentDetails();
    
 }
+
+
 
 
 /***********  View Purchased Orders Starts ******************/
@@ -67,9 +74,9 @@ function loadPurchasedOrders(){
         response.data.forEach(request => {
             var html = '<tr>';
             html +='<td align="center">'+request.orderId+'</td>' ;
-           
             html +='<td align="center">'+formatDate(request.orderDate)+'</td>' ;
             html +='<td align="center">'+formatDate(request.returnedDate)+'</td>' ;
+            html +='<td align="center">'+request.orderId+'</td>' ; //todo
             html +='<td align="center">' + getOrderStatusLabels(request.orderStatus) + '</td>';
             html +='<td align="center">' + getOrderHoldLabels(request.onHold) + '</td>';
              html +='<td align="center">' +
@@ -79,8 +86,8 @@ function loadPurchasedOrders(){
             '</a>' +
            '</td>' ;
              html +='<td align="center">' +
-            '<a href="pay-for-pending-payments.html" title="" class="btn btn-danger btn-sm">\n' +
-           '        <span class="fa fa-money" aria-hidden="true"></span>\n' +
+            '<a href="pay-for-pending-payments.html#'+request.supplierId+'" title="" class="btn btn-danger btn-sm">\n' +
+           '        <span class="fa fa-credit-card" aria-hidden="true"></span>\n' +
            '        <span><strong>Pay Now</strong></span></a>'+
             '</a>' +
            '</td>' ;
@@ -161,8 +168,32 @@ window.makeOrderHold = function(ele) {
 /***********  View Purchased Orders Ends ******************/
 
 
-function payNow(){
-    $.notify("Paid Successfully", "success");
+// function payNow(){
+//     $.notify("Paid Successfully", "success");
+// }
+
+function populatePaymentDetails(){
+    if (CURRENT_URL.includes('#')) {
+		let supplierId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
+		console.log(supplierId);
+		$("#supplier-id").val(supplierId);
+
+
+		axios.get(BASE_URL_LOCAL + '/supplier/'+supplierId).then(function (response) {
+			if (response.data) {
+				console.log(response);
+				// $('#order-id').val(response.data.siteName);//orderid
+				$('#supplier-name').val(response.data.supplierName);
+				$('#bank-acc-id').val(response.data.bankAccountNo);
+				$('#bank-acc-name').val(response.data.bankName);
+				// $('#amount').val(response.data.siteName)
+			}
+		}).catch(function (error) {
+			console.log(error);
+		});
+
+
+	}
 }
 
 function clearPayments(){
@@ -236,3 +267,79 @@ function loadSuccessfullPurchasedOrders(){
         console.log(error);
     });
 }
+
+/***********  View Suppliers Start ******************/
+
+function getSuppliers() {
+    axios.get(BASE_URL_LOCAL + '/supplier/')
+    .then(response => {
+        if (response.status == 200) {
+            console.log(response.data);
+            $('#view-supp-acc').append(getSupplierTable('supplier-table', response.data));
+            window.$('#supplier-table').DataTable();
+        }
+    })
+    .catch(err => {
+        console.log(err);
+    });
+}
+
+
+
+function getSupplierTable(tableId, suppliers) {
+        let html =
+            '<table class="table table-striped table-bordered" id="'+ tableId +'">' +
+            '<thead>' +
+            '<tr>' +
+            '<th align="center"scope="col">Supplier ID</th>' +
+            '<th align="center" scope="col">Supplier Name</th>' +
+            '<th align="center" scope="col">Bank Account No</th>' +
+            '<th align="center" scope="col">Bank Name</th>' +
+            '<th align="center" scope="col">Address</th>' +
+            '<th align="center" scope="col">Email</th>' +
+            '<th align="center" scope="col">Phone</th>' +
+            '<th align="center" scope="col">Availability</th>' +
+            '</tr>' +
+            '</thead>' +
+            '<tbody>';  
+    
+        
+        suppliers.forEach(request => {
+            html +=
+                '<tr>'+
+                    '<td align="center">' + request.supplierId + '</td>' +
+                    '<td align="center">' + request.supplierName + '</td>' +
+                    '<td align="center">' + request.bankAccountNo + '</td>' +
+                    '<td align="center">' + request.bankName  + '</td>' +
+                    '<td align="center">' + request.address  + '</td>' +
+                    '<td align="center">' + request.email  + '</td>' +
+                    '<td align="center">' + request.phone  + '</td>' +
+                    '<td align="center">' + getBannedLabel(request.isBanned) + '</td>' +
+                    
+                '</tr>';
+        });
+    
+        html += '</tbody></table>'; 
+    
+        return html;
+    }
+
+    
+
+function getBannedLabel(status){
+    var badgeClass ='';
+    var badgeText='';
+    if(status == true){
+        badgeClass = "badge badge-danger";
+        badgeText = "Banned";
+    }
+   
+    else{
+        badgeClass = "badge badge-success";
+        badgeText = "Unbanned";
+    }
+
+	var html = '<h4><span class="'+badgeClass+'">'+badgeText+'</span></h4>';
+	return html;
+}
+/***********  View Suppliers Ends ******************/

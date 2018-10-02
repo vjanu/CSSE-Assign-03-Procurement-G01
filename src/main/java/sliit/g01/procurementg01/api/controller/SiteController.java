@@ -16,14 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.model.Site;
 import sliit.g01.procurementg01.api.service.SiteService;
+import sliit.g01.procurementg01.api.service.impl.ItemServiceImpl;
 import sliit.g01.procurementg01.api.service.impl.SiteManagerServiceImpl;
 
 /**
- * created by viraj
+ * @author viraj
+ * @author Tharindu TCJ
  **/
 @RestController
 @RequestMapping("/site")
 public class SiteController {
+
+	@Autowired
+	private ItemServiceImpl itemService;
 
 	@Autowired
 	private SiteService siteService;
@@ -34,6 +39,25 @@ public class SiteController {
 	@RequestMapping(value = "/add-new-site", method = RequestMethod.POST)
 	public ResponseEntity<String> addSite(@Validated @RequestBody Site site) {
 		site.setSiteId("ST" + RandomStringUtils.randomNumeric(5));
+
+		// quantity required, mapped against item id.
+		// Map<String, String> itemIdAndQuantities = site.getItems();
+		//
+		// for (String itemId : itemIdAndQuantities.keySet()) {
+		//
+		// String quantity = itemIdAndQuantities.get(itemId);
+		// Item i = itemService.getItem(itemId);
+		//
+		// if (i != null) {
+		// i.setQuantity(quantity);
+		//
+		// // create a new list of items for future use.
+		// List<Item> itemList = new ArrayList<>();
+		// itemList.add(i);
+		//
+		// }
+		// }
+
 		if (siteService.addSite(site)) {
 			// update the site with its new site manager's details.
 			// when sending data, we only send site manager's employeeId

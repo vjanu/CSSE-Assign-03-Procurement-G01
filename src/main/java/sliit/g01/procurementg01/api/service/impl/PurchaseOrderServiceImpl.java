@@ -50,7 +50,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
      *                         employee.
      */
     @Override
-    public List<PurchaseOrder> createOrder(RequestMaterial requestMaterial) {
+    public List<PurchaseOrder>createOrder(RequestMaterial requestMaterial) {
         List<PurchaseOrder> orders = new ArrayList<>(); // holds the purchase orders(one order per supplier).
         Map<String, List<Item>> itemsOrderedFromEachSupplier = new HashMap<>(); // list of items mapped against the supplier.
         Map<String, String> itemIdAndQuantities = requestMaterial.getItems(); // quantity required, mapped against item id.
@@ -94,10 +94,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             PurchaseOrder p = new PurchaseOrder();
 
             p.setRequestId(requestMaterial.getRequestId());
-            p.setOrderId(UUID.randomUUID().toString());
+            p.setOrderId(requestMaterial.getRequestId());
             p.setDraftPurchaseOrder(true); // will be a draft as long as the payment isn't made.
             p.setItems(itemsOrderedFromEachSupplier.get(supplierId));
-            p.setOnHold(true); // will stay on hold until a staff member approves this.
+            p.setOnHold(false);
             p.setOrderDate(new Date());
 //            p.setOrderStatus("Pending approval");
             p.setSequentialReference("No idea");
@@ -178,7 +178,14 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     // for the given supplier, get the orders that are pending or something similar to that.
     @Override
     public PurchaseOrder updatePurchaseOrder(String orderId, PurchaseOrder purchaseOrder) {
-        return purchaseOrderRepository.save(purchaseOrder);
+        PurchaseOrder order = purchaseOrderRepository.getPurchaseOrderByOrderId(orderId);
+        if (purchaseOrder.getReturnedDate() != null)
+            order.setReturnedDate(purchaseOrder.getReturnedDate());
+        if (purchaseOrder.getOrderStatus() != null)
+            order.setOrderStatus(purchaseOrder.getOrderStatus());
+        if (purchaseOrder.isOnHold() != false)
+            order.setOnHold(purchaseOrder.isOnHold());
+        return purchaseOrderRepository.save(order);
     }
 
 

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class ItemController {
 
 	@PostMapping("/item/add-new-item")
 	public ResponseEntity<String> addCategory(@RequestBody Item item) {
-		item.setItemId(UUID.randomUUID().toString());
+		item.setItemId("IT" + RandomStringUtils.randomNumeric(5));
 		if (itemService.addItem(item)) {
 			return new ResponseEntity<>("New Item Added", HttpStatus.OK);
 		} else {
