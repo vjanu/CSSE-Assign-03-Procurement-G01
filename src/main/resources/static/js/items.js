@@ -64,7 +64,7 @@ function getItems() {
     axios.get(BASE_URL_LOCAL+'/item/' + supplierId + '/items')
         .then(response => {
             if (response.status == 200) {
-                $('#item-table-container').append(renderSupplierTable('item-table', response.data));
+                $('#item-table-container').append(renderItemTable('item-table', response.data));
 
                 // apply data-tables transformation; note that since we dynamically insert this,
                 // table, we need to bind it before calling datatables on the table.
@@ -74,4 +74,48 @@ function getItems() {
         .catch(err => {
             console.log(err);
         });
+}
+
+/**
+ * view all items in a searchable table.(using data-tables library for interactivity)
+ *
+ * @param items: list of items(i.e: response from the backend). this has the following structure:-
+ *                      [
+ *                          { item object },
+ *                          { item object},
+ *                          ....
+ *                      ]
+ *
+ */
+function renderItemTable(tagId, items) {
+    // render the table as a bootstrap table and use data tables to,
+    // make it interactive.
+
+    // table header.
+    let html =
+        '<table class="table" id="'+ tagId +'">' +
+        '<thead>' +
+        '<tr>' +
+        '<th scope="col">Item Id</th>' +
+        '<th scope="col">Item Name</th>' +
+        '<th scope="col">Quantity in Store</th>' +
+        '<th scope="col">Unit Price</th>' +
+        '</tr>' +
+        '</thead>' +
+        '<tbody>';  // be sure to end this tag in the end.
+
+    // add the rows(a row per supplier).
+    items.forEach(item => {
+        html +=
+            '<tr>'+
+            '<td>' + item.itemId + '</td>' +
+            '<td>' + item.itemName + '</td>' +
+            '<td>' + item.quantity + '</td>' +
+            '<td>' + item.price + '</td>' +
+            '</tr>';
+    })
+
+    html += '</tbody></table>'; // closing tags.
+
+    return html;
 }
