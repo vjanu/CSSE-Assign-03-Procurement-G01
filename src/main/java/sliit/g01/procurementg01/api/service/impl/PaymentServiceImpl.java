@@ -10,8 +10,8 @@ import sliit.g01.procurementg01.api.repository.PaymentRepository;
 import sliit.g01.procurementg01.api.service.PaymentService;
 
 /**
- * created by viraj
- **/
+ * @author Viraj
+ */
 
 @Service("paymentService")
 public class PaymentServiceImpl implements PaymentService {

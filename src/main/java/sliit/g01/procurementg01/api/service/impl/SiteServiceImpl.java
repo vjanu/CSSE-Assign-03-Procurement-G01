@@ -49,7 +49,11 @@ public class SiteServiceImpl implements SiteService {
 
 	@Override
 	public Site updateSite(String siteId, Site site) {
-		return siteRepository.save(site);
+		Site newSite = siteRepository.findBySiteId(siteId);
+
+		if (site.getItems() != null)
+			newSite.setItems(site.getItems());
+		return siteRepository.save(newSite);
 	}
 
 	// returns the site which the provided site manager is managing currently.

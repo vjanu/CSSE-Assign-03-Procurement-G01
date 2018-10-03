@@ -13,8 +13,8 @@ import sliit.g01.procurementg01.api.repository.SiteRepository;
 import sliit.g01.procurementg01.api.service.SiteManagerService;
 
 /**
- * created by viraj
- **/
+ * @author Viraj
+ */
 @Service("SiteManagerService")
 public class SiteManagerServiceImpl implements SiteManagerService {
 

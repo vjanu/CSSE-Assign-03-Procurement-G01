@@ -14,8 +14,8 @@ import sliit.g01.procurementg01.api.model.Rating;
 import sliit.g01.procurementg01.api.service.RatingService;
 
 /**
- * created by viraj & Modified By Tharidnu
- **/
+ * @author Viraj/Tharindu
+ */
 @RestController
 @RequestMapping("/ratings")
 public class RatingController {

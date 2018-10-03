@@ -6,8 +6,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * created by viraj
- **/
+ * @author Viraj
+ */
 @Document(collection = "Site")
 public class Site {
 

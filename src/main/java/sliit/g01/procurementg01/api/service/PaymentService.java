@@ -5,8 +5,8 @@ import sliit.g01.procurementg01.api.model.Payment;
 import java.util.List;
 
 /**
- * created by viraj
- **/
+ * @author Viraj
+ */
 
 public interface PaymentService {
 

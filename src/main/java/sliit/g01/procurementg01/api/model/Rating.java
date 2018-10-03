@@ -3,8 +3,8 @@ package sliit.g01.procurementg01.api.model;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * created by viraj
- **/
+ * @author Viraj
+ */
 @Document(collection = "Rating")
 public class Rating {
 

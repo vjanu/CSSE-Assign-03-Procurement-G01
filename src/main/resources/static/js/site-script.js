@@ -65,6 +65,16 @@ if (CURRENT_URL.includes('make-request')) {
    
 }
 
+$('#btn-add-item-to-site').on('click', function (e) {
+	e.preventDefault();
+	addItemToSite1();
+});
+
+if (CURRENT_URL.includes('update-stock-sitemanager')) {
+	generateItemSelectDropdown1();
+	
+}
+
 function loadRequestsFromConstructor(){
 	 axios.get(BASE_URL_LOCAL + '/requestmaterial/')
      .then(function (response) {
@@ -77,11 +87,11 @@ function loadRequestsFromConstructor(){
              html +='<td align="right">' + request.requestedPerson +'</td>' ;
              html +='<td align="right">' + request.requestedDate + '</td>' ;
              html +='<td align="right">' + request.siteId + '</td>' ;
-             html +='<td align="center">' + getItemList(request.items) + '</td>' ;
+             html +='<td align="right">' + getItemList(request.items) + '</td>' ;
              html +='<td align="right">' + getImmediateLabels(request.isImmediated) + '</td>';
              html +='<td align="right">' + getApprovedLabels(request.isSiteManagerApproved) + '</td>' ;
               html +='<td align="right">' +
-            '<a href="make-request.html#'+request.siteId+'?'+request.requestId+'"title="" class="btn btn-primary btn-sm">\n' +
+            '<a href="make-request.html#'+request.requestId+'"title="" class="btn btn-primary btn-sm">\n' +
             '        <span class="far fa-check-square" aria-hidden="true"></span>\n' +
             '        <span><strong>Make Request</strong></span></a>'+
              '</a>' +
@@ -321,54 +331,43 @@ $(document).ready(function(){
     // });
 
     // get the information of the site when site id is given
-    // $('#site-id').on('input',function(e){
-    //     let data = {
-    //       siteId : $('#site-id').val()
-    //     }
-    //      console.log(data.siteId);
-    //     axios.get(BASE_URL_LOCAL + '/site/'+ data.siteId)
-    //     .then(function (response) {
-    //             $("#site-name").val(response.data.siteName);
+    $('#site-id_').on('input',function(e){
+        let data = {
+          siteId : $('#site-id_').val()
+        }
+         console.log(data.siteId);
+        axios.get(BASE_URL_LOCAL + '/site/'+ data.siteId)
+        .then(function (response) {
+                $("#site-name").val(response.data.siteName);
 
-    //     })
-    //     .catch(function (error) {
-    //         // handle error
-    //         console.log(error);
-    //     });
-    // });
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        });
+
+        axios.get(BASE_URL_LOCAL + '/employee/site-manager/sites/'+data.siteId).then(function (response) {
+            if (response.data) {
+                console.log(response);
+                $('#nic').val(response.data.nic);
+                $('#site-manager-id').val(response.data.employeeId);
+                $('#site-manager-name').val(response.data.employeeName);
+            }
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+    });
 
     function populateRequestDetails(){
         let x='';
-        if (CURRENT_URL.includes('#') && CURRENT_URL.includes('?')) {
-            let siteId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.lastIndexOf('?'));
-            let reqId = CURRENT_URL.substr(CURRENT_URL.indexOf('?') + 1, CURRENT_URL.length);
-            console.log(CURRENT_URL.lastIndexOf('?'));
-            console.log(CURRENT_URL.length);
-            console.log(siteId);
-            console.log(reqId);
-            $("#site-id").val(siteId);
+        if (CURRENT_URL.includes('#') ) {
+            // let siteId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.lastIndexOf('?'));
+            let reqId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
+           
+            // $("#site-id").val(siteId);
             $("#request-id").val(reqId);
-    
-    
-            axios.get(BASE_URL_LOCAL + '/employee/site-manager/sites/'+siteId).then(function (response) {
-                if (response.data) {
-                    console.log(response);
-                    $('#nic').val(response.data.nic);
-                    $('#site-manager-id').val(response.data.employeeId);
-                    $('#site-manager-name').val(response.data.employeeName);
-                }
-            }).catch(function (error) {
-                console.log(error);
-            });
-    
-            axios.get(BASE_URL_LOCAL + '/site/'+siteId).then(function (response) {
-                if (response.data) {
-                    console.log(response);
-                    $('#site-name').val(response.data.siteName);
-                }
-            }).catch(function (error) {
-                console.log(error);
-            });
+            let siteId = $("#request-id").val();
 
         axios.get(BASE_URL_LOCAL + '/requestmaterial/'+ reqId)
         .then(function (response) {
@@ -473,7 +472,7 @@ $(document).ready(function(){
                 html +='<td align="right">' + request.requestedPerson +'</td>' ;
                 html +='<td align="right">' + request.requestedDate + '</td>' ;
                 html +='<td align="right">' + request.siteId + '</td>' ;
-                html +='<td align="center">' + getItemList(request.items) + '</td>' ;
+                html +='<td align="right">' + getItemList(request.items) + '</td>' ;
                 html +='<td align="right">' + getImmediateLabels(request.isImmediated) + '</td>';             
                 html +='</tr>';
                $('#requests-on-status tbody').append(html);
@@ -498,7 +497,7 @@ $(document).ready(function(){
             html +='<td align="right">' + request.requestedPerson +'</td>' ;
             html +='<td align="right">' + request.requestedDate + '</td>' ;
             html +='<td align="right">' + request.siteId + '</td>' ;
-            html +='<td align="center">' + getItemList(request.items) + '</td>' ;
+            html +='<td align="right">' + getItemList(request.items) + '</td>' ;
             html +='<td align="right">' + getImmediateLabels(request.isImmediated) + '</td>';             
             html +='</tr>';
            $('#requests-on-immediate tbody').append(html);
@@ -590,10 +589,10 @@ function loadPurchasedOrders(){
 
             var html = '<tr>';
             html +='<td align="right">'+request.requestId+'</td>' ;
-            html +='<td align="center">' + getOrderList(request.items) + '</td>' ;
+            html +='<td align="right">' + getOrderList(request.items) + '</td>' ;
             html +='<td align="right">'+formatDate(request.orderDate)+'</td>' ;
             html +='<td align="right">'+formatDate(request.returnedDate)+'</td>' ;
-            html +='<td align="right">'+'<input type = "date" id="returnedDate"/>'+'</td>' ;
+            html +='<td align="right">'+'<input type = "date" style="width:140px" id="returnedDate"/>'+'</td>' ;
             html +='<td align="right">' + getOrderStatusLabels(request.orderStatus) + '</td>';
              html +='<td align="right">' +
            '<a href="#" title="" class="btn btn-primary btn-sm" onclick="getOrderPurchasedFullyDelivered(this)">\n' +
@@ -662,13 +661,15 @@ window.getOrderPurchasedFullyDelivered = function(ele) {
         .then(response => {
             console.log(response.orderPurchased);
                    $.notify("Order Marked as Fully Delivered", "success");
+                    loadRequestsFromConstructor();
+                    
+                
                    
         })
         .catch(error => {
             console.log(error);
                     $.notify("Order Marking Error", "error");           
         })
-
 
 
 }
@@ -690,14 +691,14 @@ window.getOrderPurchasedPartiallyDelivered = function(ele) {
         .then(response => {
             console.log(response.orderPurchased);
                    $.notify("Order Marked as Partially Delivered", "success");
-                   
+                   loadPurchasedOrders();
         })
         .catch(error => {
             console.log(error);
             $.notify("Order Marking Error", "error");  
         })
 
-
+        
 
 }
 /***********  View Purchased Orders Ends ******************/
@@ -713,3 +714,143 @@ function formatDate(date) {
 
     return [year, month, day].join('-');
 }
+
+/***********  Update Site with Items starts ******************/
+function addItemToSite1() {
+	if ($('#item-qty').val() != "") {
+
+		let data = {
+			itemId: $('#op-item-select').val(),
+			itemName: $('#op-item-select :selected').text(),
+			itemQty: $('#item-qty').val()
+		}
+		itemsArray.push(data);
+		localStorage.setItem('items', JSON.stringify(itemsArray));
+
+		loadItemTable1();
+	} else {
+		$.notify("Quantity cannot be empty", "error");
+	}
+}
+
+function loadItemTable1() {
+	let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+	console.log(storedItems)
+
+	for (var i of storedItems) {
+		console.log(i.itemId + " | " + i.itemName);
+		var html = '<tr>';
+		html += '	<td class="nr-itemId" align="right">' + i.itemId + '</td>';
+		html += '	<td class="text-right">' + i.itemName + '</td>';
+		html += '	<td class="text-right">' + i.itemQty + '</td>';
+		html += '	<td class="text-right">' +
+			'		<a align="right" href="#" title="" class="btn btn-danger btn-sm">\n' +
+			'        	<span class="far fa-trash-alt" aria-hidden="true"></span>\n' +
+			'        	<span><strong>Remove</strong></span></a>' +
+			'		</a>' +
+			'	</td>';
+		html += '</tr>';
+	}
+
+	$('#site-item-table tbody').append(html);
+}
+
+
+function generateItemSelectDropdown1() {
+	axios.get(BASE_URL_LOCAL + '/item/')
+		.then(function (response) {
+			console.log(response.data)
+			var html = '<select class="form-control" id="op-item-select">';
+
+			Object.keys(response.data).forEach(supplierAsKey => {
+				response.data[supplierAsKey].forEach(item => {
+					html += '<option value="' + item.itemId + '">' + item.itemName + '</option>';
+				});
+			});
+
+
+			html += '</select>';
+			$('#item-select').append(html);
+		}).catch(function (error) {
+			// handle error
+			console.log(error);
+		});
+}
+
+
+$(document).on('click', '#site-item-table .btn-danger', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	var itemId = $(this).closest("tr").find(".nr-itemId").text();
+	console.log(itemId);
+	var r = confirm("Are you sure want to remove this item from this site?");
+	if (r == true) {
+
+
+		let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+
+		var index = storedItems.findIndex(function (item, i) {
+			return item.itemId === itemId
+		});
+
+		console.log("Index : " + index);
+		if (index != -1) {
+			storedItems.splice(index, 1);
+		}
+
+		localStorage.setItem('items', JSON.stringify(storedItems));
+		$("#item-list tbody").empty();
+
+		loadItemTable1();
+
+
+		$.notify(itemId, "success");
+	}
+});
+
+//  get the information of the site when site id is given
+    $('#site-id').on('input',function(e){
+        let data = {
+          siteId : $('#site-id').val()
+        }
+         console.log(data.siteId);
+        axios.get(BASE_URL_LOCAL + '/site/'+ data.siteId)
+        .then(function (response) {
+                $("#site-name").val(response.data.siteName);
+                $("#site-address").val(response.data.address);
+
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        });
+    });
+
+
+function updateSiteStock() {
+	let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+	var obj = {};
+	for (var i of storedItems) {
+		obj[i.itemName] = i.itemQty;
+	}
+
+	let data = {
+        siteId : $('#site-id').val(),
+		items: obj,
+	}
+
+	axios.put(BASE_URL_LOCAL + '/site/' + data.siteId, data)
+		.then(function (response) {
+            $.notify("Site Updated With Items", "success");
+            $('#site-id').val('');
+            $("#site-name").val('');
+            $("#site-address").val('');
+		})
+		.catch(function (error) {
+			// handle error
+			console.log(error);
+			$.notify("Site Updation Failed", "error");;
+		});
+}
+
+/***********  Update Site with Items ends ******************/

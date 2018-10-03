@@ -18,7 +18,7 @@
     <!-- lato font(from google fonts) -->
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
     <link href="css/custom-style.css" rel="stylesheet">
-    <link href="css/view-sitemanager-style.css" rel="stylesheet">
+    <link href="css/update-sitestock.css" rel="stylesheet">
 
 
     <title>Procurement Home</title>
@@ -82,7 +82,8 @@
                                       <a class="dropdown-item" href="update-stock-sitemanager.html" style="color:white">Update Site Stock</a>
                                     </div>
                                   </li>
-  
+
+                            
     
                 </ul>
     
@@ -117,50 +118,92 @@
                     <li class="breadcrumb-item">
                         <a href="sitemanager-dashboard.html">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item active">View Requests</li>
+                    <li class="breadcrumb-item active">Update Site Stock</li>
                 </ol>
+                <div class="card">
+                        <div class="card-header">
+                            <h4>Manage Site Stock</h4>
+                        </div>
+                        <div class="card-body">
+    
+    
+    
+                            <!-- main content: start -->
+    
+                            <div class="card-body mr-md-5 ml-md-5">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <form>
+                                     
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="site-id">Site Id</label>
+                                                    <input type="text" class="form-control" id="site-id" placeholder="Site Id"
+                                                        >
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="site-name">Site Name</label>
+                                                    <input type="text" class="form-control" id="site-name" placeholder="Site Name" 
+                                                    disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                    <div class="form-group col-md-12">
+                                                        <label for="site-Address">Site Address</label>
+                                                        <input type="text" class="form-control" id="site-address" placeholder="Site Address" disabled
 
-               
-                       
-                                <div class="card">
-                                <div class="card-header">
-                                    <h4>View Requests</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div style="width: 100%; padding-left: -10px; ">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped" id="view-requests">
-                                            <thead>
-                                                <tr>
-                                                    <th  class="text-right">Request ID</th>
-                                                    <th  class="text-right">Requested Person</th>
-                                                    <th scope="col" class="text-center">Date</th>
-                                                    <th scope="col" class="text-right">Site ID</th>
-                                                    <th scope="col" class="text-center">Items</th>
-                                                    <th scope="col" class="text-right">Immediate</th>
-                                                    <th scope="col" class="text-right">Approval Status</th>
-                                                    <th scope="col" class="text-right">Grant Request</th>
-                                                    <!--<th scope="col" class="text-center">Decline</th> -->
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
+                                                            >
+                                                    </div>
+                                                    
+                                                </div>
+     
+                                        </form>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="form-group col-md-4" id="item-select">
+                                                <label for="site-id">Item</label>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="item-qty">Quantity</label>
+    
+                                                <input type="number" class="form-control" id="item-qty" placeholder="Quantity">
+                                            </div>
+    
+                                            <div class="form-group col-md-4 mt-4" align="center">
+                                             
+
+                                                    <a href="#" title="" id="btn-add-item-to-site" class="btn btn-primary " >
+                                                            <span class="fa fa-plus-circle" aria-hidden="true"></span>
+                                                            <span><strong>Add Items</strong></span></a>
+                                                            <a href="#" title="" id="btn-update-site" class="btn btn-success " onclick="updateSiteStock()">
+                                                                    <span class="fas fa-edit" aria-hidden="true"></span>
+                                                                    <span><strong>Update Site</strong></span></a>
+                                            </div>
+    
+                                            <div class="table-responsive" id="item-list">
+                                                <table class="table table-bordered table-striped" id="site-item-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" class="text-center">Item ID</th>
+                                                            <th scope="col" class="text-center">Item Name</th>
+                                                            <th scope="col" class="text-center">Quantity</th>
+                                                            <th scope="col" class="text-center">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                           
+                                        </div>
                                     </div>
                                 </div>
-                                </div>
-            
-                                <!-- <input type="text" id="siteId" class="form-control" placeholder="Password" required="required"> -->
-                                <!-- <input type="text" id="orderId" class="form-control" placeholder="Password" required="required">
-                                <input type="text" id="orderId1" class="form-control" placeholder="Password" required="required">
-                                <input type="text" id="orderId2" class="form-control" placeholder="Password" required="required">
-                                <input type="text" id="orderId3" class="form-control" placeholder="Password" required="required">
-                                <textarea id="orderId5" rows="4" cols="50">
-                                        </textarea>
-                                <input type="button" value="Upload" class="btn btn-success " id ="btn-update">
-                                 -->
-                            
-                </div>
+                            </div>
+                            <!-- main content: end -->
+    
+                        </div>
+                    </div>
                 
             </div>
 
