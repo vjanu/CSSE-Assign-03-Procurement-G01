@@ -55,6 +55,7 @@ public class ItemController {
 		return new ResponseEntity<>("Item Not Created; Check if supplier exists.", HttpStatus.NOT_IMPLEMENTED);
 	}
 
+
 	// get all items supplied by a specific supplier.
 	@GetMapping("item/{supplierId}/items")
 	public List<Item> getItemsSuppliedBy(@PathVariable String supplierId) {
@@ -67,6 +68,7 @@ public class ItemController {
 		return itemService.getAllItemsGroupedBySupplier();
 	}
 
+	// get details of a specific item.
 	@GetMapping("/item/{itemId}")
 	public Item getCategory(@PathVariable String itemId) {
 		return itemService.getItem(itemId);

@@ -14,7 +14,7 @@ let BASE_URL = BASE_URL_LOCAL;
 let currentLocation = window.location.href;
 
 /* * * * Event Triggers * * * */
-// to add a supplier.
+// to add an item.
 $('#btn-add-item').on('click', function () {
     addItem();
 });
@@ -115,8 +115,8 @@ function renderItemTable(tagId, items) {
             '<td>' + item.price + '</td>' +
             '<td>' +
             '<div class="btn-group" role="group" aria-label="Basic example">' +
-            '<button id="edit-item-' + item.itemId + '" type="button" class="btn btn-outline-success"><i class="fas fa-edit"></i></button>' +
-            '<button id="delete-item-' + item.itemId + '" type="button" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></button>' +
+            '<button id="edit-item-' + item.itemId + '" type="button" class="btn btn-outline-success" onclick="goToEditPage(this);"><i class="fas fa-edit"></i></button>' +
+            '<button id="delete-item-' + item.itemId + '" type="button" class="btn btn-outline-danger" onclick="deleteItem(this);"><i class="fas fa-trash-alt"></i></button>' +
             '</div>' +
             '</td>' +
             '</tr>';
@@ -125,4 +125,49 @@ function renderItemTable(tagId, items) {
     html += '</tbody></table>'; // closing tags.
 
     return html;
+}
+
+
+/**
+ * This is responsible for redirecting to the edit page for the relevant item.
+ *
+ * @param itemId: item id of the item that we want to edit the information of.
+ */
+function goToEditPage(button) {
+    // get the relevant item's id from the button.
+    let id = button.id;     // id is in this format: edit-item-IT123 where IT123 is the itemId.
+    let itemId = id.includes('edit-item-') ? id.replace('edit-item-', '') : '';
+
+    // navigate to edit page.
+    // we embed the item id in the edit page's URL so that the script/function running on that page,
+    // can identify which item needs to be edited.
+    // url: <host>:<port>/suppliers/items/edit-supply-item.html#<item id>.
+    // having something starting with a hash in the end of the url won't do any harm to url navigation.
+    window.location.href = currentLocation.includes('view-supply-items') ? currentLocation.replace('view-supply-items', 'edit-supply-item') + '#' + itemId : currentLocation;   // redirection.
+}
+
+
+function loadItemDetailsForEditing() {
+    if (currentLocation.includes('#')) {
+        let itemId = currentLocation.split('#').pop();  // when u split by # you get the full url and the item id at the end. we only need the latter.
+
+        // get the details of the above item from the database and show it in the form.
+        axios.get(BASE_URL_LOCAL + '/item/' + itemId)
+            .then(response => {
+                if (response.status == 200) {
+                    let item = response.data;
+
+                    // now that we have details of the item, we can populate the form with existing info.
+                    if (item) {
+                        $('#item-id').val(item.itemId);
+                        $('#item-description').val(item.itemName);
+                        $('#available-quantity-in-store').val(item.quantity);
+                        $('#unit-price').val(item.price);
+                    }
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 }
