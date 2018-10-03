@@ -1,6 +1,7 @@
 package sliit.g01.procurementg01.api.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.model.Site;
 import sliit.g01.procurementg01.api.service.SiteService;
-import sliit.g01.procurementg01.api.service.impl.ItemServiceImpl;
 import sliit.g01.procurementg01.api.service.impl.SiteManagerServiceImpl;
 
 /**
@@ -27,8 +26,8 @@ import sliit.g01.procurementg01.api.service.impl.SiteManagerServiceImpl;
 @RequestMapping("/site")
 public class SiteController {
 
-	@Autowired
-	private ItemServiceImpl itemService;
+	// @Autowired
+	// private ItemServiceImpl itemService;
 
 	@Autowired
 	private SiteService siteService;
@@ -82,7 +81,7 @@ public class SiteController {
 	}
 
 	@RequestMapping(value = "/siteitem/{id}", method = RequestMethod.GET)
-	public List<Item> getAvailableItems(@PathVariable("id") final String id) {
+	public List<Map<String, String>> getAvailableItems(@PathVariable("id") final String id) {
 		return siteService.getAvailableItems(id);
 	}
 
