@@ -21,6 +21,8 @@ public interface ItemService {
 
 	Item getItem(String itemId);
 
+	Boolean updateItem(Item item);
+
 	Boolean deleteItem(String itemId);
 
 	Boolean addToRestrictedList(String itemId);

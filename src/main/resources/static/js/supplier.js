@@ -146,8 +146,8 @@ function renderSupplierTable(tagId, suppliers) {
                 '<td>' + (supplier.isBanned ? 'Allowed' : 'Not allowed') + '</td>' +
                 '<td>' +
                     '<div class="btn-group" role="group" aria-label="Basic example">' +
-                        '<button type="button" class="btn btn-success"><i class="fas fa-edit"></i></button>' +
-                        '<button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>' +
+                        '<button id="edit-supplier-' + supplier.supplierId + '" type="button" class="btn btn-outline-success"><i class="fas fa-edit"></i></button>' +
+                        '<button id="delete-supplier-' + supplier.supplierId + '" type="button" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></button>' +
                     '</div>'
                 '</td>' +
             '</tr>';

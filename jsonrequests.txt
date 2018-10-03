@@ -1,4 +1,4 @@
-﻿//add site manager
+//add site manager
 {
 	"managedSiteId":"0",
 	"employeeId":"20",
@@ -172,7 +172,7 @@
 
 -------- Add Items ----------
 // we add two items to each supplier.
-// for supplier ﻿257d2b90-ada2-4140-b695-31e145d22b1c
+// for supplier 257d2b90-ada2-4140-b695-31e145d22b1c
 {
   "categoryId": 1,
   "deliveryInformation": "Delivery within 2 days",
@@ -196,7 +196,7 @@
   "unitType": "10kg pack"
 }
 
-// for supplier ﻿ac86b0a0-31ce-4033-8773-88941ca42828
+// for supplier ac86b0a0-31ce-4033-8773-88941ca42828
 {
   "categoryId": 2,
   "deliveryInformation": "Delivery within 1 day",

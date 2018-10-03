@@ -22,6 +22,10 @@ $('#btn-add-request').on('click', function (e) {
 });
 
 
+$('#btn-add-item').on('click', function (e) {
+	e.preventDefault();
+	addItemTo();
+});
 
 
 
@@ -43,18 +47,18 @@ if (CURRENT_URL.includes('view-requests')) {
     loadConstructorRequests();
     
 }
-
+/*
 
 function addRequest(){
 	let data = {
-			orderId : $('#orderId').val(),
+			requestId : $('#orderId').val(),
 			requestedPerson : $('#constructorname').val(),
 			requestedDate : $('#requesteddate').val(),
 			items : $('#menu').val(),
 			quantity : $('#qty').val(),
 			requestingDate : $('#requestingdate').val()
 	}
-	axios.post(BASE_URL_LOCAL + '/requestmaterial/add-new-order', data)
+	axios.post(BASE_URL_LOCAL + '/requestmaterial/add-new-request', data)
     .then(function (response) {
     	alert(response.data);
     	$.notify(response.data, "success");
@@ -65,6 +69,82 @@ function addRequest(){
         $.notify("Request not added", "error");;    
     });
 }
+*/
+
+
+
+/*
+function addRequest() {
+	let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+	var obj = {};
+	for (var i of storedItems) {
+		obj[i.itemName] = i.itemQty;
+	}
+
+	let data = {
+			requestId: $('#orderId').val(),
+			requestedPerson: $('#constructorname').val(),
+			requestedDate: $('#requesteddate').val(),
+		    items: obj,
+		    requestingDate: $('#requestingdate').val(),
+		
+	}
+
+	axios.post(BASE_URL_LOCAL + '/requestmaterial/add-new-request', data)
+		.then(function (response) {
+			alert(response.data);
+	    	$.notify(response.data, "success");
+		})
+		.catch(function (error) {
+			 // handle error
+	        console.log(error);
+	        $.notify("Request not added", "error");;    
+		});
+}
+
+*/
+
+
+
+
+
+
+function addRequest() {
+	let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+	var obj = {};
+	for (var i of storedItems) {
+		obj[i.itemName] = i.itemQty;
+	}
+
+	let data = {
+			requestId: $('#orderId').val(),
+			requestedPerson: $('#constructorname').val(),
+		    requestedDate: $('#requesteddate').val(),
+            items: obj,
+		    requestingDate: $('#requestingdate').val(),
+		
+	}
+
+	axios.post(BASE_URL_LOCAL + '/requestmaterial/add-new-request', data)
+		.then(function (response) {
+			$.notify(response.data, "success");
+		})
+		.catch(function (error) {
+			// handle error
+			console.log(error);
+			$.notify("Request not added", "error");;
+		});
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -76,13 +156,14 @@ function loadConstructorRequests(){
 
 
             var html = '<tr>';
-            html +='<td align="right">'+request.orderId+'</td>' ;
+            html +='<td align="right">'+request.requestId+'</td>' ;
             html +='<td align="right">' + request.requestedPerson +'</td>' ;
             html +='<td align="right">' + request.requestedDate + '</td>' ;
-            html +='<td align="right">' + request.item + '</td>' ;
+   
+            html +='<td align="right">'  + getItemList(request.items) + '</td>' ;
             html +='<td align="right">' + request.quantity + '</td>' ;
             html +='<td align="right">' + request.requestingDate + '</td>' ;
-//            html +='<td align="center">' + getItemList(request.items) + '</td>' ;
+
         
             html +='</tr>';
            $('#view-requests tbody').append(html);
@@ -93,6 +174,64 @@ function loadConstructorRequests(){
         console.log(error);
     });
 }
+
+
+
+
+
+
+function addItemTo() {
+	if ($('#item-qty').val() != "") {
+
+		let data = {
+			itemId: $('#op-item-select').val(),
+			itemName: $('#op-item-select :selected').text(),
+			itemQty: $('#item-qty').val()
+		}
+		itemsArray.push(data);
+		localStorage.setItem('items', JSON.stringify(itemsArray));
+
+		loadItemTable();
+	} else {
+		$.notify("Quantity cannot be empty", "error");
+	}
+}
+
+function loadItemTable() {
+	let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+	console.log(storedItems)
+
+	for (var i of storedItems) {
+		console.log(i.itemId + " | " + i.itemName);
+		var html = '<tr>';
+		html += '	<td class="nr-itemId"><center>' + i.itemId + '</center></td>';
+		html += '	<td class="text-center">' + i.itemName + '</td>';
+		html += '	<td class="text-center">' + i.itemQty + '</td>';
+		html += '	<td class="text-center">' +
+			'		<a href="#" title="" class="btn btn-danger btn-sm">\n' +
+			'        	<span class="far fa-trash-alt" aria-hidden="true"></span>\n' +
+			'        	<span><strong>Remove</strong></span></a>' +
+			'		</a>' +
+			'	</td>';
+		html += '</tr>';
+	}
+
+	$('#request-item-table tbody').append(html);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function formatDate(date) {
@@ -108,5 +247,14 @@ function formatDate(date) {
 }
 
 
-
+function getItemList(items) {
+	var html = '<ul>';
+	for (var key in items) {
+		if (items.hasOwnProperty(key)) {
+			html += '<li>' + key + ' - ' + items[key] + '</li>';
+		}
+	}
+	html += '</ul>';
+	return html;
+}
 

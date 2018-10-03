@@ -1,11 +1,11 @@
 package sliit.g01.procurementg01.api.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.model.Site;
 import sliit.g01.procurementg01.api.repository.SiteRepository;
 import sliit.g01.procurementg01.api.service.SiteService;
@@ -21,9 +21,8 @@ public class SiteServiceImpl implements SiteService {
 	private SiteRepository siteRepository;
 
 	@Override
-	public List<Item> getAvailableItems(String siteId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Map<String, String>> getAvailableItems(String siteId) {
+		return siteRepository.findItemBySiteId(siteId);
 	}
 
 	@Override
