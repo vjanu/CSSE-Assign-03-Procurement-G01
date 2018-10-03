@@ -100,6 +100,7 @@ function renderItemTable(tagId, items) {
         '<th scope="col">Item Name</th>' +
         '<th scope="col">Quantity in Store</th>' +
         '<th scope="col">Unit Price</th>' +
+        '<th scope="col">Operations</th>' +
         '</tr>' +
         '</thead>' +
         '<tbody>';  // be sure to end this tag in the end.
@@ -112,6 +113,12 @@ function renderItemTable(tagId, items) {
             '<td>' + item.itemName + '</td>' +
             '<td>' + item.quantity + '</td>' +
             '<td>' + item.price + '</td>' +
+            '<td>' +
+            '<div class="btn-group" role="group" aria-label="Basic example">' +
+            '<button id="edit-item-' + item.itemId + '" type="button" class="btn btn-outline-success"><i class="fas fa-edit"></i></button>' +
+            '<button id="delete-item-' + item.itemId + '" type="button" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></button>' +
+            '</div>' +
+            '</td>' +
             '</tr>';
     })
 
