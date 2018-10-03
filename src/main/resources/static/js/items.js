@@ -42,3 +42,8 @@ function addItem() {
         console.log(err);
     });
 }
+
+// retrieve all items for this supplier from database.
+function getItems() {
+    
+}
