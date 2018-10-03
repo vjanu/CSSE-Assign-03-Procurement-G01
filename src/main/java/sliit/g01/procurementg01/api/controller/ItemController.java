@@ -8,11 +8,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.service.ItemService;
@@ -55,6 +51,17 @@ public class ItemController {
 		return new ResponseEntity<>("Item Not Created; Check if supplier exists.", HttpStatus.NOT_IMPLEMENTED);
 	}
 
+	// update an item.
+    @PutMapping("/item")
+    public ResponseEntity<String> updateItem(@RequestBody Item item) {
+        if (itemService.updateItem(item)) {
+            return new ResponseEntity<>("New Item Added", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Item Not Created", HttpStatus.NOT_IMPLEMENTED);
+        }
+
+    }
+
 	// get all items supplied by a specific supplier.
 	@GetMapping("item/{supplierId}/items")
 	public List<Item> getItemsSuppliedBy(@PathVariable String supplierId) {
@@ -67,6 +74,7 @@ public class ItemController {
 		return itemService.getAllItemsGroupedBySupplier();
 	}
 
+	// get details of a specific item.
 	@GetMapping("/item/{itemId}")
 	public Item getCategory(@PathVariable String itemId) {
 		return itemService.getItem(itemId);

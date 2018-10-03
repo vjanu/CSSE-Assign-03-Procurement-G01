@@ -72,4 +72,17 @@ public class ItemServiceImpl implements ItemService {
 
         return itemsOfferedBySupplier;
 	}
+
+	@Override
+	public Boolean updateItem(Item item) {
+		// check if an item under the given id exist.
+		Item existingItem = itemRepository.findByItemId(item.getItemId());
+
+		if (item != null) {
+			itemRepository.save(item);	// since the id is the same, the existing record will be replaced.
+			return true;
+		}
+
+		return false;
+	}
 }
