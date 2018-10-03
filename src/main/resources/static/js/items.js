@@ -16,33 +16,49 @@ let currentLocation = window.location.href;
 /* * * * Event Triggers * * * */
 // to add an item.
 $('#btn-add-item').on('click', function () {
-    addItem();
+    addItem(false);
+});
+// to update an item.
+$('#btn-edit-item').on('click', function () {
+    addItem(true);
 });
 
 
 /* * * * Functions * * * */
 
-// to add an item.
-function addItem() {
+// to add or update an item.
+function addItem(update) {
     // get data from html form.
     let data = {
         itemId: $('#item-id').val(),
         itemName: $('#item-description').val(),
         quantity: $('#available-quantity-in-store').val(),
         price: $('#unit-price').val(),
-        supplierId: 'SP10980'
+        supplierId: 'SP10980'   // this should be taken from localStorage.
     };
 
-    console.log(data);
-    axios.post(BASE_URL + '/item/add-new-item', data)
-        .then((response) => {
-            if (response.status == 200) {
-                alert('Item added; Redirecting to all items page');
-                window.location.href = currentLocation.includes('add-supply-item') ? currentLocation.replace('add-supply-item', 'view-supply-items') : currentLocation;   // redirection.
-            }
-        }).catch((err) => {
-        console.log(err);
-    });
+    if (update) {
+        axios.put(BASE_URL + '/item', data)
+            .then((response) => {
+                if (response.status == 200) {
+                    alert('Item Updated; Redirecting to all items page');
+                    window.location.href = currentLocation.includes('edit-supply-item') ? currentLocation.replace('edit-supply-item', 'view-supply-items') : currentLocation;   // redirection.
+                }
+            }).catch((err) => {
+            console.log(err);
+        });
+    }
+    else {
+        axios.post(BASE_URL + '/item/add-new-item', data)
+            .then((response) => {
+                if (response.status == 200) {
+                    alert('Item added; Redirecting to all items page');
+                    window.location.href = currentLocation.includes('add-supply-item') ? currentLocation.replace('add-supply-item', 'view-supply-items') : currentLocation;   // redirection.
+                }
+            }).catch((err) => {
+            console.log(err);
+        });
+    }
 }
 
 /**
@@ -147,6 +163,10 @@ function goToEditPage(button) {
 }
 
 
+/**
+ * This function will fill the fields in the edit form with the details relevant to the item,
+ * that the user is editing.
+ */
 function loadItemDetailsForEditing() {
     if (currentLocation.includes('#')) {
         let itemId = currentLocation.split('#').pop();  // when u split by # you get the full url and the item id at the end. we only need the latter.
