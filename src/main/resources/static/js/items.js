@@ -24,5 +24,21 @@ $('#btn-add-item').on('click', function () {
 
 // to add an item.
 function addItem() {
+    // get data from html form.
+    let data = {
+        itemId: $('#item-id').val(),
+        itemName: $('#item-description').val(),
+        quantity: $('#available-quantity-in-store').val(),
+        price: $('#unit-price').val()
+    };
 
+    axios.post(BASE_URL + '/item/add-new-item', data)
+        .then((response) => {
+            if (response.status == 200) {
+                alert('Item added; Redirecting to all items page');
+                window.location.href = currentLocation.includes('add-supply-item') ? currentLocation.replace('add-supply-item', 'view-supply-items') : currentLocation;   // redirection.
+            }
+        }).catch((err) => {
+        console.log(err);
+    });
 }
