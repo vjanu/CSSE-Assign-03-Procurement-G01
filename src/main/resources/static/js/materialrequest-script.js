@@ -225,6 +225,67 @@ function loadAddedItemTable() {
 }
 
 
+//reset the add request form
+function resetAddRequestForm(){
+    if (CURRENT_URL.includes('request-order')){    
+        
+           $('#requestId').val(''),
+           $('#constructorname').val(''),
+           $('#requesteddate').val(''),
+           $('#item-select').val(''),
+           $('#item-qty').val('')
+           $('#requestingdate').val('')
+           
+   }
+}
+
+
+
+
+/**
+ * Click event in site-item-table
+ */
+$(document).on('click', '#request-item-table .btn-danger', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	var itemId = $(this).closest("tr").find(".nr-itemId").text();
+	console.log(itemId);
+	var r = confirm("Are you sure you want to remove this item ? This action cannot be undone");
+	if (r == true) {
+
+
+		let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+
+		var index = storedItems.findIndex(function (item, i) {
+			return item.itemId === itemId
+		});
+
+		console.log("Index : " + index);
+		if (index != -1) {
+			storedItems.splice(index, 1);
+		}
+
+		localStorage.setItem('items', JSON.stringify(storedItems));
+		$("#item-list tbody").empty();
+
+		loadItemTable();
+
+
+		$.notify(itemId, "success");
+	}
+});
+
+
+
+
+
+
+
+
+
+
+
+
 function formatDate(date) {
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
