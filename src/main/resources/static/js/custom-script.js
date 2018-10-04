@@ -343,8 +343,12 @@ function approveRequestedMaterial(oid) {
 	axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + oid, data)
 		.then(function (response) {
 			console.log(response);
-			$.notify("Successfully Approved", "success");
-			loadRequestedMaterialTable();
+			if (response.data) {
+				$.notify(oid + " Approved Successfully", "success");
+				loadRequestedMaterialTable();
+			} else {
+				$.notify(oid + " Not Approved", "error");
+			}
 		}).catch(function (error) {
 			console.log(error);
 		});

@@ -2,7 +2,6 @@ package sliit.g01.procurementg01.api.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,19 +16,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.model.RequestMaterial;
-import sliit.g01.procurementg01.api.service.ItemService;
 import sliit.g01.procurementg01.api.service.RequestMaterialService;
-import sliit.g01.procurementg01.api.service.impl.SupplierServiceImpl;
 
+/**
+ * @author Tharindu TCJ
+ **/
 @RestController
 @RequestMapping("/requestmaterial")
 public class RequestMaterialController {
-	
 
-	
-	
 	@Autowired
 	private RequestMaterialService requestMaterialService;
 
@@ -42,15 +37,8 @@ public class RequestMaterialController {
 		} else {
 			return new ResponseEntity<>("Not Created", HttpStatus.NOT_IMPLEMENTED);
 		}
-
 	}
 
-	
-	
-	
-	
-	
-	
 	@GetMapping("/")
 	public List<RequestMaterial> getAllRequests() {
 		return requestMaterialService.getAllrequests();
@@ -67,7 +55,7 @@ public class RequestMaterialController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, value = "/update/{requestId}")
-	public RequestMaterial update(@PathVariable String requestId, @RequestBody RequestMaterial requestMaterial) {
+	public Boolean update(@PathVariable String requestId, @RequestBody RequestMaterial requestMaterial) {
 		return requestMaterialService.updateRequest(requestId, requestMaterial);
 	}
 

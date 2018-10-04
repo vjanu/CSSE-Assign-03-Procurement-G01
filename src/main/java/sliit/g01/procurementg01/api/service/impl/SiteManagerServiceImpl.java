@@ -14,6 +14,7 @@ import sliit.g01.procurementg01.api.service.SiteManagerService;
 
 /**
  * @author Viraj
+ * @author Tharindu TCJ
  */
 @Service("SiteManagerService")
 public class SiteManagerServiceImpl implements SiteManagerService {
@@ -96,21 +97,13 @@ public class SiteManagerServiceImpl implements SiteManagerService {
 	@Override
 	public List<SiteManager> getUnAssignedSiteManagers() {
 		List<SiteManager> siteManagerList = siteManagerRepository.findAll();
-		List<Site> siteList = siteRepository.findAll();
 
 		List<SiteManager> unassignedList = new ArrayList<SiteManager>();
 
+		/**
+		 * Iterate site managers and get site manager id null objects
+		 */
 		for (SiteManager sm : siteManagerList) {
-			// for (Site s : siteList) {
-			// System.out.println(sm.getEmployeeId() + " --> " +
-			// s.getSiteManager().getEmployeeId());
-			// if
-			// (!sm.getEmployeeId().equals(s.getSiteManager().getEmployeeId()))
-			// {
-			// unassignedList.add(sm);
-			// }
-			// }
-
 			if (sm.getManagedSiteId() == null) {
 				unassignedList.add(sm);
 			}

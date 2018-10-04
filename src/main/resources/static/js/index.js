@@ -38,7 +38,7 @@ function validateUserSignedIn() {
                 localStorage.setItem('user_info', window.btoa(JSON.stringify(user_info)));
                 // localStorage.setItem('user_info', (JSON.stringify(user_info)));
                 if(user_info.UserType == 'Procurement-Staff'){
-                    window.location.href = "procurement-staff-dashboard.html";
+                    window.location.href = "manage-sites.html";
                 }else if(user_info.UserType == 'Sitemanager'){
                     window.location.href = "sitemanager-dashboard.html";
                 }else if(user_info.UserType == 'Constructor'){

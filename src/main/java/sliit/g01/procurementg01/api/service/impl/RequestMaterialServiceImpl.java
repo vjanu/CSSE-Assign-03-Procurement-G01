@@ -10,6 +10,9 @@ import sliit.g01.procurementg01.api.model.RequestMaterial;
 import sliit.g01.procurementg01.api.repository.RequestMaterialRepository;
 import sliit.g01.procurementg01.api.service.RequestMaterialService;;
 
+/**
+ * @author Tharindu TCJ
+ **/
 @Service("requestmaterialService")
 public class RequestMaterialServiceImpl implements RequestMaterialService {
 
@@ -43,7 +46,7 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 	}
 
 	@Override
-	public RequestMaterial updateRequest(String requestId, RequestMaterial requestMaterial) {
+	public Boolean updateRequest(String requestId, RequestMaterial requestMaterial) {
 		RequestMaterial req = requestmaterialRepository.findByRequestId(requestId);
 
 		if (requestMaterial.getIsProcumentApproved() != null)
@@ -58,8 +61,8 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 		if (requestMaterial.getIsImmediated() != null)
 			req.setIsImmediated(requestMaterial.getIsImmediated());
 
-//		if (requestMaterial.getItems() == null)
-//			requestMaterial.setItems(req.getItems());
+		// if (requestMaterial.getItems() == null)
+		// requestMaterial.setItems(req.getItems());
 
 		// if the material request is updated, we can go ahead and create the
 		// purchase orders.
@@ -69,7 +72,7 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 			purchaseOrderService.addPurchaseOrders(ordersForSuppliers);
 		}
 
-		return requestmaterialRepository.save(req);
+		return (requestmaterialRepository.save(req) != null);
 	}
 
 	@Override
