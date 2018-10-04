@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.model.Site;
 import sliit.g01.procurementg01.api.service.SiteService;
 import sliit.g01.procurementg01.api.service.impl.SiteManagerServiceImpl;
@@ -81,7 +82,7 @@ public class SiteController {
 	}
 
 	@RequestMapping(value = "/siteitem/{id}", method = RequestMethod.GET)
-	public List<Map<String, String>> getAvailableItems(@PathVariable("id") final String id) {
+	public List<Item> getAvailableItems(@PathVariable("id") final String id) {
 		return siteService.getAvailableItems(id);
 	}
 
