@@ -2,13 +2,14 @@ package sliit.g01.procurementg01.api.service;
 
 import java.util.List;
 
-
 import sliit.g01.procurementg01.api.model.RequestMaterial;
 
+/**
+ * @author Tharindu TCJ
+ **/
 public interface RequestMaterialService {
 
 	Boolean addOrder(RequestMaterial requestmaterial);
-
 
 	List<RequestMaterial> getAllrequests();
 
@@ -18,7 +19,7 @@ public interface RequestMaterialService {
 
 	Boolean deleteRequest(String requestId);
 
-	RequestMaterial updateRequest(String requestId, RequestMaterial requestMaterial);
+	Boolean updateRequest(String requestId, RequestMaterial requestMaterial);
 
 	Boolean setProcumentStaffApproved(String requestId, Boolean isProcumentApproved);
 

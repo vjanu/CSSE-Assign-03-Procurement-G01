@@ -1,6 +1,5 @@
 package sliit.g01.procurementg01.api.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.model.Site;
 import sliit.g01.procurementg01.api.service.SiteService;
-import sliit.g01.procurementg01.api.service.impl.ItemServiceImpl;
 import sliit.g01.procurementg01.api.service.impl.SiteManagerServiceImpl;
 
 /**
@@ -29,9 +27,6 @@ import sliit.g01.procurementg01.api.service.impl.SiteManagerServiceImpl;
 public class SiteController {
 
 	@Autowired
-	private ItemServiceImpl itemService;
-
-	@Autowired
 	private SiteService siteService;
 
 	@Autowired
@@ -40,21 +35,6 @@ public class SiteController {
 	@RequestMapping(value = "/add-new-site", method = RequestMethod.POST)
 	public ResponseEntity<String> addSite(@Validated @RequestBody Site site) {
 		site.setSiteId("ST" + RandomStringUtils.randomNumeric(5));
-
-		List<Item> itemList = new ArrayList<>();
-
-		// quantity required, mapped against item id.
-		List<Item> itemIdAndQuantities = site.getItems();
-
-		for (Item item : itemIdAndQuantities) {
-			Item i = itemService.getItem(item.getItemId());
-			if (i != null) {
-				i.setQuantity(item.getQuantity());
-				// create a new list of items for future use.
-				itemList.add(i);
-			}
-		}
-		site.setItems(itemList);
 
 		if (siteService.addSite(site)) {
 			// update the site with its new site manager's details.
@@ -67,7 +47,9 @@ public class SiteController {
 
 			// in site object, we have included a site manager object which has
 			// the employee id.
-			siteManagerService.assignSiteToSiteManager(site.getSiteId(), site.getSiteManager().getEmployeeId());
+			if (site.getSiteManager().getEmployeeId() != null) {
+				siteManagerService.assignSiteToSiteManager(site.getSiteId(), site.getSiteManager().getEmployeeId());
+			}
 			return new ResponseEntity<>("New Site Added", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Not Created", HttpStatus.NOT_IMPLEMENTED);

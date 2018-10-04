@@ -223,6 +223,7 @@ $(document).on('click', '#request-item-table .btn-danger', function (e) {
 	}
 });
 
+
 //click event for remove button when adding an item
 $(document).on('click', '#request-item-table .btn-clear', function (e) {
 	e.preventDefault();
@@ -253,6 +254,7 @@ $(document).on('click', '#request-item-table .btn-clear', function (e) {
 		$.notify(itemId, "success");
 	}
 });
+
 
 function loadRequestsFromConstructor(){
 	 axios.get(BASE_URL_LOCAL + '/requestmaterial/')
