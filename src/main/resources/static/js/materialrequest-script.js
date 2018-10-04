@@ -242,9 +242,7 @@ function resetAddRequestForm(){
 
 
 
-/**
- * Click event in site-item-table
- */
+//click event for remove button when adding an item
 $(document).on('click', '#request-item-table .btn-danger', function (e) {
 	e.preventDefault();
 	e.stopPropagation();
@@ -274,16 +272,6 @@ $(document).on('click', '#request-item-table .btn-danger', function (e) {
 		$.notify(itemId, "success");
 	}
 });
-
-
-
-
-
-
-
-
-
-
 
 
 function formatDate(date) {
