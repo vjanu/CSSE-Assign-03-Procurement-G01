@@ -53,7 +53,7 @@ public class SupplierController {
 		return supplierService.updateSupplier(employeeId, supplier);
 	}
 
-	@PutMapping("/supplier/")
+	@PutMapping("/supplier")
 	public Supplier updateSupplier(@RequestBody Supplier supplier) {
 		return supplierService.updateSupplier(supplier);
 	}
