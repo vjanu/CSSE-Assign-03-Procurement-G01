@@ -230,13 +230,19 @@
                                                         <textarea class="form-control" id="comments" rows="5"></textarea>
                                                     </div>
                                                     
-                                                    <div class="row">
-                                                            <div class="col-3">
-                                                                    <input type="button" value="Save" class="btn btn-primary " id ="btn-save" onclick="addRatings()">   
-                                                            </div>
-                                                            <div class="col-3">
-                                                                    <input type="button" value="Reset" class="btn btn-success " id ="btn-reset" onclick="clearRatings()">
-                                                            </div>
+                                                    <div class="form-group" align="center">
+                                                            
+                                                                    <a href="#" title="" id ="btn-save" class="btn btn-success btn-sm" onclick="addRatings()">
+                                                                            <span class="fa fa-star" aria-hidden="true"></span>
+                                                                            <span><strong>Rate</strong></span></a>
+                                                                    
+                                                            
+                                                            
+                                                                    <a href="#" title="" id ="btn-reset" class="btn btn-danger btn-sm" onclick="clearRatings()">
+                                                                            <span class="fa fa-window-restore" aria-hidden="true"></span>
+                                                                            <span><strong>Reset</strong></span></a>
+                                                                    
+                                                            
                                                      </div>
 
                                         </form>

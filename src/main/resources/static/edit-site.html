@@ -67,7 +67,7 @@
                         <span class="nav-link-text">Ratings</span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="supplier/view-supplier-ratings.html">Supplier Ratings</a>
+                        <a class="dropdown-item" href="view-supplier-ratings.html">Supplier Ratings</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="view-constructor-ratings.html">Constructors Ratings</a>
                     </div>
@@ -110,7 +110,7 @@
                         <a href="#">Dashboard</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="#">Manage Sites</a>
+                        <a href="manage-sites.html">Manage Sites</a>
                     </li>
                     <li class="breadcrumb-item active">Edit Site</li>
                 </ol>
@@ -174,40 +174,37 @@
                                         </div>
                                         <!-- Site Manager -->
 
-                                        <button type="button" class="btn btn-primary" id="btn-add-site">Add Site</button>
+                                        <button type="button" class="btn btn-primary" id="btn-edit-site">Update Site</button>
                                     </form>
                                 </div>
+
+
                                 <div class="col-md-6">
-                                    <div class="row">
-                                        <div class="form-group col-md-4" id="item-select">
-                                            <label for="site-id">Item</label>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4>Site Item List</h4>
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="item-qty">Quantity</label>
-
-                                            <input type="number" class="form-control" id="item-qty" placeholder="Quantity">
-                                        </div>
-
-                                        <div class="form-group col-md-4 mt-4">
-                                            <button type="button" class="btn btn-primary" id="btn-add-item-to-site">Add
-                                                Item</button>
-                                        </div>
-
-                                        <div class="table-responsive" id="item-list">
-                                            <table class="table table-bordered table-hover" id="site-item-table">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col" class="text-center">Item ID</th>
-                                                        <th scope="col" class="text-center">Item Name</th>
-                                                        <th scope="col" class="text-center">Quantity</th>
-                                                        <th scope="col" class="text-center">Remove</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-hover" id="site-item-list">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" class="text-center">Item ID</th>
+                                                            <th scope="col" class="text-center">Item Name</th>
+                                                            <th scope="col" class="text-center">Quantity</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
+
+
+
+
+
                                 </div>
                             </div>
                         </div>

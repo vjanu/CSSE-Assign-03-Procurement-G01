@@ -11,8 +11,8 @@ import sliit.g01.procurementg01.api.repository.RatingRepository;
 import sliit.g01.procurementg01.api.service.RatingService;
 
 /**
- * created by viraj & Modified by Tharindu
- **/
+ * @author Viraj/Tharindu
+ */
 
 @Service("ratingService")
 public class RatingServiceImpl implements RatingService {

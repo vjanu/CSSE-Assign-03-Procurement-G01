@@ -49,6 +49,16 @@
                     </li>
     
 		
+		
+		                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                        <a class="nav-link nav-link-collapse" href="search-requests.html">
+                            <i class="far fa-fw fa-building"></i>
+                            <span class="nav-link-text">Search Requests</span>
+                        </a>
+                    </li>
+		
+		
+		
             </ul>
 
 
@@ -81,7 +91,7 @@
             <div>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="#">Dashboard</a>
+                        <a href="constructor-dashboard.html">Dashboard</a>
                     </li>
 					
                     <li class="breadcrumb-item active">Add Request </li>
@@ -98,53 +108,86 @@
 					
                         <!-- main content: start -->
 
-                <div class="card-body mr-md-5 ml-md-5">
-                    <form>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="orderId">Order Id</label>
-                                <input type="text" class="form-control" id="orderId" placeholder="Order Id">
+                        <div class="card-body mr-md-5 ml-md-5">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <form>
+                                       
+                                        <div class="form-group">
+                                            <label for="requestId">Request Id</label>
+                                            <input type="text" class="form-control" id="requestId" placeholder="Request ID">
+                                        </div>
+                   
+                                        <div class="form-group">
+                                            <label for="constructorname">Name</label>
+                                            <input type="text" class="form-control" id="constructorname" placeholder="Name">
+                                        </div>
+              
+                                        <div class="form-group">
+                                            <label for="requesteddate">Requested Date</label>
+                                            <input type="date" class="form-control" id="requesteddate" placeholder="Requested Date ">
+                                        </div>
+                                  
+                                    <div class="form-group">
+                                            <label for="siteId">Site ID</label>
+                                            <input type="text" class="form-control" id="siteId" placeholder="Site ID">
+                                        </div>
+                                  
+                                 
+                                        <div class="form-group">
+                                            <label for="requestingdate">Requesting Date </label>
+                                            <input type="date" class="form-control" id="requestingdate" placeholder="Current Capacity">
+                                        </div>
+                                    
+
+
+                                        <button type="button" class="btn btn-primary" id="btn-add-request">Add Request</button>
+                                        
+                                           <a href="#" title="" id ="btn-reset" class="btn btn-danger btn-sm" onclick="resetAddRequestForm()">
+                                                                            <span class="fa fa-window-restore" aria-hidden="true"></span>
+                                                                            <span><strong>Reset</strong></span></a>
+                                                                          
+                                                                            
+                                    </form>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="form-group col-md-4" id="item-select">
+                                            <label for="orderId">Item</label>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="item-qty">Quantity</label>
+
+                                            <input type="number" class="form-control" id="item-qty" placeholder="Quantity">
+                                        </div>
+
+                                        <div class="form-group col-md-4 mt-4">
+                                            <button type="button" class="btn btn-primary" id="btn-add-item">Add
+                                                Item</button>
+                                        </div>
+
+                                        <div class="table-responsive" id="item-list">
+                                            <table class="table table-bordered table-hover" id="request-item-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" class="text-center">Item ID</th>
+                                                        <th scope="col" class="text-center">Item Name</th>
+                                                        <th scope="col" class="text-center">Quantity</th>
+                                                        <th scope="col" class="text-center">Remove</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="constructorname"> Name</label>
-                                <input type="text" class="form-control" id="constructorname" placeholder="Name">
-                            </div>
-                        </div>
-                        
-                
-	                      <div class="form-row">
-	                        <div class="form-group col-md-6">
-	                            <label for="requesteddate">Requested Date </label>
-	                            <input type="text" class="form-control" id="requesteddate" placeholder=" Requested Date ">
-	                        </div>
-	                        <div class="form-group col-md-6">
-	                            <label for="menu">Item </label>
-	                            <input type="text" class="form-control" id="menu" placeholder="Item">
-	                        </div>
-	                        
-	                        
                         </div>
 
-
-     <div class="form-row">
-	                        <div class="form-group col-md-6">
-	                            <label for="qty">Quantity</label>
-	                            <input type="text" class="form-control" id="qty" placeholder="Quantity">
-	                        </div>
-	                        <div class="form-group col-md-6">
-	                            <label for="requestingdate">Requesting Date</label>
-	                            <input type="text" class="form-control" id="requestingdate" placeholder="Requesting Date">
-	                        </div>
-	                        
-                        </div>
-
-                        
                      
 
-
-                        <!-- Semester and grades -->
-
-                        <button type="button" class="btn btn-primary" id="btn-add-request">Add Request</button>
+               <!--       <button type="button" class="btn btn-primary" id="btn-add-request">Add Request</button> -->
                     </form>
                 </div>
                 <!-- main content: end -->
@@ -200,6 +243,13 @@
         crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
        <script src="js/materialrequest-script.js"></script>
+       
+        <script src="js/bootstrap.min.js"></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/notify.min.js"></script>
+    
+    <script src="js/notify.js"></script>
+       
 </body>
 
 </html>

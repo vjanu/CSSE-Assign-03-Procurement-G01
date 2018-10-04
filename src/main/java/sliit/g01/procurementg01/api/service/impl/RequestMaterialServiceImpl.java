@@ -52,6 +52,12 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 		if (requestMaterial.getIsSiteManagerApproved() != null)
 			req.setIsSiteManagerApproved(requestMaterial.getIsSiteManagerApproved());
 
+		if (requestMaterial.getRequestedDate() != null)
+			req.setRequestedDate(requestMaterial.getRequestedDate());
+
+		if (requestMaterial.getIsImmediated() != null)
+			req.setIsImmediated(requestMaterial.getIsImmediated());
+
 //		if (requestMaterial.getItems() == null)
 //			requestMaterial.setItems(req.getItems());
 
@@ -87,6 +93,12 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 		req.setIsProcumentApproved(isProcumentApproved);
 
 		return (requestmaterialRepository.save(req) != null);
+	}
+
+	@Override
+	public boolean addItem(RequestMaterial requestMaterial) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -5,8 +5,8 @@ import java.util.List;
 import sliit.g01.procurementg01.api.model.SiteManager;
 
 /**
- * created by viraj
- **/
+ * @author Viraj
+ */
 
 public interface SiteManagerService {
 

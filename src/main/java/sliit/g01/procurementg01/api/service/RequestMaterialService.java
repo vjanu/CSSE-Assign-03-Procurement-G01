@@ -2,11 +2,13 @@ package sliit.g01.procurementg01.api.service;
 
 import java.util.List;
 
+
 import sliit.g01.procurementg01.api.model.RequestMaterial;
 
 public interface RequestMaterialService {
 
 	Boolean addOrder(RequestMaterial requestmaterial);
+
 
 	List<RequestMaterial> getAllrequests();
 
@@ -23,5 +25,7 @@ public interface RequestMaterialService {
 	List<RequestMaterial> getRequestsByStatus(String isSiteManagerApproved);
 
 	List<RequestMaterial> getRequestsByImmediated(String isImmediated);
+
+	boolean addItem(RequestMaterial requestMaterial);
 
 }

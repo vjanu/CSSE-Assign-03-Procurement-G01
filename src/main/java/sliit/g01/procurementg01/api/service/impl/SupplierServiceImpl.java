@@ -51,4 +51,16 @@ public class SupplierServiceImpl implements SupplierService {
 
 		return supplierRepository.save(sup);
 	}
+
+	@Override
+	public Supplier updateSupplier(Supplier supplier) {
+		// check if a supplier under the id already exists.
+		Supplier existingSupplier = supplierRepository.findBySupplierId(supplier.getSupplierId());
+
+		if (existingSupplier != null) {
+			return supplierRepository.save(supplier);	// existing entry will be replaced since the ids are the same.
+		}
+
+		return new Supplier();
+	}
 }

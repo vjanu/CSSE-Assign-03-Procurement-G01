@@ -34,7 +34,17 @@ $('#btn-add-item').on('click', function (e) {
 	addNewItem();
 });
 
+$('#btn-edit-site').on('click', function (e) {
+	e.preventDefault();
+	updateSiteDetails();
+});
 
+
+
+/**
+ * Material request approve click
+ * this click cannot be undone
+ */
 $(document).on('click', '#manage-material-requests .btn-primary', function (e) {
 	e.preventDefault();
 	e.stopPropagation();
@@ -204,6 +214,11 @@ if (CURRENT_URL.includes('add-new-item')) {
 if (CURRENT_URL.includes('edit-site')) {
 	populateSiteDetails();
 	populateSiteItems();
+	generateSiteManagersDropdown('site-managers');
+}
+
+if (CURRENT_URL.includes('procurement-staff-dashboard')) {
+	// get();
 }
 
 
@@ -211,18 +226,27 @@ if (CURRENT_URL.includes('edit-site')) {
 
 /* * * * * FUNCTION * * * * */
 
+function setSiteManager() {
+
+}
+
 function populateSiteItems() {
 	if (CURRENT_URL.includes('#')) {
 		let siteId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
-		$("#site-id").val(siteId);
-		axios.get(BASE_URL_LOCAL + '/site/' + siteId).then(function (response) {
+		axios.get(BASE_URL_LOCAL + '/site/siteitem/' + siteId).then(function (response) {
 			if (response.data) {
 				console.log(response);
-				$('#site-name').val(response.data.siteName);
-				$('#address').val(response.data.address);
-				$('#storage-capacity').val(response.data.storageCapacity);
-				$('#current-capacity').val(response.data.currentCapacity);
-				// $('#site-managers').val(response.data.siteName)
+				response.data.forEach(item => {
+					var html = '<tr>';
+					html += '<td class="text-center">' + item.itemId + '</td>';
+					html += '<td class="text-center">' + item.itemName + '</td>';
+					html += '<td class="text-center">' + item.quantity + '</td>';
+					html += '</tr>';
+
+					$('#site-item-list tbody').append(html);
+				});
+
+
 			}
 		}).catch(function (error) {
 			console.log(error);
@@ -258,7 +282,7 @@ function blacklistSupplier(sid, isBanned) {
 	axios.put(BASE_URL_LOCAL + '/supplier/update/' + sid, data)
 		.then(function (response) {
 			console.log(response);
-			$.notify((isBanned) ? sid+" Successfully Blacklisted" : sid+" Successfully Unbanned", "success");
+			$.notify((isBanned) ? sid + " Successfully Blacklisted" : sid + " Successfully Unbanned", "success");
 			loadAllSuppliers();
 		}).catch(function (error) {
 			console.log(error);
@@ -274,7 +298,7 @@ function blacklistConstructor(cid, isBanned) {
 	axios.put(BASE_URL_LOCAL + '/employee/update/' + cid, data)
 		.then(function (response) {
 			console.log(response);
-			$.notify((isBanned) ? cid+" Successfully Blacklisted" : cid+" Successfully Unbanned", "success");
+			$.notify((isBanned) ? cid + " Successfully Blacklisted" : cid + " Successfully Unbanned", "success");
 			loadAllConstructors();
 		}).catch(function (error) {
 			console.log(error);
@@ -286,7 +310,12 @@ function removeMaterialRequest(rid) {
 	axios.delete(BASE_URL_LOCAL + '/requestmaterial/remove/' + rid)
 		.then(function (response) {
 			console.log(response);
-			loadRequestedMaterialTable();
+			if (response.data) {
+				$.notify(rid + " Removed Successfully", "success");
+				loadRequestedMaterialTable();
+			} else {
+				$.notify(rid + " Not Removed", "error");
+			}
 		}).catch(function (error) {
 			console.log(error);
 		});
@@ -296,7 +325,12 @@ function removeSite(siteId) {
 	axios.delete(BASE_URL_LOCAL + '/site/' + siteId)
 		.then(function (response) {
 			console.log(response);
-			loadAllSites();
+			if (response.data) {
+				$.notify(siteId + " Removed Successfully", "success");
+				loadAllSites();
+			} else {
+				$.notify(siteId + " Not Removed", "error");
+			}
 		}).catch(function (error) {
 			console.log(error);
 		});
@@ -364,6 +398,9 @@ function loadConstructorRatings() {
 	});
 }
 
+/**
+ * This function load all suppliers
+ */
 function loadAllSuppliers() {
 	axios.get(BASE_URL_LOCAL + '/supplier/')
 		.then(function (response) {
@@ -390,7 +427,9 @@ function loadAllSuppliers() {
 
 }
 
-
+/**
+ * get all constructors for blacklist purpose
+ */
 function loadAllConstructors() {
 	axios.get(BASE_URL_LOCAL + '/employee/constructor/')
 		.then(function (response) {
@@ -416,7 +455,9 @@ function loadAllConstructors() {
 		});
 }
 
-
+/**
+ * here get all metarial request that are approved by site manager
+ */
 function loadRequestedMaterialTable() {
 	axios.get(BASE_URL_LOCAL + '/requestmaterial/sitemanager-approved/')
 		.then(function (response) {
@@ -428,7 +469,7 @@ function loadRequestedMaterialTable() {
 				html += '<td class="nr-oid" scope="row"><center>' + item.requestId + '</center></td>';
 				html += '<td class="text-center">' + item.requestedPerson + '</td>';
 				html += '<td class="text-center">' + item.siteId + '</td>';
-				html += '<td >' + getItemList(item.items) + '</td>';
+				html += '<td >' + getRequestedItemList(item.items) + '</td>';
 				html += '<td class="text-center">' + item.requestedDate + '</td>';
 				html += '<td class="text-center">' + getImmediateButton(item.isImmediated) + '</td>';
 				html += '<td class="text-center">' + getApprovedButton(item.isProcumentApproved) + '</td>';
@@ -448,17 +489,57 @@ function loadRequestedMaterialTable() {
 		});
 }
 
+function updateSiteDetails() {
+	if (CURRENT_URL.includes('#')) {
+		let siteId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
+		let data = {
+			siteId: siteId,
+			siteName: $('#site-name').val(),
+			address: $('#address').val(),
+			storageCapacity: $('#storage-capacity').val(),
+			currentCapacity: $('#current-capacity').val(),
+			siteManager: {
+				employeeId: $('#site-managers').val()
+				// don't worry about the other details, it will be taken care of, by the backend.
+			}
+		}
+
+		axios.put(BASE_URL_LOCAL + '/site/' + siteId, data)
+			.then(function (response) {
+				console.log(response);
+				if (response.data) {
+					$.notify(siteId + " updated successfully", "success");
+				} else {
+					$.notify(siteId + " not updated", "error");
+				}
+			})
+			.catch(function (error) {
+				// handle error
+				console.log(error);
+				$.notify("Site not Updated", "error");;
+			});
+
+	}
+}
+
+/**
+ * This function will add new site to the system
+ */
 function addNewSite() {
 	let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
-	var obj = {};
+	var itemList = [];
 	for (var i of storedItems) {
-		obj[i.itemName] = i.itemQty;
+		let data = {
+			itemId: i.itemId,
+			quantity: i.itemQty
+		}
+		itemList.push(data);
 	}
 
 	let data = {
 		siteName: $('#site-name').val(),
 		address: $('#address').val(),
-		items: obj,
+		items: itemList,
 		storageCapacity: $('#storage-capacity').val(),
 		currentCapacity: $('#current-capacity').val(),
 		siteManager: {
@@ -466,7 +547,6 @@ function addNewSite() {
 			// don't worry about the other details, it will be taken care of, by the backend.
 		}
 	}
-
 	axios.post(BASE_URL_LOCAL + '/site/add-new-site', data)
 		.then(function (response) {
 			$.notify(response.data, "success");
@@ -594,7 +674,7 @@ function loadAllSites() {
  * TODO: make sure to fetch only the managers with no current site assigned to them.
  */
 function generateSiteManagersDropdown(selectTagName) {
-	axios.get(BASE_URL_LOCAL + '/employee/site-manager')
+	axios.get(BASE_URL_LOCAL + '/employee/site-manager/unassign')
 		.then(response => {
 			if (response.data) {
 				// we'll put the site managers in a combo box so that,
@@ -667,6 +747,16 @@ function formatDate(date) {
  */
 function getItemList(items) {
 	var html = '<ul>';
+
+	items.forEach(item => {
+		html += '<li>' + item.itemId + ' - ' + item.itemName + '</li>';
+	});
+	html += '</ul>';
+	return html;
+}
+
+function getRequestedItemList(items) {
+	var html = '<ul>';
 	for (var key in items) {
 		if (items.hasOwnProperty(key)) {
 			html += '<li>' + key + ' - ' + items[key] + '</li>';
@@ -675,6 +765,7 @@ function getItemList(items) {
 	html += '</ul>';
 	return html;
 }
+
 
 function getApprovedButton(status) {
 	var btnClass = (status == 1) ? "btn btn-default btn-sm" : "btn btn-primary btn-sm";

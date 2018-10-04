@@ -1,5 +1,6 @@
 package sliit.g01.procurementg01.api.model;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.annotation.Id;
@@ -25,7 +26,8 @@ public class RequestMaterial {
 	private String siteManagerID;
 	@JsonIgnore
 	private String isDeclinedBySiteManager;
-
+	
+	
 
 	public String getQuantity() {
 		return quantity;

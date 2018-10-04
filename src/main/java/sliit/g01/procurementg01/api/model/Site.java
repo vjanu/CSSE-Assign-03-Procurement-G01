@@ -1,21 +1,21 @@
 package sliit.g01.procurementg01.api.model;
 
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * created by viraj
- **/
+ * @author Viraj
+ */
 @Document(collection = "Site")
 public class Site {
 
-    @Id
+	@Id
 	private String siteId;
 	private String siteName;
 	private String address;
-	private Map<String, String> items;
+	private List<Item> items;
 	private float storageCapacity;
 	private float currentCapacity;
 	private SiteManager siteManager;
@@ -47,11 +47,11 @@ public class Site {
 		this.address = address;
 	}
 
-	public Map<String, String> getItems() {
+	public List<Item> getItems() {
 		return items;
 	}
 
-	public void setItems(Map<String, String> items) {
+	public void setItems(List<Item> items) {
 		this.items = items;
 	}
 

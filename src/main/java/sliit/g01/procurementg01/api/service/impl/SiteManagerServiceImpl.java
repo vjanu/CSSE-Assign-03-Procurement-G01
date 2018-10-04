@@ -13,8 +13,8 @@ import sliit.g01.procurementg01.api.repository.SiteRepository;
 import sliit.g01.procurementg01.api.service.SiteManagerService;
 
 /**
- * created by viraj
- **/
+ * @author Viraj
+ */
 @Service("SiteManagerService")
 public class SiteManagerServiceImpl implements SiteManagerService {
 
@@ -101,10 +101,18 @@ public class SiteManagerServiceImpl implements SiteManagerService {
 		List<SiteManager> unassignedList = new ArrayList<SiteManager>();
 
 		for (SiteManager sm : siteManagerList) {
-			for (Site s : siteList) {
-				if (!sm.getEmployeeId().equals(s.getSiteManager().getEmployeeId())) {
-					unassignedList.add(sm);
-				}
+			// for (Site s : siteList) {
+			// System.out.println(sm.getEmployeeId() + " --> " +
+			// s.getSiteManager().getEmployeeId());
+			// if
+			// (!sm.getEmployeeId().equals(s.getSiteManager().getEmployeeId()))
+			// {
+			// unassignedList.add(sm);
+			// }
+			// }
+
+			if (sm.getManagedSiteId() == null) {
+				unassignedList.add(sm);
 			}
 		}
 

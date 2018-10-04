@@ -5,12 +5,12 @@ import sliit.g01.procurementg01.api.model.Payment;
 import java.util.List;
 
 /**
- * created by viraj
- **/
+ * @author Viraj
+ */
 
 public interface PaymentService {
 
-	Boolean makePayment(Payment payment);
+	Payment makePayment(Payment payment);
 
 	List<Payment> getAllPayments();
 

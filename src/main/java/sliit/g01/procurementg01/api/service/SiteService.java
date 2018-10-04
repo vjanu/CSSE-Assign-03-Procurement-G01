@@ -6,9 +6,8 @@ import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.model.Site;
 
 /**
- * created by viraj
- **/
-
+ * @author Viraj
+ */
 public interface SiteService {
 
 	List<Item> getAvailableItems(String siteId);
@@ -21,7 +20,7 @@ public interface SiteService {
 
 	boolean deleteSite(String siteId);
 
-	Site updateSite(String siteId, Site site);
+	boolean updateSite(String siteId, Site site);
 
 	Site getSiteUnderManager(String siteManagerId);
 
