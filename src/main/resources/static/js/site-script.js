@@ -196,7 +196,27 @@ $(document).on('click', '#request-item-table .btn-danger', function (e) {
 	}
 });
 
+function loadAddedItemTable() {
+	let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+	console.log(storedItems)
 
+	for (var i of storedItems) {
+		console.log(i.itemId + " | " + i.itemName);
+		var html = '<tr>';
+		html += '	<td class="nr-itemId"><center>' + i.itemId + '</center></td>';
+		html += '	<td class="text-center">' + i.itemName + '</td>';
+		html += '	<td class="text-center">' + i.itemQty + '</td>';
+		html += '	<td class="text-center">' +
+			'		<a href="#" title="" class="btn btn-danger btn-sm">\n' +
+			'        	<span class="far fa-trash-alt" aria-hidden="true"></span>\n' +
+			'        	<span><strong>Remove</strong></span></a>' +
+			'		</a>' +
+			'	</td>';
+		html += '</tr>';
+	}
+
+	$('#request-item-table tbody').append(html);
+}
 
 function loadRequestsFromConstructor(){
 	 axios.get(BASE_URL_LOCAL + '/requestmaterial/')
