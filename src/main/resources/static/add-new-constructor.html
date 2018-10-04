@@ -24,8 +24,8 @@
 
 <body class="fixed-nav">
 
-    <!-- navbar: start -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+       <!-- navbar: start -->
+       <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
         <a class="navbar-brand" href="#">Procurement Home</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
             aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,14 +33,60 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                    <a class="nav-link nav-link-collapse" href="manage-sites.html">
+                    
+
+                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    <a class="nav-link nav-link-collapse" href="view-requests-sitemanager.html">
                         <i class="far fa-fw fa-building"></i>
-                        <span class="nav-link-text">Manage Constructors</span>
+                        <span class="nav-link-text">View Requests</span>
                     </a>
                 </li>
 
-		
+                <li class="nav-item dropdown navbar-dark bg-dark">
+                        <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Manage Requests
+                        </a>
+                        <div class="dropdown-menu navbar-dark bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="make-request.html" style="color:white">Make Requests</a>
+                            <a class="dropdown-item" href="approved-requests.html" style="color:white">Approved Requests</a>
+                          <a class="dropdown-item" href="rejected-requests.html" style="color:white">Rejected Requests</a>
+                          <a class="dropdown-item" href="pending-requests.html" style="color:white">Pending Requests</a>
+                          <a class="dropdown-item" href="immediate-requests.html" style="color:white">Immediate Requests</a>
+                        </div>
+                      </li>
+
+                      <li class="nav-item dropdown navbar-dark bg-dark">
+                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Manage Ratings
+                            </a>
+                            <div class="dropdown-menu navbar-dark bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                              <a class="dropdown-item" href="rate-constructor.html" style="color:white">Rate Constructor</a>
+                              <a class="dropdown-item" href="rate-supplier.html" style="color:white">Rate Supplier</a>
+                            </div>
+                          </li>
+
+                          <li class="nav-item dropdown navbar-dark bg-dark">
+                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Manage Requests
+                            </a>
+                            <div class="dropdown-menu navbar-dark bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                              <a class="dropdown-item" href="request-order-site-manager.html" style="color:white">Request Materials</a>
+                              <a class="dropdown-item" href="add-new-constructor.html" style="color:white">Add Constructors</a>
+                            </div>
+                          </li>
+
+                          
+                        <li class="nav-item dropdown navbar-dark bg-dark">
+                                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Manage Orders
+                                </a>
+                                <div class="dropdown-menu navbar-dark bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                                  <a class="dropdown-item" href="view-orders-sitemanager.html" style="color:white">View Orders</a>
+                                  <a class="dropdown-item" href="update-stock-sitemanager.html" style="color:white">Update Site Stock</a>
+                                </div>
+                              </li>
+
+
             </ul>
 
             <ul class="navbar-nav ml-auto">
@@ -105,49 +151,50 @@
                 
 	                      <div class="form-row">
 	                        <div class="form-group col-md-6">
-	                            <label for="fname">First Name</label>
-	                            <input type="text" class="form-control" id="fname" placeholder="First Name">
+	                            <label for="fname">Full Name</label>
+	                            <input type="text" class="form-control" id="name" placeholder="Full Name">
 	                        </div>
-	                        <div class="form-group col-md-6">
-	                            <label for="lname">Last Name</label>
-	                            <input type="text" class="form-control" id="lname" placeholder="Last Name">
-	                        </div>
-	                        
-	                        
-                        </div>
-
-
-     <div class="form-row">
+	     
 	                        <div class="form-group col-md-6">
 	                            <label for="address">Address</label>
 	                            <input type="text" class="form-control" id="address" placeholder="Address">
 	                        </div>
+                        </div>
+
+
+     <div class="form-row">
+	                        
 	                        <div class="form-group col-md-6">
 	                            <label for="email">Email</label>
-	                            <input type="text" class="form-control" id=""email"" placeholder="Email">
+	                            <input type="text" class="form-control" id="email" placeholder="Email">
 	                        </div>
 	                         <div class="form-group col-md-6">
 	                            <label for="phone">Phone Number</label>
-	                            <input type="text" class="form-control" id="phone" placeholder="Phone Number">
+	                            <input type="number" class="form-control" id="phone" placeholder="Phone Number">
 	                        </div>
 	                        
 	                        
 	                         <div class="form-group col-md-6">
-	                            <label for="site">Site</label>
-	                            <input type="text" class="form-control" id="site" placeholder="Site">
+	                            <label for="site">Site ID</label>
+	                            <input type="text" class="form-control" id="site-ID" placeholder="Site ID">
 	                        </div>
 	                        
                         </div>
 
+                        <div class="form-group" align="center">
                         
+                            <a href="#" title="" id="btn-add-item" onclick="addConstructors()" class="btn btn-primary">
+                            <span class="fa fa-plus-circle" aria-hidden="true"></span>
+                            <span><strong>Add Constructor</strong></span></a>
                      
 
 
-                        <!-- Semester and grades -->
 
-                        <button type="button" class="btn btn-primary" id="btn-add-constructor">Add Constructor</button>
+             </div>
                     </form>
                 </div>
+               
+        
                 <!-- main content: end -->
 						
 						
@@ -193,13 +240,15 @@
     <!-- Bootstrap core JavaScript
 ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+     <script src="js/bootstrap.min.js"></script>
+     <!--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
+     <script src="js/axios.min.js"></script>
+     <script src="js/site-script.js"></script>
+     <script src="js/notify.min.js"></script>
+     <script src="js/notify.js"></script>
  
 </body>
 

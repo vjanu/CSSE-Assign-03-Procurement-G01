@@ -153,7 +153,8 @@ function addRequest() {
 		    requestedDate: $('#requesteddate').val(),	   
 		    siteId: $('#siteId').val(),
             items: obj,
-		    requestingDate: $('#requestingdate').val(),
+			requestingDate: $('#requestingdate').val(),
+			isSiteManagerApproved:"0"
 		
 	}
 

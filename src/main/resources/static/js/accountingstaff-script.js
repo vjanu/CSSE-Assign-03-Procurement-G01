@@ -143,7 +143,7 @@ window.makeOrderHold = function(ele) {
         orderId: row.find('td:first').text(),
         orderDate: row.find('td:nth-child(2)').text(),   
         returnedDate:  row.find('td:nth-child(3)').text(),   
-        orderStatus: row.find('td:nth-child(4)').text(),    
+        orderStatus: row.find('td:nth-child(5)').text(),    
         onHold: true
     }
     //change
@@ -153,7 +153,7 @@ window.makeOrderHold = function(ele) {
         .then(response => {
             console.log(response.orderPurchased);
                    $.notify("Order Marked as on Hold", "warn");
-                   
+                   loadPurchasedOrders()
         })
         .catch(error => {
             console.log(error);
@@ -168,9 +168,6 @@ window.makeOrderHold = function(ele) {
 /***********  View Purchased Orders Ends ******************/
 
 
-// function payNow(){
-//     $.notify("Paid Successfully", "success");
-// }
 
 function populatePaymentDetails(){
     if (CURRENT_URL.includes('#')) {

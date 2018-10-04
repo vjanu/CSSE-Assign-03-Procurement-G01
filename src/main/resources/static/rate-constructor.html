@@ -25,8 +25,8 @@
 
 <body class="fixed-nav">
 
-       <!-- navbar: start -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+     <!-- navbar: start -->
+     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
         <a class="navbar-brand" href="#">Procurement Home</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
             aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,18 +65,28 @@
                               <a class="dropdown-item" href="rate-supplier.html" style="color:white">Rate Supplier</a>
                             </div>
                           </li>
-                          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-3">
-                                <a class="nav-link nav-link-collapse" href="request-order.html">
-                                    <i class="far fa-fw fa-paper-plane"></i>
-                                    <span class="nav-link-text">Request Materials</span>
-                                </a>
-                        </li>  
-                        <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                            <a class="nav-link nav-link-collapse" href="view-orders-sitemanager.html">
-                                <i class="far fa-fw fa-building"></i>
-                                <span class="nav-link-text">Manage Orders</span>
+
+                          <li class="nav-item dropdown navbar-dark bg-dark">
+                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Manage Requests
                             </a>
-                        </li>  
+                            <div class="dropdown-menu navbar-dark bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                              <a class="dropdown-item" href="request-order-site-manager.html" style="color:white">Request Materials</a>
+                              <a class="dropdown-item" href="add-new-constructor.html" style="color:white">Add Constructors</a>
+                            </div>
+                          </li>
+
+                          
+                        <li class="nav-item dropdown navbar-dark bg-dark">
+                                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Manage Orders
+                                </a>
+                                <div class="dropdown-menu navbar-dark bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                                  <a class="dropdown-item" href="view-orders-sitemanager.html" style="color:white">View Orders</a>
+                                  <a class="dropdown-item" href="update-stock-sitemanager.html" style="color:white">Update Site Stock</a>
+                                </div>
+                              </li>
+
 
             </ul>
 

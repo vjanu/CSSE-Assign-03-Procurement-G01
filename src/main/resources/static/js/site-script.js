@@ -75,7 +75,8 @@ if (CURRENT_URL.includes('view-orders-sitemanager')) {
 
 
 if (CURRENT_URL.includes('request-order-site-manager')) {
-	generateItemSelectDropdown();
+    console.log("You are on request-order-site-manager page")
+	generateItemSelectDropdown2();
 }
 
 
@@ -96,6 +97,9 @@ if (CURRENT_URL.includes('update-stock-sitemanager')) {
 
 
 //constructor add requests-add request page
+
+
+
 function addRequest() {
 	let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
 	var obj = {};
@@ -109,18 +113,19 @@ function addRequest() {
 		    requestedDate: $('#requesteddate').val(),
 		    siteId: $('#siteId').val(),
             items: obj,
-		    requestingDate: $('#requestingdate').val(),
+            requestingDate: $('#requestingdate').val(),
+            isSiteManagerApproved:"0"
 		
 	}
 
 	axios.post(BASE_URL_LOCAL + '/requestmaterial/add-new-request', data)
 		.then(function (response) {
-			$.notify(response.data, "success");
+			$.notify("Request Added Successfully", "success");
 		})
 		.catch(function (error) {
 			// handle error
 			console.log(error);
-			$.notify("Request not added", "error");;
+			$.notify("Request not added", "error");
 		});
 }
 
@@ -128,25 +133,47 @@ function addRequiredItem() {
 	if ($('#item-qty').val() != "") {
 
 		let data = {
-			itemId: $('#op-item-select').val(),
-			itemName: $('#op-item-select :selected').text(),
+			itemId: $('#op-item-select1').val(),
+			itemName: $('#op-item-select1 :selected').text(),
 			itemQty: $('#item-qty').val()
 		}		
 		itemsArray.push(data);
 		localStorage.setItem('items', JSON.stringify(itemsArray));
-		loadAddedItemTable();
+		loadAddedItemTable1();
 	} else {
 		$.notify("Quantity cannot be empty", "error");
 	}
 
 }
 
+function loadAddedItemTable1() {
+	let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+	console.log(storedItems)
+
+	for (var i of storedItems) {
+		console.log(i.itemId + " | " + i.itemName);
+		var html = '<tr>';
+		html += '	<td class="nr-itemId"><center>' + i.itemId + '</center></td>';
+		html += '	<td class="text-center">' + i.itemName + '</td>';
+		html += '	<td class="text-center">' + i.itemQty + '</td>';
+		html += '	<td class="text-center">' +
+			'		<a href="#" title="" id ="btn-clear" class="btn btn-danger btn-sm">\n' +
+			'        	<span class="far fa-trash-alt" aria-hidden="true"></span>\n' +
+			'        	<span><strong>Remove</strong></span></a>' +
+			'		</a>' +
+			'	</td>';
+		html += '</tr>';
+	}
+
+	$('#request-item-table1 tbody').append(html);
+}
+
 //generate item selection dropdown list in add request page
-function generateItemSelectDropdown() {
+function generateItemSelectDropdown2() {
 	axios.get(BASE_URL_LOCAL + '/item/')
 		.then(function (response) {
 			console.log(response.data)
-			var html = '<select class="form-control" id="op-item-select">';
+			var html = '<select class="form-control" id="op-item-select1">';
 
 			Object.keys(response.data).forEach(supplierAsKey => {
 				response.data[supplierAsKey].forEach(item => {
@@ -156,7 +183,7 @@ function generateItemSelectDropdown() {
 
 
 			html += '</select>';
-			$('#item-select').append(html);
+			$('#item-select1').append(html);
 		}).catch(function (error) {
 			// handle error
 			console.log(error);
@@ -196,7 +223,36 @@ $(document).on('click', '#request-item-table .btn-danger', function (e) {
 	}
 });
 
+//click event for remove button when adding an item
+$(document).on('click', '#request-item-table .btn-clear', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	var itemId = $(this).closest("tr").find(".nr-itemId").text();
+	console.log(itemId);
+	var r = confirm("Are you sure you want to remove this item ? This action cannot be undone");
+	if (r == true) {
 
+
+		let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+
+		var index = storedItems.findIndex(function (item, i) {
+			return item.itemId === itemId
+		});
+
+		console.log("Index : " + index);
+		if (index != -1) {
+			storedItems.splice(index, 1);
+		}
+
+		localStorage.setItem('items', JSON.stringify(storedItems));
+		$("#item-list1 tbody").empty();
+
+		loadItemTable1();
+
+
+		$.notify(itemId, "success");
+	}
+});
 
 function loadRequestsFromConstructor(){
 	 axios.get(BASE_URL_LOCAL + '/requestmaterial/')
@@ -711,7 +767,7 @@ function loadPurchasedOrders(){
 
 
             var html = '<tr>';
-            html +='<td align="right">'+request.requestId+'</td>' ;
+            html +='<td align="right">'+request.orderId+'</td>' ;
             html +='<td align="right">' + getOrderList(request.items) + '</td>' ;
             html +='<td align="right">'+formatDate(request.orderDate)+'</td>' ;
             html +='<td align="right">'+formatDate(request.returnedDate)+'</td>' ;
@@ -977,3 +1033,33 @@ function updateSiteStock() {
 }
 
 /***********  Update Site with Items ends ******************/
+
+
+/***********  Add Constructor Starts ******************/
+
+function addConstructors(){
+    let data=''; 
+	 data = {
+		employeeId : $('#employee-id').val(),
+		employeeType : $("#employee-type").val(),
+        employeeName : $('#name').val(),
+        address : $("address").val(),
+        email : $("email").val(),
+		phone : $('#phone').val(),
+		site : $('#site-ID').val()
+		
+    }
+
+	axios.post(BASE_URL_LOCAL + '/employee/constructor', data)
+    .then(function (response) {
+    	$.notify("Successfully Added", "success");
+    })
+    .catch(function (error) {
+        // handle error
+        $.notify("Employee cannot add", "error");
+    });
+}
+
+
+
+/***********  Add Constructor Ends ******************/
