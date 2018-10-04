@@ -1,14 +1,14 @@
 package sliit.g01.procurementg01.api.service;
 
 import java.util.List;
+import java.util.Map;
 
 import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.model.Site;
 
 /**
- * created by viraj
- **/
-
+ * @author Viraj
+ */
 public interface SiteService {
 
 	List<Item> getAvailableItems(String siteId);

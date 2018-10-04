@@ -1,6 +1,7 @@
 package sliit.g01.procurementg01.api.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,7 @@ public class SiteServiceImpl implements SiteService {
 
 	@Override
 	public List<Item> getAvailableItems(String siteId) {
-		// TODO Auto-generated method stub
-		return null;
+		return siteRepository.findBySiteId(siteId).getItems();
 	}
 
 	@Override
@@ -49,7 +49,11 @@ public class SiteServiceImpl implements SiteService {
 
 	@Override
 	public Site updateSite(String siteId, Site site) {
-		return siteRepository.save(site);
+		Site newSite = siteRepository.findBySiteId(siteId);
+
+		if (site.getItems() != null)
+			newSite.setItems(site.getItems());
+		return siteRepository.save(newSite);
 	}
 
 	// returns the site which the provided site manager is managing currently.

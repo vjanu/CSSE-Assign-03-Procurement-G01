@@ -35,6 +35,10 @@ $('#btn-add-item').on('click', function (e) {
 });
 
 
+/**
+ * Material request approve click
+ * this click cannot be undone
+ */
 $(document).on('click', '#manage-material-requests .btn-primary', function (e) {
 	e.preventDefault();
 	e.stopPropagation();

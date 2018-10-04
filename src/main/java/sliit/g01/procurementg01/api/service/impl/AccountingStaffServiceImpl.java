@@ -11,9 +11,9 @@ import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.repository.AccountingStaffRepository;
 import sliit.g01.procurementg01.api.service.AccountingStaffService;
 
-/***
- * created by viraj
- ***/
+/**
+ * @author Viraj
+ */
 @Service("AccountingStaffService")
 public class AccountingStaffServiceImpl implements AccountingStaffService {
 

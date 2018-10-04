@@ -1,11 +1,16 @@
 package sliit.g01.procurementg01.api.repository;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import sliit.g01.procurementg01.api.model.Site;
 
 /**
- * created by viraj
+ * @author viraj
+ * 
+ * @author Tharindu TCJ
  **/
 
 public interface SiteRepository extends MongoRepository<Site, String> {
@@ -16,5 +21,7 @@ public interface SiteRepository extends MongoRepository<Site, String> {
 
 	Site findSiteBySiteManager(String siteManagerId);
 	// Item findByDiteId(String siteId);
+
+	List<Map<String, String>> findItemBySiteId(String siteId);
 
 }

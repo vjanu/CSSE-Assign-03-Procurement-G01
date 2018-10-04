@@ -5,8 +5,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * created by viraj
- **/
+ * @author Viraj
+ */
 @Document(collection = "AccountingStaff")
 public class AccountingStaff extends AuthorizedEmployee {
 

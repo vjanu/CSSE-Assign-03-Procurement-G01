@@ -52,6 +52,12 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 		if (requestMaterial.getIsSiteManagerApproved() != null)
 			req.setIsSiteManagerApproved(requestMaterial.getIsSiteManagerApproved());
 
+		if (requestMaterial.getRequestedDate() != null)
+			req.setRequestedDate(requestMaterial.getRequestedDate());
+
+		if (requestMaterial.getIsImmediated() != null)
+			req.setIsImmediated(requestMaterial.getIsImmediated());
+
 //		if (requestMaterial.getItems() == null)
 //			requestMaterial.setItems(req.getItems());
 

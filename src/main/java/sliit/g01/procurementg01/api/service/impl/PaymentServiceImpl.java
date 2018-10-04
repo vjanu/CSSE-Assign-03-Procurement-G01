@@ -10,8 +10,8 @@ import sliit.g01.procurementg01.api.repository.PaymentRepository;
 import sliit.g01.procurementg01.api.service.PaymentService;
 
 /**
- * created by viraj
- **/
+ * @author Viraj
+ */
 
 @Service("paymentService")
 public class PaymentServiceImpl implements PaymentService {
@@ -20,8 +20,8 @@ public class PaymentServiceImpl implements PaymentService {
 	private PaymentRepository paymentRepository;
 
 	@Override
-	public Boolean makePayment(Payment payment) {
-		return (paymentRepository.save(payment) != null);
+	public Payment makePayment(Payment payment) {
+		return paymentRepository.save(payment);
 	}
 
 	@Override
