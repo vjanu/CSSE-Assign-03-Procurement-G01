@@ -225,11 +225,6 @@ if (CURRENT_URL.includes('procurement-staff-dashboard')) {
 
 
 /* * * * * FUNCTION * * * * */
-
-function setSiteManager() {
-
-}
-
 function populateSiteItems() {
 	if (CURRENT_URL.includes('#')) {
 		let siteId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
@@ -266,7 +261,11 @@ function populateSiteDetails() {
 				$('#address').val(response.data.address);
 				$('#storage-capacity').val(response.data.storageCapacity);
 				$('#current-capacity').val(response.data.currentCapacity);
-				// $('#site-managers').val(response.data.siteName)
+				if (response.data.siteManager.employeeId != null) {
+					$('#site-managers').append($("<option></option>")
+						.attr("value", response.data.siteManager.employeeId)
+						.text(response.data.siteManager.employeeName));
+				}
 			}
 		}).catch(function (error) {
 			console.log(error);
@@ -360,10 +359,10 @@ function loadSupplierRatings() {
 				var html = '<tr>';
 				html += '<td class="text-center">' + item.purchaseOrderReference + '</td>';
 				html += '<td class="text-center">' + item.supplierName + '</td>';
-				html += '<td class="text-center">' + item.deliveryEfficiency + '</td>';
-				html += '<td class="text-center">' + item.supportiveness + '</td>';
-				html += '<td class="text-center">' + item.workOnTime + '</td>';
-				html += '<td class="text-center">' + item.overallRate + '</td>';
+				html += '<td class="text-center">' + generateRatingStarts(item.deliveryEfficiency) + '</td>';
+				html += '<td class="text-center">' + generateRatingStarts(item.supportiveness) + '</td>';
+				html += '<td class="text-center">' + generateRatingStarts(item.workOnTime) + '</td>';
+				html += '<td class="text-center">' + generateRatingStarts(item.overallRate) + '</td>';
 				html += '<td class="text-center">' + item.feedback + '</td>';
 				html += '</tr>';
 
@@ -383,10 +382,10 @@ function loadConstructorRatings() {
 				var html = '<tr>';
 				html += '<td class="text-center">' + item.constructorId + '</td>';
 				html += '<td class="text-center">' + item.constructorName + '</td>';
-				html += '<td class="text-center">' + item.deliveryEfficiency + '</td>';
-				html += '<td class="text-center">' + item.supportiveness + '</td>';
-				html += '<td class="text-center">' + item.workOnTime + '</td>';
-				html += '<td class="text-center">' + item.overallRate + '</td>';
+				html += '<td class="text-center">' + generateRatingStarts(item.deliveryEfficiency) + '</td>';
+				html += '<td class="text-center">' + generateRatingStarts(item.supportiveness) + '</td>';
+				html += '<td class="text-center">' + generateRatingStarts(item.workOnTime) + '</td>';
+				html += '<td class="text-center">' + generateRatingStarts(item.overallRate) + '</td>';
 				html += '<td class="text-center">' + item.feedback + '</td>';
 				html += '</tr>';
 
@@ -643,7 +642,7 @@ function loadAllSites() {
 					'<td>' + getItemList(item.items) + '</td>' +
 					'<td class="text-center">' + item.storageCapacity + '</td>' +
 					'<td class="text-center">' + item.currentCapacity + '</td>' +
-					'<td class="text-center">' + item.siteManager.employeeName + '</td>' +
+					'<td class="text-center">' + getSiteManagerInfo(item.siteManager) + '</td>' +
 					'<td class="text-center">' +
 					'<a href="edit-site.html#' + item.siteId + '" title="" class="btn btn-primary btn-sm">' +
 					'        <span class="fas fa-edit" aria-hidden="true"></span> Edit' +
@@ -662,6 +661,15 @@ function loadAllSites() {
 			// handle error
 			console.log(error);
 		});
+}
+
+/**
+ * This fucntion return assigned site manager name
+ * if site manager not assigned it return (Not Assigned)
+ * @param {*} siteManager 
+ */
+function getSiteManagerInfo(siteManager) {
+	return (siteManager.employeeName != null) ? siteManager.employeeName : '<span style="color:red"><i>(Not Assigned)</i></span>';
 }
 
 
@@ -845,4 +853,16 @@ function generateItemSelectDropdown() {
 			// handle error
 			console.log(error);
 		});
+}
+
+function generateRatingStarts(rateValue) {
+	var html = '<div>';
+	for (i = 0; i < 5; i++) {
+		let isChecked = (rateValue < 1) ? "" : "checked";
+		console.log(isChecked + " | "+rateValue);
+		html += '<span class="fa fa-star '+isChecked+'"></span>';
+		rateValue--;
+	}
+	html += '</div>';
+	return html;
 }
