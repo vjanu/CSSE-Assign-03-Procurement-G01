@@ -89,4 +89,10 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 		return (requestmaterialRepository.save(req) != null);
 	}
 
+	@Override
+	public boolean addItem(RequestMaterial requestMaterial) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

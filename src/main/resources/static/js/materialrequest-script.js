@@ -117,7 +117,7 @@ function addRequest() {
 	}
 
 	let data = {
-			requestId: $('#orderId').val(),
+			requestId: $('#requestId').val(),
 			requestedPerson: $('#constructorname').val(),
 		    requestedDate: $('#requesteddate').val(),
             items: obj,
@@ -161,7 +161,7 @@ function loadConstructorRequests(){
             html +='<td align="right">' + request.requestedDate + '</td>' ;
    
             html +='<td align="right">'  + getItemList(request.items) + '</td>' ;
-            html +='<td align="right">' + request.quantity + '</td>' ;
+            
             html +='<td align="right">' + request.requestingDate + '</td>' ;
 
         
@@ -188,6 +188,9 @@ function addItemTo() {
 			itemName: $('#op-item-select :selected').text(),
 			itemQty: $('#item-qty').val()
 		}
+		
+	
+	
 		itemsArray.push(data);
 		localStorage.setItem('items', JSON.stringify(itemsArray));
 
@@ -195,6 +198,10 @@ function addItemTo() {
 	} else {
 		$.notify("Quantity cannot be empty", "error");
 	}
+
+	
+	
+	
 }
 
 function loadItemTable() {
