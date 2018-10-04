@@ -27,4 +27,9 @@ public class AccountServiceImpl implements AccountService {
 	public Account getAccountBySupplierId(String supplierId) {
 		return accountRepository.findBySupplierId(supplierId);
 	}
+
+	@Override
+	public Account addAccount(Account account) {
+		return accountRepository.save(account);
+	}
 }
