@@ -43,28 +43,6 @@ public class RatingControllerTest extends ProcurementUtils {
     @MockBean
     private RatingServiceImpl ratingService;
 
-//    @Test
-//    public void saveRatingData_Test() throws Exception {
-////        MockHttpServletRequestBuilder builder =
-////                MockMvcRequestBuilders.post("/ratings")
-////                        .contentType(APPLICATION_JSON_UTF8)
-////                        .accept(APPLICATION_JSON_UTF8)
-////                        .characterEncoding("UTF-8")
-////                        .content(RATING_REQUEST);
-////
-////        mvc.perform(builder)
-////                .andExpect(MockMvcResultMatchers.status()
-////                        .isOk())
-////                .andExpect(MockMvcResultMatchers.content()
-////                        .string("Rating added"))
-////                .andDo(MockMvcResultHandlers.print());
-//
-//        mvc.perform(post("/ratings").content(RATING_REQUEST)
-//                .contentType(APPLICATION_JSON_UTF8))
-//                .andExpect(status().isOk());
-//
-//    }
-
 
     @Test
     public void retrieveAllSupplierRatingData_Test() throws Exception {
@@ -79,30 +57,28 @@ public class RatingControllerTest extends ProcurementUtils {
                 .andExpect(jsonPath("$[0].deliveryEfficiency", is(allSupplierRating.get(0).getDeliveryEfficiency())));
     }
 
+    @Test
+    public void retrieveAllConstructorRatingData_Test() throws Exception {
+        List<Rating> allConstructorRating = getConstructorRatingBeans();
+        given(ratingService.getConstructorRatings()).willReturn(allConstructorRating);
+        mvc.perform(get("/ratings/constructor-ratings")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].constructorId", is(allConstructorRating.get(0).getConstructorId())))
+                .andExpect(jsonPath("$[0].constructorName", is(allConstructorRating.get(0).getConstructorName())))
+                .andExpect(jsonPath("$[0].workOnTime", is(allConstructorRating.get(0).getWorkOnTime())))
+                .andExpect(jsonPath("$[0].deliveryEfficiency", is(allConstructorRating.get(0).getDeliveryEfficiency())));
+    }
+
 
     @Test
-    public void saveAccountingStaffDataException_Test() throws Exception {
+    public void saveSupplierRatingDataException_Test() throws Exception {
         mvc.perform(post("/ratings").content(RATING_REQUEST)
                                 .contentType(APPLICATION_JSON_UTF8))
-                .andExpect(status().is(405));
+                .andExpect(status().is(501));
 
     }
 
-    @Test
-    public void updateAccountingStaffData_Test() throws Exception {
-        long id = 1;
-        MockHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.put("/employee/accounting-staff/" + id)
-                        .contentType(APPLICATION_JSON_UTF8)
-                        .accept(APPLICATION_JSON_UTF8)
-                        .characterEncoding("UTF-8")
-                .content(RATING_REQUEST);
 
-        mvc.perform(builder)
-                .andExpect(MockMvcResultMatchers.status()
-                        .isOk())
-                .andExpect(MockMvcResultMatchers.content()
-                        .string(""))
-                .andDo(MockMvcResultHandlers.print());
-    }
 }

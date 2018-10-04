@@ -12,9 +12,9 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import sliit.g01.procurementg01.api.model.AccountingStaff;
+import sliit.g01.procurementg01.api.model.Payment;
 import sliit.g01.procurementg01.api.model.SiteManager;
-import sliit.g01.procurementg01.api.service.impl.AccountingStaffServiceImpl;
+import sliit.g01.procurementg01.api.service.impl.PaymentServiceImpl;
 import sliit.g01.procurementg01.api.service.impl.SiteManagerServiceImpl;
 import sliit.g01.procurementg01.api.utility.ProcurementUtils;
 
@@ -30,76 +30,77 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Test class to check the REST calls associated with the Site Manager
+ * Test class to check the REST calls associated with the Payment
  * @author Viraj
  */
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(SiteManagerController.class)
-public class SiteManagerControllerTest extends ProcurementUtils {
+@WebMvcTest(PaymentController.class)
+public class PaymentsControllerTest extends ProcurementUtils {
 
     @Autowired
     private MockMvc mvc;
 
     @MockBean
-    private SiteManagerServiceImpl siteManagerService;
+    private PaymentServiceImpl paymentService;
 
 
     @Test
-    public void retrieveAllSiteManagerData_Test() throws Exception {
-        List<SiteManager> allSiteManagers = getSiteManagerBeans();
-        given(siteManagerService.getAllSiteManagers()).willReturn(allSiteManagers);
-        mvc.perform(get("/employee/site-manager")
+    public void retrieveAllPaymentData_Test() throws Exception {
+        List<Payment> allPayments = getPaymentBeans();
+        given(paymentService.getAllPayments()).willReturn(allPayments);
+        mvc.perform(get("/payment")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].managedSiteId", is(allSiteManagers.get(0).getManagedSiteId())))
-                .andExpect(jsonPath("$[0].employeeId", is(allSiteManagers.get(0).getEmployeeId())))
-                .andExpect(jsonPath("$[0].nic", is(allSiteManagers.get(0).getNic())));
+                .andExpect(jsonPath("$[0].paymentID", is(allPayments.get(0).getPaymentID())))
+                .andExpect(jsonPath("$[0].paymentMethod", is(allPayments.get(0).getPaymentMethod())))
+                .andExpect(jsonPath("$[0].totAmount", is(allPayments.get(0).getTotAmount())));
     }
 
     @Test
-    public void retrieveSiteManagerDataBySiteId_Test() throws Exception {
-        String siteId = "ST1022";
-        List<SiteManager>  managedSiteMgr = getSiteManagerBeans();
-        given(siteManagerService.getSiteManagerOfSite(siteId)).willReturn(managedSiteMgr.get(0));
-        mvc.perform(get("/employee/site-manager/sites/"+ siteId)
+    public void retrievePaymentById_Test() throws Exception {
+        String payId = "ST1022";
+        List<Payment> payments = getPaymentBeans();
+        given(paymentService.getPaymentByPaymentID(payId)).willReturn(payments.get(0));
+        mvc.perform(get("/payment/"+ payId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()", is(8)));
+                .andExpect(jsonPath("$.length()", is(3)));
     }
 
 
     @Test
-    public void saveSiteManagerData_Test() throws Exception {
-        mvc.perform(post("/employee/site-manager").content(SITE_MGR_REQUEST)
+    public void savePaymentData_Test() throws Exception {
+        mvc.perform(post("/payment").content(PAYMENT_REQUEST)
                                 .contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 
     }
 
     @Test
-    public void saveSiteManagerDataException_Test() throws Exception {
-        mvc.perform(post("/employee/site-manager").content(SITE_MGR_REQUEST)
+    public void savePaymentException_Test() throws Exception {
+        mvc.perform(post("/payment").content(PAYMENT_REQUEST)
                                 .contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().is(200));
 
     }
 
     @Test
-    public void updateAccountingStaffData_Test() throws Exception {
+    public void updatePaymentData_Test() throws Exception {
+        String payId = "ST1022";
         MockHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.put("/employee/site-manager/assign")
+                MockMvcRequestBuilders.put("/payment/"+payId)
                         .contentType(APPLICATION_JSON_UTF8)
                         .accept(APPLICATION_JSON_UTF8)
                         .characterEncoding("UTF-8")
-                .content(SITE_MGR_REQUEST);
+                .content(PAYMENT_REQUEST);
 
         mvc.perform(builder)
                 .andExpect(MockMvcResultMatchers.status()
                         .isOk())
                 .andExpect(MockMvcResultMatchers.content()
-                        .string("Success:false"))
+                        .string(""))
                 .andDo(MockMvcResultHandlers.print());
     }
 }

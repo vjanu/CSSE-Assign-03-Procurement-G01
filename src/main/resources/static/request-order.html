@@ -49,6 +49,16 @@
                     </li>
     
 		
+		
+		                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                        <a class="nav-link nav-link-collapse" href="search-requests.html">
+                            <i class="far fa-fw fa-building"></i>
+                            <span class="nav-link-text">Search Requests</span>
+                        </a>
+                    </li>
+		
+		
+		
             </ul>
 
 
@@ -104,8 +114,8 @@
                                     <form>
                                        
                                         <div class="form-group">
-                                            <label for="orderId">Request Id</label>
-                                            <input type="text" class="form-control" id="orderId" placeholder="Request ID">
+                                            <label for="requestId">Request Id</label>
+                                            <input type="text" class="form-control" id="requestId" placeholder="Request ID">
                                         </div>
                    
                                         <div class="form-group">
@@ -126,9 +136,14 @@
                                         </div>
                                     
 
-                                       
 
                                         <button type="button" class="btn btn-primary" id="btn-add-request">Add Request</button>
+                                        
+                                           <a href="#" title="" id ="btn-reset" class="btn btn-danger btn-sm" onclick="resetAddRequestForm()">
+                                                                            <span class="fa fa-window-restore" aria-hidden="true"></span>
+                                                                            <span><strong>Reset</strong></span></a>
+                                                                          
+                                                                            
                                     </form>
                                 </div>
                                 <div class="col-md-6">
@@ -224,6 +239,13 @@
         crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
        <script src="js/materialrequest-script.js"></script>
+       
+        <script src="js/bootstrap.min.js"></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/notify.min.js"></script>
+    
+    <script src="js/notify.js"></script>
+       
 </body>
 
 </html>
