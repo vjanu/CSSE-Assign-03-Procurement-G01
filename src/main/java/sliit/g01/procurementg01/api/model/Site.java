@@ -1,7 +1,6 @@
 package sliit.g01.procurementg01.api.model;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Site")
 public class Site {
 
-    @Id
+	@Id
 	private String siteId;
 	private String siteName;
 	private String address;
