@@ -16,16 +16,24 @@ let currentLocation = window.location.href;
 /* * * * Event Triggers * * * */
 // to add a supplier.
 $('#btn-add-supplier').on('click', function () {
-    addSupplier();
+    addSupplier(false);
 });
-
+// to update a supplier.
+$('#btn-edit-supplier').on('click', function () {
+    addSupplier(true);
+});
 
 /* * * * Functions * * * */
 
-// to add a supplier
-function addSupplier() {
+/**
+ * Add or update a supplier to/in database.
+ *
+ * @param update indicates if this an update query or a totally new insertion.
+ */
+function addSupplier(update) {
     // get data from html form.
     let data = {
+        supplierId: $('#supplier-id').val(),
         supplierName: $('#supplier-name').val(),
         bankAccountNo: $('#bank-account-number').val(),
         address: $('#address').val(),
@@ -34,15 +42,28 @@ function addSupplier() {
         isBanned: $('#availability').val()
     };
 
-    axios.post(BASE_URL + '/supplier', data)
-        .then((response) => {
-            if (response.status == 200) {
-                alert('Supplier added; Redirecting to all suppliers page');
-                window.location.href = currentLocation.includes('add-new-supplier') ? currentLocation.replace('add-new-supplier', 'view-suppliers') : currentLocationÒ;   // redirection.
-            }
-        }).catch((err) => {
-        console.log(err);
-    });
+    if (update) {
+        axios.put(BASE_URL + '/supplier', data)
+            .then((response) => {
+                if (response.status == 200) {
+                    alert('Supplier added; Redirecting to all suppliers page');
+                    window.location.href = currentLocation.includes('add-new-supplier') ? currentLocation.replace('add-new-supplier', 'view-suppliers') : currentLocationÒ;   // redirection.
+                }
+            }).catch((err) => {
+            console.log(err);
+        });
+    }
+    else {
+        axios.post(BASE_URL + '/supplier', data)
+            .then((response) => {
+                if (response.status == 200) {
+                    alert('Supplier added; Redirecting to all suppliers page');
+                    window.location.href = currentLocation.includes('add-new-supplier') ? currentLocation.replace('add-new-supplier', 'view-suppliers') : currentLocationÒ;   // redirection.
+                }
+            }).catch((err) => {
+            console.log(err);
+        });
+    }
 }
 
 

@@ -18,6 +18,8 @@ public interface SupplierService {
 
 	Supplier updateSupplier(String employeeId, Supplier supplier);
 
+	Supplier updateSupplier(Supplier supplier);
+
 	Boolean deleteSupplier(String supplierId);
 
 	Boolean supplierExists(String supplierId);
