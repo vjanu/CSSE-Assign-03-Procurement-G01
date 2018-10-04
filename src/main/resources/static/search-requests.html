@@ -18,7 +18,7 @@
     <!-- lato font(from google fonts) -->
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
     <link href="css/custom-style.css" rel="stylesheet">
-
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     <title>Procurement Home</title>
 </head>
 
@@ -82,8 +82,8 @@
     </nav>
     <!-- navbar: end -->
 
-    <div class="content-wrapper">
-     <!--     <div class="container-fluid">
+  <!--   <div class="content-wrapper">
+         <div class="container-fluid">
 
             <div>
                 <ol class="breadcrumb">
@@ -165,7 +165,7 @@
                 </div>
             </div>   -->
             
-            
+       <!--     
               <div class="container-fluid">
 
             <div>
@@ -205,7 +205,37 @@
         </div>
             
 
+        </div>-->
+        
+        
+        
+       <div class="content-wrapper">
+        <div class="container-fluid">
+
+            <div>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="../../constructor-dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Request List</li>
+                </ol>
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Search Request List</h4>
+                    </div>
+                    <div class="card-body" id="view-search-req">
+                      
+                    </div>
+
+                
+                
+    </div>
+            
         </div>
+    </div></div> 
+        
+        
+        
 
         <footer class="sticky-footer">
             <div class="container">
@@ -247,13 +277,10 @@
     <script src="js/axios.min.js"></script>
     <script src="js/notify.min.js"></script>
     <script src="js/materialrequest-script.js"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
     
-    
-     <script>
-        $(document).ready(function () {
-            $('#search-rquests-list').DataTable();
-        });
-    </script>
+   
     
 </body>
 
