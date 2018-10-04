@@ -13,9 +13,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import sliit.g01.procurementg01.api.model.AccountingStaff;
-import sliit.g01.procurementg01.api.model.SiteManager;
-import sliit.g01.procurementg01.api.service.impl.AccountingStaffServiceImpl;
+import sliit.g01.procurementg01.api.model.Site;
 import sliit.g01.procurementg01.api.service.impl.SiteManagerServiceImpl;
+import sliit.g01.procurementg01.api.service.impl.SiteServiceImpl;
 import sliit.g01.procurementg01.api.utility.ProcurementUtils;
 
 import java.util.List;
@@ -24,82 +24,84 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Test class to check the REST calls associated with the Site Manager
+ * Test class to check the REST calls associated with the Site
  * @author Viraj
  */
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(SiteManagerController.class)
-public class SiteManagerControllerTest extends ProcurementUtils {
+@WebMvcTest(SiteController.class)
+public class SiteControllerTest extends ProcurementUtils {
 
     @Autowired
     private MockMvc mvc;
 
     @MockBean
+    private SiteServiceImpl siteService;
+
+    @MockBean
     private SiteManagerServiceImpl siteManagerService;
 
+    @Test
+    public void retrieveSiteDataBySiteId_Test() throws Exception {
+        String siteId = "ST1022";
+        List<Site> siteData = getSiteBeans();
+        given(siteService.getSite(siteId)).willReturn(siteData.get(0));
+        mvc.perform(get("/site/"+ siteId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()", is(7)));
+    }
 
     @Test
-    public void retrieveAllSiteManagerData_Test() throws Exception {
-        List<SiteManager> allSiteManagers = getSiteManagerBeans();
-        given(siteManagerService.getAllSiteManagers()).willReturn(allSiteManagers);
-        mvc.perform(get("/employee/site-manager")
+    public void deleteSiteData_Test() throws Exception {
+            String siteId = "ST1022";
+            given(siteService.deleteSite(siteId)).willReturn(true);
+            mvc.perform(delete("/site/"+ siteId)
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk());
+    }
+
+    @Test
+    public void retrieveAllSiteData_Test() throws Exception {
+        List<Site> allSites = getSiteBeans();
+        given(siteService.listAllSites()).willReturn(allSites);
+        mvc.perform(get("/site/")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].managedSiteId", is(allSiteManagers.get(0).getManagedSiteId())))
-                .andExpect(jsonPath("$[0].employeeId", is(allSiteManagers.get(0).getEmployeeId())))
-                .andExpect(jsonPath("$[0].nic", is(allSiteManagers.get(0).getNic())));
+                .andExpect(jsonPath("$[0].siteName", is(allSites.get(0).getSiteName())))
+                .andExpect(jsonPath("$[0].address", is(allSites.get(0).getAddress())));
     }
 
     @Test
-    public void retrieveSiteManagerDataBySiteId_Test() throws Exception {
-        String siteId = "ST1022";
-        List<SiteManager>  managedSiteMgr = getSiteManagerBeans();
-        given(siteManagerService.getSiteManagerOfSite(siteId)).willReturn(managedSiteMgr.get(0));
-        mvc.perform(get("/employee/site-manager/sites/"+ siteId)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()", is(8)));
-    }
-
-
-    @Test
-    public void saveSiteManagerData_Test() throws Exception {
-        mvc.perform(post("/employee/site-manager").content(SITE_MGR_REQUEST)
+    public void saveSiteDataException_Test() throws Exception {
+        mvc.perform(post("/site/add-new-site").content(SITE_REQUEST)
                                 .contentType(APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
-
+                .andExpect(status().is(501));
     }
 
     @Test
-    public void saveSiteManagerDataException_Test() throws Exception {
-        mvc.perform(post("/employee/site-manager").content(SITE_MGR_REQUEST)
-                                .contentType(APPLICATION_JSON_UTF8))
-                .andExpect(status().is(200));
-
-    }
-
-    @Test
-    public void updateAccountingStaffData_Test() throws Exception {
+    public void updateSiteData_Test() throws Exception {
+        String siteId = "ST1243";
         MockHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.put("/employee/site-manager/assign")
+                MockMvcRequestBuilders.put("/site/" + siteId)
                         .contentType(APPLICATION_JSON_UTF8)
                         .accept(APPLICATION_JSON_UTF8)
                         .characterEncoding("UTF-8")
-                .content(SITE_MGR_REQUEST);
+                .content(SITE_REQUEST);
 
         mvc.perform(builder)
                 .andExpect(MockMvcResultMatchers.status()
                         .isOk())
                 .andExpect(MockMvcResultMatchers.content()
-                        .string("Success:false"))
+                        .string(""))
                 .andDo(MockMvcResultHandlers.print());
     }
 }

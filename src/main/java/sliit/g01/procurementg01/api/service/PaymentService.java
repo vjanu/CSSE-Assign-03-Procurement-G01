@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface PaymentService {
 
-	Boolean makePayment(Payment payment);
+	Payment makePayment(Payment payment);
 
 	List<Payment> getAllPayments();
 
