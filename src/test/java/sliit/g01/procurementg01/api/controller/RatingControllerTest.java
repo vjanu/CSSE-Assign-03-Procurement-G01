@@ -60,7 +60,7 @@ public class RatingControllerTest extends ProcurementUtils {
     @Test
     public void retrieveAllConstructorRatingData_Test() throws Exception {
         List<Rating> allConstructorRating = getConstructorRatingBeans();
-        given(ratingService.getSupplierRatings()).willReturn(allConstructorRating);
+        given(ratingService.getConstructorRatings()).willReturn(allConstructorRating);
         mvc.perform(get("/ratings/constructor-ratings")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
