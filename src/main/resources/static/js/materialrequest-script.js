@@ -30,6 +30,13 @@ $('#btn-add-item').on('click', function (e) {
 
 
 /* * * * *     Page Activities     * * * * */
+if (CURRENT_URL.includes('constructor-dashboard')) {
+    console.log("You are on constructor-dashboard page")
+    
+}
+
+
+
 if (CURRENT_URL.includes('request-order')) {
     console.log("You are on Request material page");
  //  loadRequestMaterials();
