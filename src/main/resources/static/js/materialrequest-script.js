@@ -150,7 +150,8 @@ function addRequest() {
 	let data = {
 			requestId: $('#requestId').val(),
 			requestedPerson: $('#constructorname').val(),
-		    requestedDate: $('#requesteddate').val(),
+		    requestedDate: $('#requesteddate').val(),	   
+		    siteId: $('#siteId').val(),
             items: obj,
 		    requestingDate: $('#requestingdate').val(),
 		
@@ -178,7 +179,8 @@ function loadConstructorRequests(){
             var html = '<tr>';
             html +='<td align="right">'+request.requestId+'</td>' ;
             html +='<td align="right">' + request.requestedPerson +'</td>' ;
-            html +='<td align="right">' + request.requestedDate + '</td>' ;  
+            html +='<td align="right">' + request.requestedDate + '</td>' ; 
+            html +='<td align="right">' + request.siteId + '</td>' ; 
             html +='<td align="right">'  + getItemList(request.items) + '</td>' ;       
             html +='<td align="right">' + request.requestingDate + '</td>' ;   
             html +='</tr>';

@@ -16,6 +16,18 @@ $('#btn-logout').on('click', function (e) {
     window.location.href = "index.html";
 });
 
+
+$('#btn-add-request').on('click', function (e) {
+    e.preventDefault();
+    addRequest();
+});
+$('#btn-add-item').on('click', function (e) {
+	e.preventDefault();
+	addRequiredItem();
+});
+
+
+
 /* * * * *     Headers for cross origin issues   * * * * */
 let headers = {
     'Content-Type': 'application/json',
@@ -60,6 +72,13 @@ if (CURRENT_URL.includes('view-orders-sitemanager')) {
    
 }
 
+
+
+if (CURRENT_URL.includes('request-order-site-manager')) {
+	generateItemSelectDropdown();
+}
+
+
 if (CURRENT_URL.includes('make-request')) {
     populateRequestDetails()
    
@@ -74,6 +93,110 @@ if (CURRENT_URL.includes('update-stock-sitemanager')) {
 	generateItemSelectDropdown1();
 	
 }
+
+
+//constructor add requests-add request page
+function addRequest() {
+	let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+	var obj = {};
+	for (var i of storedItems) {
+		obj[i.itemName] = i.itemQty;
+	}
+
+	let data = {
+			requestId: $('#requestId').val(),
+			requestedPerson: $('#constructorname').val(),
+		    requestedDate: $('#requesteddate').val(),
+		    siteId: $('#siteId').val(),
+            items: obj,
+		    requestingDate: $('#requestingdate').val(),
+		
+	}
+
+	axios.post(BASE_URL_LOCAL + '/requestmaterial/add-new-request', data)
+		.then(function (response) {
+			$.notify(response.data, "success");
+		})
+		.catch(function (error) {
+			// handle error
+			console.log(error);
+			$.notify("Request not added", "error");;
+		});
+}
+
+function addRequiredItem() {
+	if ($('#item-qty').val() != "") {
+
+		let data = {
+			itemId: $('#op-item-select').val(),
+			itemName: $('#op-item-select :selected').text(),
+			itemQty: $('#item-qty').val()
+		}		
+		itemsArray.push(data);
+		localStorage.setItem('items', JSON.stringify(itemsArray));
+		loadAddedItemTable();
+	} else {
+		$.notify("Quantity cannot be empty", "error");
+	}
+
+}
+
+//generate item selection dropdown list in add request page
+function generateItemSelectDropdown() {
+	axios.get(BASE_URL_LOCAL + '/item/')
+		.then(function (response) {
+			console.log(response.data)
+			var html = '<select class="form-control" id="op-item-select">';
+
+			Object.keys(response.data).forEach(supplierAsKey => {
+				response.data[supplierAsKey].forEach(item => {
+					html += '<option value="' + item.itemId + '">' + item.itemName + '</option>';
+				});
+			});
+
+
+			html += '</select>';
+			$('#item-select').append(html);
+		}).catch(function (error) {
+			// handle error
+			console.log(error);
+		});
+}
+
+
+
+//click event for remove button when adding an item
+$(document).on('click', '#request-item-table .btn-danger', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	var itemId = $(this).closest("tr").find(".nr-itemId").text();
+	console.log(itemId);
+	var r = confirm("Are you sure you want to remove this item ? This action cannot be undone");
+	if (r == true) {
+
+
+		let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+
+		var index = storedItems.findIndex(function (item, i) {
+			return item.itemId === itemId
+		});
+
+		console.log("Index : " + index);
+		if (index != -1) {
+			storedItems.splice(index, 1);
+		}
+
+		localStorage.setItem('items', JSON.stringify(storedItems));
+		$("#item-list tbody").empty();
+
+		loadItemTable();
+
+
+		$.notify(itemId, "success");
+	}
+});
+
+
 
 function loadRequestsFromConstructor(){
 	 axios.get(BASE_URL_LOCAL + '/requestmaterial/')
