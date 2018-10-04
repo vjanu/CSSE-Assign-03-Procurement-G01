@@ -1,7 +1,7 @@
 package sliit.g01.procurementg01.api.controller;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.model.Site;
 import sliit.g01.procurementg01.api.service.SiteService;
+import sliit.g01.procurementg01.api.service.impl.ItemServiceImpl;
 import sliit.g01.procurementg01.api.service.impl.SiteManagerServiceImpl;
 
 /**
@@ -27,8 +28,8 @@ import sliit.g01.procurementg01.api.service.impl.SiteManagerServiceImpl;
 @RequestMapping("/site")
 public class SiteController {
 
-	// @Autowired
-	// private ItemServiceImpl itemService;
+	@Autowired
+	private ItemServiceImpl itemService;
 
 	@Autowired
 	private SiteService siteService;
@@ -40,23 +41,20 @@ public class SiteController {
 	public ResponseEntity<String> addSite(@Validated @RequestBody Site site) {
 		site.setSiteId("ST" + RandomStringUtils.randomNumeric(5));
 
+		List<Item> itemList = new ArrayList<>();
+
 		// quantity required, mapped against item id.
-		// Map<String, String> itemIdAndQuantities = site.getItems();
-		//
-		// for (String itemId : itemIdAndQuantities.keySet()) {
-		//
-		// String quantity = itemIdAndQuantities.get(itemId);
-		// Item i = itemService.getItem(itemId);
-		//
-		// if (i != null) {
-		// i.setQuantity(quantity);
-		//
-		// // create a new list of items for future use.
-		// List<Item> itemList = new ArrayList<>();
-		// itemList.add(i);
-		//
-		// }
-		// }
+		List<Item> itemIdAndQuantities = site.getItems();
+
+		for (Item item : itemIdAndQuantities) {
+			Item i = itemService.getItem(item.getItemId());
+			if (i != null) {
+				i.setQuantity(item.getQuantity());
+				// create a new list of items for future use.
+				itemList.add(i);
+			}
+		}
+		site.setItems(itemList);
 
 		if (siteService.addSite(site)) {
 			// update the site with its new site manager's details.
@@ -87,7 +85,7 @@ public class SiteController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public Site updateSite(@PathVariable("id") final String id, @Validated @RequestBody final Site site) {
+	public boolean updateSite(@PathVariable("id") final String id, @Validated @RequestBody final Site site) {
 		return siteService.updateSite(id, site);
 	}
 

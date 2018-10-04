@@ -1,7 +1,6 @@
 package sliit.g01.procurementg01.api.service.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,12 +47,24 @@ public class SiteServiceImpl implements SiteService {
 	}
 
 	@Override
-	public Site updateSite(String siteId, Site site) {
+	public boolean updateSite(String siteId, Site site) {
 		Site newSite = siteRepository.findBySiteId(siteId);
+
+		if (site.getSiteName() != null)
+			newSite.setSiteName(site.getSiteName());
+
+		if (site.getAddress() != null)
+			newSite.setAddress(site.getAddress());
+
+		if (site.getStorageCapacity() > 0)
+			newSite.setStorageCapacity(site.getStorageCapacity());
+
+		if (site.getCurrentCapacity() > 0)
+			newSite.setCurrentCapacity(site.getCurrentCapacity());
 
 		if (site.getItems() != null)
 			newSite.setItems(site.getItems());
-		return siteRepository.save(newSite);
+		return (siteRepository.save(newSite) != null);
 	}
 
 	// returns the site which the provided site manager is managing currently.
