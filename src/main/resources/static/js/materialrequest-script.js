@@ -30,6 +30,13 @@ $('#btn-add-item').on('click', function (e) {
 
 
 /* * * * *     Page Activities     * * * * */
+if (CURRENT_URL.includes('constructor-dashboard')) {
+    console.log("You are on constructor-dashboard page")
+    
+}
+
+
+
 if (CURRENT_URL.includes('request-order')) {
     console.log("You are on Request material page");
  //  loadRequestMaterials();
@@ -143,7 +150,8 @@ function addRequest() {
 	let data = {
 			requestId: $('#requestId').val(),
 			requestedPerson: $('#constructorname').val(),
-		    requestedDate: $('#requesteddate').val(),
+		    requestedDate: $('#requesteddate').val(),	   
+		    siteId: $('#siteId').val(),
             items: obj,
 		    requestingDate: $('#requestingdate').val(),
 		
@@ -171,7 +179,8 @@ function loadConstructorRequests(){
             var html = '<tr>';
             html +='<td align="right">'+request.requestId+'</td>' ;
             html +='<td align="right">' + request.requestedPerson +'</td>' ;
-            html +='<td align="right">' + request.requestedDate + '</td>' ;  
+            html +='<td align="right">' + request.requestedDate + '</td>' ; 
+            html +='<td align="right">' + request.siteId + '</td>' ; 
             html +='<td align="right">'  + getItemList(request.items) + '</td>' ;       
             html +='<td align="right">' + request.requestingDate + '</td>' ;   
             html +='</tr>';
