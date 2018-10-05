@@ -48,11 +48,11 @@ $('#btn-edit-site').on('click', function (e) {
 $(document).on('click', '#manage-material-requests #btn-approve-request-material', function (e) {
 	e.preventDefault();
 	e.stopPropagation();
-	var oid = $(this).closest("tr").find(".nr-oid").text();
-	console.log(oid);
+	var rid = $(this).closest("tr").find(".nr-oid").text();
+	console.log(rid);
 	var r = confirm("Are you sure? This action cannot be undone");
 	if (r == true) {
-		approveRequestedMaterial(oid);
+		approveOrRejectRequestedMaterial(rid, true);
 	}
 });
 
@@ -78,7 +78,20 @@ $(document).on('click', '#manage-material-requests #btn-reject', function (e) {
 	var rid = $(this).closest("tr").find(".nr-oid").text();
 	var r = confirm("Are you sure want to reject this request? This action cannot be undone");
 	if (r == true) {
-		rejectMaterialRequest(rid);
+		approveOrRejectRequestedMaterial(rid, false);
+	}
+});
+
+/**
+ * Material requeest reject click event
+ */
+$(document).on('click', '#manage-material-requests #btn-notify', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	var rid = $(this).closest("tr").find(".nr-oid").text();
+	var r = confirm("Are you sure want to Notify to management?");
+	if (r == true) {
+		notifyToManagement(rid);
 	}
 });
 
@@ -341,25 +354,43 @@ function removeSite(siteId) {
 }
 
 
-function approveRequestedMaterial(oid, isApproved, isRejected) {
+function approveOrRejectRequestedMaterial(rid, isApproved) {
 	let data = {
 		"isProcumentApproved": isApproved,
-		"isProcumentRejected": isRejected
+		"isProcumentRejected": ((isApproved) ? false : true)
 	}
-	axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + oid, data)
+	axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + rid, data)
 		.then(function (response) {
 			console.log(response);
 			if (response.data) {
-				$.notify(oid + " Approved Successfully", "success");
+				$.notify(rid + ((isApproved) ? " Approved Successfully" : " Rejected Successfully"), "success");
 				loadRequestedMaterialTable();
 			} else {
-				$.notify(oid + " Not Approved", "error");
+				$.notify(rid + ((isApproved) ? " Not Approved" : " Not Rejected"), "error");
 			}
 		}).catch(function (error) {
 			console.log(error);
 		});
 }
 
+
+function notifyToManagement(rid) {
+	let data = {
+		"notifyManagement": true
+	}
+	axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + rid, data)
+		.then(function (response) {
+			console.log(response);
+			if (response.data) {
+				$.notify(rid + " Notified Successfully", "success");
+				loadRequestedMaterialTable();
+			} else {
+				$.notify(rid + " Not Notified", "error");
+			}
+		}).catch(function (error) {
+			console.log(error);
+		});
+}
 
 function loadSupplierRatings() {
 	axios.get(BASE_URL_LOCAL + '/ratings/supplier-ratings').then(function (response) {
@@ -482,8 +513,8 @@ function loadRequestedMaterialTable() {
 				html += '<td class="text-center">' + item.requestedDate + '</td>';
 				html += '<td class="text-center">' + getImmediateButton(item.isImmediated) + '</td>';
 				html += '<td class="text-center">' + isViolation(item.items) + '</td>';
-				html += '<td class="text-center">' + requestStatus(item.isProcumentApproved) + '</td>';
-				html += '<td class="text-center">' + getApprovedButton(item.isProcumentApproved) + '</td>';
+				html += '<td class="text-center">' + requestStatus(item) + '</td>';
+				html += '<td class="text-center">' + getApprovedButton(item) + '</td>';
 				html += '<td><center>' +
 					'<a href="#" id="btn-reject" title="" class="btn btn-danger btn-sm">\n' +
 					'        <span class="fas fa-check-double" aria-hidden="true"></span>\n' +
@@ -798,11 +829,10 @@ function getRequestedItemList(items) {
 }
 
 
-function getApprovedButton(status) {
-	var btnClass = (status == 1) ? "btn btn-default btn-sm" : "btn btn-primary btn-sm";
-	var btnText = (status == 1) ? "Approved" : "Approve";
-	var isDisabled = (status == 1) ? "disabled" : "";
-
+function getApprovedButton(request) {
+	var btnClass = (request.isProcumentApproved) ? "btn btn-default btn-sm" : "btn btn-primary btn-sm";
+	var btnText = (request.isProcumentApproved) ? "Approved" : "Approve";
+	var isDisabled = (request.isProcumentApproved || request.isProcumentRejected) ? "disabled" : "";
 
 	var html = '<button id="btn-approve-request-material" type="button" title="Approve Button" class="' + btnClass + '" ' + isDisabled + '>' +
 		'        <span class="fa fa-check" aria-hidden="true"></span>' +
@@ -906,10 +936,10 @@ function isViolation(items) {
 		if (item.isRestrictedItem) {
 			isCompanyPoliciesViolated = true;
 		}
-		totalCost += item.price * item.quantity; 
+		totalCost += item.price * item.quantity;
 	});
 
-	if(totalCost > 100000){
+	if (totalCost > 100000) {
 		isCompanyPoliciesViolated = true;
 	}
 
@@ -923,9 +953,9 @@ function isViolation(items) {
  * Get the status of material request
  * @param {*} isProcumentApproved 
  */
-function requestStatus(isProcumentApproved){
-	var badgeClass = (isProcumentApproved) ? "badge badge-pill badge-success" : "badge badge-pill badge-warning";
-	var badgeText = (isProcumentApproved) ? "Approved" : "Pending";
+function requestStatus(request) {
+	var badgeClass = (request.isProcumentApproved) ? "badge badge-pill badge-success" : "badge badge-pill badge-warning";
+	var badgeText = (request.isProcumentRejected) ? "Rejected" : ((request.isProcumentApproved) ? "Approved" : "Pending");
 
 	return '<h5><span class="' + badgeClass + '"><span style="color:white">' + badgeText + '</span></span></h5>';
 }
