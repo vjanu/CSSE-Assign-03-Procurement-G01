@@ -57,20 +57,6 @@ public class AccountingStaffControllerTest extends ProcurementUtils {
                 .andExpect(jsonPath("$[0].employeeName", is(allAccountingStaff.get(0).getEmployeeName())));
     }
 
-//    @Test
-//    public void retrieveAccountingStaffDataByEmpId_Test() throws Exception {
-//        String employeeId = "EMP1022";
-//        List<AccountingStaff> allAccountingStaff = getAccountingStaffBeans();
-//        given(accountingStaffService.listAccountingStaff()).willReturn(allAccountingStaff);
-//        mvc.perform(get("/employee/accounting-staff/"+ employeeId)
-//                .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(2)));
-////                .andExpect(jsonPath("$[1].employeeId", is(allAccountingStaff.get(1).getEmployeeId())))
-////                .andExpect(jsonPath("$[1].employeeName", is(allAccountingStaff.get(1).getEmployeeName())));
-//    }
-
-
     @Test
     public void saveAccountingStaffData_Test() throws Exception {
         mvc.perform(post("/employee/accounting-staff").content(ACCOUNTING_STAFF_REQUEST)

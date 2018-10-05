@@ -214,6 +214,7 @@ $(document).ready(function() {
 				$('#supplier-name').val(response.data.supplierName);
 				$('#bank-acc-id').val(response.data.bankAccountNo);
 				$('#bank-acc-name').val(response.data.bankName);
+				$('#supplier-email').val(response.data.email);
 			}
 		}).catch(function (error) {
 			console.log(error);
@@ -388,10 +389,19 @@ function pay(){
         totAmount : $("#amount").val(),
         orderID : $("#order-id").val(),
         bankNo : $("#bank-acc-id").val(),
-        date : $("#date").val()
+        date : $("#date").val(),
+        email : $("#supplier-email").val()
 		
 		
     }
+
+    axios.post(BASE_URL_LOCAL + '/email', data)
+    .then(function (response) {
+    	
+    })
+    .catch(function (error) {
+       
+    });
 
 	axios.post(BASE_URL_LOCAL + '/payment', data)
     .then(function (response) {
@@ -401,6 +411,33 @@ function pay(){
         // handle error
         $.notify("Payment Failed", "error");
     });
+
+
+}
+
+function sentEmail(){
+    let data='';
+	 data = {
+		
+ 
+        totAmount : $("#amount").val(),
+        orderID : $("#order-id").val(),
+        bankNo : $("#bank-acc-id").val(),
+        date : $("#date").val(),
+        email : $("#supplier-email").val()
+		
+		
+    }
+
+    axios.post(BASE_URL_LOCAL + '/email', data)
+    .then(function (response) {
+    	$.notify("Receipt Sent to "+ data.email, "success");
+    })
+    .catch(function (error) {
+        $.notify("Email is not sent", "error");
+    });
+
+	
 
 
 }

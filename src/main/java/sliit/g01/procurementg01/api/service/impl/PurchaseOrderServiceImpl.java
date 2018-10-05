@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sliit.g01.procurementg01.api.model.*;
@@ -259,9 +260,8 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 			p.setDraftPurchaseOrder(true); // will be a draft as long as the
 											// payment isn't made.
 			p.setItems(itemsOrderedFromEachSupplier.get(supplierId));
-			p.setOnHold(false);
+			p.setOnHold("false");
 			p.setOrderDate(new Date());
-			// p.setOrderStatus("Pending approval");
 			p.setSequentialReference("No idea");
 			p.setSupplierId(supplierId);
 			p.setDeliverySite(deliverySite);
