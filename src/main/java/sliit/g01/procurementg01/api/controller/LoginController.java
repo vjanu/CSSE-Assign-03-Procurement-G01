@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import sliit.g01.procurementg01.api.model.Login;
-
 import sliit.g01.procurementg01.api.service.LoginService;
 
 @RestController
@@ -25,9 +23,5 @@ public class LoginController {
 		login.setEmployeeId("CS" + RandomStringUtils.randomNumeric(5));
 		return loginService.addUsers(login);
 	}
-	
-	
-	
-	
-	
+
 }
