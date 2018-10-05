@@ -35,6 +35,7 @@ function addSupplier(update) {
     let data = {
         supplierId: $('#supplier-id').val(),
         supplierName: $('#supplier-name').val(),
+        bankName : $('#bank-name').val(),
         bankAccountNo: $('#bank-account-number').val(),
         address: $('#address').val(),
         email: $('#email').val(),
@@ -144,6 +145,7 @@ function renderSupplierTable(tagId, suppliers) {
         '<tr>' +
         '<th scope="col">Supplier Id</th>' +
         '<th scope="col">Supplier Name</th>' +
+        '<th scope="col">Bank Name</th>' +
         '<th scope="col">Bank Account Number</th>' +
         '<th scope="col">Address</th>' +
         '<th scope="col">Email</th>' +
@@ -160,6 +162,7 @@ function renderSupplierTable(tagId, suppliers) {
             '<tr>' +
             '<td>' + supplier.supplierId + '</td>' +
             '<td>' + supplier.supplierName + '</td>' +
+            '<td>' + supplier.bankName + '</td>' +
             '<td>' + supplier.bankAccountNo + '</td>' +
             '<td>' + supplier.address + '</td>' +
             '<td>' + supplier.email + '</td>' +
@@ -285,6 +288,7 @@ function loadSupplierDetailsForEditing() {
                     if (supplier) {
                         $('#supplier-id').val(supplier.supplierId);
                         $('#supplier-name').val(supplier.supplierName);
+                        $('#bank-name').val(supplier.bankName);
                         $('#bank-account-number').val(supplier.bankAccountNo);
                         $('#address').val(supplier.address);
                         $('#email').val(supplier.email);
