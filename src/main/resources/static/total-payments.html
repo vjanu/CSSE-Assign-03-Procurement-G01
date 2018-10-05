@@ -17,15 +17,15 @@
     <!-- lato font(from google fonts) -->
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
     <link href="css/custom-style.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+
 
     <title>Account Staff Home</title>
 </head>
 
 <body class="fixed-nav">
 
-<!-- navbar: start -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <!-- navbar: start -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
         <a class="navbar-brand" href="#">Account Staff Home</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
             aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,43 +35,28 @@
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
                     
                 
-                
-                      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Pending Payments">
-                            <a class="nav-link nav-link-collapse" href="pending-payments.html">
-                                <i class="fas fa-hourglass-half"></i>
-                                <span class="nav-link-text">Pending Payments</span>
-                            </a>
-                                </li>  
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Successfull Payments">
-                            <a class="nav-link nav-link-collapse" href="successfull-payments.html">
-                                    <i class="far fa-thumbs-up"></i>
-                                <span class="nav-link-text">Successfull Payments</span>
-                            </a>
-                    </li> 
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="On Hold Payments">
-                            <a class="nav-link nav-link-collapse" href="onhold-payments.html">
-                                    <i class="fas fa-ban"></i>
-                                <span class="nav-link-text">On-Hold Payments</span>
-                            </a>
-                    </li> 
-                      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="View Supplier">
-                    <a class="nav-link nav-link-collapse" href="view-supplier-acc.html">        
-                            <i class="fas fa-people-carry"></i>
-                        <span class="nav-link-text">Suppliers</span>
+                <li class="nav-item dropdown navbar-dark bg-dark">
+                        <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Manage Payments
+                        </a>
+                        <div class="dropdown-menu navbar-dark bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" href="pending-payments.html" style="color:white">Pending Payments</a>
+                          <a class="dropdown-item" href="successfull-payments.html" style="color:white">Successfull Payments</a>
+                          <a class="dropdown-item" href="onhold-payments.html" style="color:white">On Hold Payments</a>
+                        </div>
+                      </li>
+
+                      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-3">
+                    <a class="nav-link nav-link-collapse" href="view-supplier-acc.html">                        <i class="far fa-fw fa-paper-plane"></i>
+                        <span class="nav-link-text">View Supplier</span>
                     </a>
-                        </li> 
-                        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="View Constructors">
-                                <a class="nav-link nav-link-collapse" href="view-constructors-acc.html">              
-                                        <i class="fas fa-user"></i>
-                                    <span class="nav-link-text">Constructors</span>
-                                </a>
-                                    </li>     
-    
+                          
+
             </ul>
-    
+
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-    
+
                     <form class="navbar-form" role="search">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search" name="q">
@@ -91,7 +76,6 @@
         </div>
     </nav>
     <!-- navbar: end -->
-
     <div class="content-wrapper">
         <div class="container-fluid">
 
@@ -100,14 +84,37 @@
                     <li class="breadcrumb-item">
                         <a href="accountingstaff-dashboard.html">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item active">Constructor List</li>
+                    <li class="breadcrumb-item active">Payment Summary</li>
+                   
                 </ol>
                 <div class="card">
                     <div class="card-header">
-                        <h4>View Constructor List</h4>
+                        <h4>Total Payment Summary</h4>
                     </div>
-                    <div class="card-body" id="view-con-acc">
-                      
+                    <div class="card-body">
+                        <div style="width: 100%; padding-left: -10px; ">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered" id="view-tot-acc">
+                                <thead>
+                                    <tr>
+                                        <th  class="text-center">Payment ID</th>
+                                        <th  class="text-center">Order ID</th>
+                                        <th  class="text-center">Supplier ID</th>
+                                        <th  class="text-center">Paid Date</th>
+                                
+                                        <th scope="col" class="text-center">Total Amount</th>
+                                        <th scope="col" class="text-center">Bank Account No</th>
+                                      
+                                        <th  class="text-center">Payment Method</th>
+                                  
+                                 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     </div>
 
                 
@@ -157,8 +164,6 @@
     <script src="js/accountingstaff-script.js"></script>
     <script src="js/notify.min.js"></script>
     <script src="js/notify.js"></script>
-    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
   
 
 </html>
