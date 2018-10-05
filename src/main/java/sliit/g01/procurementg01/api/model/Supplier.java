@@ -2,6 +2,9 @@ package sliit.g01.procurementg01.api.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+/*
+ * @author Tharushi
+ */
 
 @Document(collection = "Supplier")
 public class Supplier {
