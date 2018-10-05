@@ -51,29 +51,14 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	 */
 	@Override
 	public List<PurchaseOrder> createOrder(RequestMaterial requestMaterial) {
-		List<PurchaseOrder> orders = new ArrayList<>(); // holds the purchase
-														// orders(one order per
-														// supplier).
-		Map<String, List<Item>> itemsOrderedFromEachSupplier = new HashMap<>(); // list
-																				// of
-																				// items
-																				// mapped
-																				// against
-																				// the
-																				// supplier.
-		Map<String, String> itemIdAndQuantities = requestMaterial.getItems(); // quantity
-																				// required,
-																				// mapped
-																				// against
-																				// item
-																				// id.
-		Site deliverySite = siteService.getSite(requestMaterial.getSiteId()); // this
-																				// is
-																				// where
-																				// the
-																				// order
-																				// is
-																				// headed.
+		// holds the purchase orders(one order per supplier).
+		List<PurchaseOrder> orders = new ArrayList<>();
+		// list of items mapped against the supplier.
+		Map<String, List<Item>> itemsOrderedFromEachSupplier = new HashMap<>();
+		// quantity required, mapped against item id.
+		Map<String, String> itemIdAndQuantities = requestMaterial.getItems();
+		// this is where the order is headed.
+		Site deliverySite = siteService.getSite(requestMaterial.getSiteId());
 
 		// request material object has a map of items where quantity of each
 		// item is mapped against its item code.
@@ -119,7 +104,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 			p.setDraftPurchaseOrder(true); // will be a draft as long as the
 											// payment isn't made.
 			p.setItems(itemsOrderedFromEachSupplier.get(supplierId));
-			p.setOnHold("false");
+			p.setOnHold(false);
 			p.setOrderDate(new Date());
 			// p.setOrderStatus("Pending approval");
 			p.setSequentialReference("No idea");
@@ -205,7 +190,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 			order.setReturnedDate(purchaseOrder.getReturnedDate());
 		// if (purchaseOrder.getOrderStatus() != null)
 		// order.setOrderStatus(purchaseOrder.getOrderStatus());
-		if (purchaseOrder.isOnHold() != "false")
+		if (purchaseOrder.isOnHold() != false)
 			order.setOnHold(purchaseOrder.isOnHold());
 		return purchaseOrderRepository.save(order);
 	}
