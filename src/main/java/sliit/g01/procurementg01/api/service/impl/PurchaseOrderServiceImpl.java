@@ -260,7 +260,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 			p.setDraftPurchaseOrder(true); // will be a draft as long as the
 											// payment isn't made.
 			p.setItems(itemsOrderedFromEachSupplier.get(supplierId));
-			p.setOnHold(false);
+			p.setOnHold("false");
 			p.setOrderDate(new Date());
 			p.setSequentialReference("No idea");
 			p.setSupplierId(supplierId);

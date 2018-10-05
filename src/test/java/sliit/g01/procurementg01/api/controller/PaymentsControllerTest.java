@@ -61,7 +61,7 @@ public class PaymentsControllerTest extends ProcurementUtils {
 		List<Payment> payments = getPaymentBeans();
 		given(paymentService.getPaymentByPaymentID(payId)).willReturn(payments.get(0));
 		mvc.perform(get("/payment/" + payId).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-				.andExpect(jsonPath("$.length()", is(7)));
+				.andExpect(jsonPath("$.length()", is(8)));
 	}
 
 	@Test

@@ -39,7 +39,7 @@ public class RequestMaterialControllerTest extends RequestMaterialUtils {
 	@Test
 	public void saveSiteDataException_Test() throws Exception {
 		mvc.perform(post("/requestmaterial/add-new-request").content(ADD_NEW_REQUEST_JSON)
-				.contentType(APPLICATION_JSON_UTF8)).andExpect(status().is(501));
+				.contentType(APPLICATION_JSON_UTF8)).andExpect(status().is(400));
 	}
 
 	@Test
