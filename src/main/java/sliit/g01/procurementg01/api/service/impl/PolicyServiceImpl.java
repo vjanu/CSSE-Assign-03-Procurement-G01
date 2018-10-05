@@ -1,5 +1,6 @@
 package sliit.g01.procurementg01.api.service.impl;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sliit.g01.procurementg01.api.model.Policy;
@@ -21,7 +22,7 @@ public class PolicyServiceImpl implements PolicyService {
     @Override
     public Policy addPolicy(Policy policy) {
         // give a random id
-        policy.setPolicyId(UUID.randomUUID().toString());
+        policy.setPolicyId("PL" + RandomStringUtils.randomNumeric(5));
         return policyRepository.save(policy);
     }
 
@@ -29,7 +30,7 @@ public class PolicyServiceImpl implements PolicyService {
     public Policy viewPolicy(String policyId) {
         Policy policy = policyRepository.findByPolicyId(policyId);
 
-        // if no policy exists in the db under the given policyId,
+        // if no policies exists in the db under the given policyId,
         // the variable will be null.
         if (policy == null) {
             policy = new Policy();
@@ -57,7 +58,7 @@ public class PolicyServiceImpl implements PolicyService {
         policyRepository.deletePolicyByPolicyId(policyId);
 
         // validate if it entry was deleted.
-        // if the entry is deleted, policy will be null.
+        // if the entry is deleted, policies will be null.
         Policy policy = viewPolicy(policyId);
         return policy.getPolicyId() == null;
     }
