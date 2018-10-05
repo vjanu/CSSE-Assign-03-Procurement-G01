@@ -29,6 +29,11 @@ public class RequestMaterialController {
 	@Autowired
 	private RequestMaterialService requestMaterialService;
 
+	// add  new request by constructor to the system.
+//in this when sending data,constructor add request by using an unique requestId
+//with its own other attributes relevant to the request
+//addRequest  method will helps to add all the details of the assigned request
+//and passed to the database.
 	@RequestMapping(value = "/add-new-request", method = RequestMethod.POST)
 	public ResponseEntity<String> addRequest(@RequestBody RequestMaterial requestMaterial) {
 		requestMaterial.setRequestId("MR" + RandomStringUtils.randomNumeric(5));
@@ -40,6 +45,7 @@ public class RequestMaterialController {
 	}
 
 	@GetMapping("/")
+	// get all requests which were assigned by the constructor.
 	public List<RequestMaterial> getAllRequests() {
 		return requestMaterialService.getAllrequests();
 	}

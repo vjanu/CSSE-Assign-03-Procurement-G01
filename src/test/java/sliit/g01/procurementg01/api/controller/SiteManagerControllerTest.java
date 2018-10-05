@@ -31,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * Test class to check the REST calls associated with the Site Manager
+ *
  * @author Viraj
  */
 
@@ -61,9 +62,9 @@ public class SiteManagerControllerTest extends ProcurementUtils {
     @Test
     public void retrieveSiteManagerDataBySiteId_Test() throws Exception {
         String siteId = "ST1022";
-        List<SiteManager>  managedSiteMgr = getSiteManagerBeans();
+        List<SiteManager> managedSiteMgr = getSiteManagerBeans();
         given(siteManagerService.getSiteManagerOfSite(siteId)).willReturn(managedSiteMgr.get(0));
-        mvc.perform(get("/employee/site-manager/sites/"+ siteId)
+        mvc.perform(get("/employee/site-manager/sites/" + siteId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()", is(8)));
@@ -73,7 +74,7 @@ public class SiteManagerControllerTest extends ProcurementUtils {
     @Test
     public void saveSiteManagerData_Test() throws Exception {
         mvc.perform(post("/employee/site-manager").content(SITE_MGR_REQUEST)
-                                .contentType(APPLICATION_JSON_UTF8))
+                .contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 
     }
@@ -81,7 +82,7 @@ public class SiteManagerControllerTest extends ProcurementUtils {
     @Test
     public void saveSiteManagerDataException_Test() throws Exception {
         mvc.perform(post("/employee/site-manager").content(SITE_MGR_REQUEST)
-                                .contentType(APPLICATION_JSON_UTF8))
+                .contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().is(200));
 
     }
@@ -93,7 +94,7 @@ public class SiteManagerControllerTest extends ProcurementUtils {
                         .contentType(APPLICATION_JSON_UTF8)
                         .accept(APPLICATION_JSON_UTF8)
                         .characterEncoding("UTF-8")
-                .content(SITE_MGR_REQUEST);
+                        .content(SITE_MGR_REQUEST);
 
         mvc.perform(builder)
                 .andExpect(MockMvcResultMatchers.status()
