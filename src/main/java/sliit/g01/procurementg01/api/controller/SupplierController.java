@@ -59,7 +59,7 @@ public class SupplierController {
 	}
 
 	@DeleteMapping("supplier/{supplierId}")
-	public void deleteCategory(@PathVariable String supplierId) {
+	public void deleteSupplier(@PathVariable String supplierId) {
 		supplierService.deleteSupplier(supplierId);
 
 	}

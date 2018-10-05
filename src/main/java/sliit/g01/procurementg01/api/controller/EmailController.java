@@ -1,3 +1,4 @@
+/*
 package sliit.g01.procurementg01.api.controller;
 
 import org.springframework.validation.annotation.Validated;
@@ -17,7 +18,7 @@ import java.util.Properties;
 
 /**
  * @author viraj
- **/
+ **//*
 
 @RestController
 @RequestMapping("/email")
@@ -94,3 +95,4 @@ public class EmailController {
         }
     }
 }
+*/
