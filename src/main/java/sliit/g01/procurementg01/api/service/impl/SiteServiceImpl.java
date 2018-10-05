@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sliit.g01.procurementg01.api.model.Item;
+import sliit.g01.procurementg01.api.model.PurchaseOrder;
 import sliit.g01.procurementg01.api.model.Site;
 import sliit.g01.procurementg01.api.repository.SiteRepository;
 import sliit.g01.procurementg01.api.service.SiteService;
@@ -26,6 +27,9 @@ public class SiteServiceImpl implements SiteService {
 
 	@Autowired
 	private SiteManagerServiceImpl siteManagerService;
+
+	@Autowired
+	private PurchaseOrderServiceImpl purchaseOrderService;
 
 	@Override
 	public List<Item> getAvailableItems(String siteId) {
@@ -64,7 +68,17 @@ public class SiteServiceImpl implements SiteService {
 			}
 		}
 		site.setItems(itemList);
-		return (siteRepository.save(site) != null);
+
+		if (siteRepository.save(site) != null) {
+			List<PurchaseOrder> ordersForSuppliers = purchaseOrderService.createOrder(site);
+			// save to db so the suppliers can see them.
+			purchaseOrderService.addPurchaseOrders(ordersForSuppliers);
+			return true;
+		} else {
+			return false;
+		}
+
+		// return (siteRepository.save(site) != null);
 	}
 
 	@Override

@@ -1,7 +1,6 @@
 package sliit.g01.procurementg01.api.model;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,16 +17,15 @@ public class RequestMaterial {
 	private String quantity;
 	private String requestingDate;
 	private String requestedDate;
-	private Map<String, String> items; //itemcode, quantity
+	private List<Item> items;
 	private String isImmediated;
 	private Boolean isProcumentApproved;
 	private String isSiteManagerApproved;
+	private Boolean notifyManagement;
 	private String siteManagerName;
 	private String siteManagerID;
 	@JsonIgnore
 	private String isDeclinedBySiteManager;
-	
-	
 
 	public String getQuantity() {
 		return quantity;
@@ -61,20 +59,20 @@ public class RequestMaterial {
 		this.isSiteManagerApproved = isSiteManagerApproved;
 	}
 
-	public Map<String, String> getItem() {
-		return items;
-	}
-
-	public void setItem(Map<String, String> items) {
-		this.items = items;
-	}
-
 	public String getSiteManagerName() {
 		return siteManagerName;
 	}
 
 	public void setSiteManagerName(String siteManagerName) {
 		this.siteManagerName = siteManagerName;
+	}
+
+	public Boolean getNotifyManagement() {
+		return notifyManagement;
+	}
+
+	public void setNotifyManagement(Boolean notifyManagement) {
+		this.notifyManagement = notifyManagement;
 	}
 
 	public String getSiteManagerID() {
@@ -119,11 +117,11 @@ public class RequestMaterial {
 		this.requestedDate = requestedDate;
 	}
 
-	public Map<String, String> getItems() {
+	public List<Item> getItems() {
 		return items;
 	}
 
-	public void setItems(Map<String, String> items) {
+	public void setItems(List<Item> items) {
 		this.items = items;
 	}
 

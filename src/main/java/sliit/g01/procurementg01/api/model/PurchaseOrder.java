@@ -1,123 +1,125 @@
 package sliit.g01.procurementg01.api.model;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.*;
 
 /**
  * @author anushka
  *
- * This is the final phase of the RequestMaterial.
- * Once a request for material has been approved, it becomes a,
- * purchase order which will be forwarded to the supplier(s).
+ *         This is the final phase of the RequestMaterial. Once a request for
+ *         material has been approved, it becomes a, purchase order which will
+ *         be forwarded to the supplier(s).
  *
  */
 @Document(collection = "PurchaseOrder")
 public class PurchaseOrder {
 
-    @Id
-    private String orderId;
-    private String requestId;   // to identify which material request resulted in this purchase order.
-    private String sequentialReference;     // someone please tell me what this is. :(
-    private List<Item> items;   // <supplier id, list of items>
-    private String supplierId;  // supplier who offers the above list of items.
-    private String orderStatus;
-    private Site deliverySite;  // site where the order should be delivered to.
-    private Date orderDate;
-    private boolean draftPurchaseOrder;
-    private boolean onHold;
-    private Date returnedDate;
+	@Id
+	private String orderId;
+	private String requestId; // to identify which material request resulted in
+								// this purchase order.
+	private String sequentialReference; // someone please tell me what this is.
+										// :(
+	private List<Item> items; // <supplier id, list of items>
+	private String supplierId; // supplier who offers the above list of items.
+	private String orderStatus;
+	private Site deliverySite; // site where the order should be delivered to.
+	private Date orderDate;
+	private boolean draftPurchaseOrder;
+	private boolean onHold;
+	private Date returnedDate;
 
+	public PurchaseOrder() {
+	}
 
-    public PurchaseOrder() {}
+	public Date getReturnedDate() {
+		return returnedDate;
+	}
 
-    public Date getReturnedDate() {
-        return returnedDate;
-    }
+	public void setReturnedDate(Date returnedDate) {
+		this.returnedDate = returnedDate;
+	}
 
-    public void setReturnedDate(Date returnedDate) {
-        this.returnedDate = returnedDate;
-    }
+	public String getOrderId() {
+		return orderId;
+	}
 
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
 
-    public String getOrderId() {
-        return orderId;
-    }
+	public String getSequentialReference() {
+		return sequentialReference;
+	}
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
+	public void setSequentialReference(String sequentialReference) {
+		this.sequentialReference = sequentialReference;
+	}
 
-    public String getSequentialReference() {
-        return sequentialReference;
-    }
+	public List<Item> getItems() {
+		return items;
+	}
 
-    public void setSequentialReference(String sequentialReference) {
-        this.sequentialReference = sequentialReference;
-    }
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
 
-    public List<Item> getItems() {
-        return items;
-    }
+	public String getOrderStatus() {
+		return orderStatus;
+	}
 
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
+	}
 
-    public String getOrderStatus() {
-        return orderStatus;
-    }
+	public Date getOrderDate() {
+		return orderDate;
+	}
 
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
 
-    public Date getOrderDate() {
-        return orderDate;
-    }
+	public boolean isDraftPurchaseOrder() {
+		return draftPurchaseOrder;
+	}
 
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
+	public void setDraftPurchaseOrder(boolean draftPurchaseOrder) {
+		this.draftPurchaseOrder = draftPurchaseOrder;
+	}
 
-    public boolean isDraftPurchaseOrder() {
-        return draftPurchaseOrder;
-    }
+	public boolean isOnHold() {
+		return onHold;
+	}
 
-    public void setDraftPurchaseOrder(boolean draftPurchaseOrder) {
-        this.draftPurchaseOrder = draftPurchaseOrder;
-    }
+	public void setOnHold(boolean onHold) {
+		this.onHold = onHold;
+	}
 
-    public boolean isOnHold() {
-        return onHold;
-    }
+	public String getRequestId() {
+		return requestId;
+	}
 
-    public void setOnHold(boolean onHold) {
-        this.onHold = onHold;
-    }
+	public void setRequestId(String requestId) {
+		this.requestId = requestId;
+	}
 
-    public String getRequestId() {
-        return requestId;
-    }
+	public String getSupplierId() {
+		return supplierId;
+	}
 
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
-    }
+	public void setSupplierId(String supplierId) {
+		this.supplierId = supplierId;
+	}
 
-    public String getSupplierId() {
-        return supplierId;
-    }
+	public Site getDeliverySite() {
+		return deliverySite;
+	}
 
-    public void setSupplierId(String supplierId) {
-        this.supplierId = supplierId;
-    }
-
-    public Site getDeliverySite() {
-        return deliverySite;
-    }
-
-    public void setDeliverySite(Site deliverySite) {
-        this.deliverySite = deliverySite;
-    }
+	public void setDeliverySite(Site deliverySite) {
+		this.deliverySite = deliverySite;
+	}
 }

@@ -59,12 +59,20 @@ if (CURRENT_URL.includes('view-supplier-acc')) {
 }
 
 if (CURRENT_URL.includes('pay-for-pending-payments')) {
+    generateSupplierSelectDropdown()
     populatePaymentDetails();
    
 }
 
+if (CURRENT_URL.includes('total-payments')) {
+    console.log("You are on total-payments")
+    loadAllPayments()
+}
 
-
+if (CURRENT_URL.includes('view-constructors-acc')) {
+    console.log("You are on view-constructors-acc page")
+    getConstructors()
+}
 
 /***********  View Purchased Orders Starts ******************/
 function loadPurchasedOrders(){
@@ -86,7 +94,7 @@ function loadPurchasedOrders(){
             '</a>' +
            '</td>' ;
              html +='<td align="center">' +
-            '<a href="pay-for-pending-payments.html#'+request.supplierId+'" title="" class="btn btn-danger btn-sm">\n' +
+            '<a href="pay-for-pending-payments.html#'+request.orderId+'" title="" class="btn btn-danger btn-sm">\n' +
            '        <span class="fa fa-credit-card" aria-hidden="true"></span>\n' +
            '        <span><strong>Pay Now</strong></span></a>'+
             '</a>' +
@@ -124,7 +132,7 @@ function getOrderStatusLabels(status){
 function getOrderHoldLabels(status){
     var badgeClass ='';
     var badgeText='';
-    if(status == true){
+    if(status == "true"){
         badgeClass = "badge badge-secondary";
         badgeText = "Hold";
     }
@@ -144,7 +152,7 @@ window.makeOrderHold = function(ele) {
         orderDate: row.find('td:nth-child(2)').text(),   
         returnedDate:  row.find('td:nth-child(3)').text(),   
         orderStatus: row.find('td:nth-child(5)').text(),    
-        onHold: true
+        onHold: "true"
     }
     //change
         axios.put(BASE_URL_LOCAL + '/order/' + orderPurchased.orderId, orderPurchased, {
@@ -153,7 +161,7 @@ window.makeOrderHold = function(ele) {
         .then(response => {
             console.log(response.orderPurchased);
                    $.notify("Order Marked as on Hold", "warn");
-                   loadPurchasedOrders()
+                   
         })
         .catch(error => {
             console.log(error);
@@ -171,24 +179,9 @@ window.makeOrderHold = function(ele) {
 
 function populatePaymentDetails(){
     if (CURRENT_URL.includes('#')) {
-		let supplierId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
-		console.log(supplierId);
-		$("#supplier-id").val(supplierId);
-
-
-		axios.get(BASE_URL_LOCAL + '/supplier/'+supplierId).then(function (response) {
-			if (response.data) {
-				console.log(response);
-				// $('#order-id').val(response.data.siteName);//orderid
-				$('#supplier-name').val(response.data.supplierName);
-				$('#bank-acc-id').val(response.data.bankAccountNo);
-				$('#bank-acc-name').val(response.data.bankName);
-				// $('#amount').val(response.data.siteName)
-			}
-		}).catch(function (error) {
-			console.log(error);
-		});
-
+		let orderId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
+		console.log(orderId);
+		$("#order-id").val(orderId);
 
 	}
 }
@@ -206,6 +199,51 @@ function clearPayments(){
    
 }
 
+$(document).ready(function() {   
+
+    $(document).on("change", "#item-select", function() {
+  
+        let data = {
+        supplierId : $('#item-select').find(":selected").text()
+        }
+    
+         console.log(data.supplierId);
+         axios.get(BASE_URL_LOCAL + '/supplier/'+data.supplierId).then(function (response) {
+			if (response.data) {
+				console.log(response);
+				$('#supplier-name').val(response.data.supplierName);
+				$('#bank-acc-id').val(response.data.bankAccountNo);
+				$('#bank-acc-name').val(response.data.bankName);
+				$('#supplier-email').val(response.data.email);
+			}
+		}).catch(function (error) {
+			console.log(error);
+		});
+    })
+    });
+
+function generateSupplierSelectDropdown() {
+	axios.get(BASE_URL_LOCAL + '/supplier/')
+		.then(function (response) {
+			console.log(response.data)
+			var html = '<select class="form-control" id="op-item-select">';
+
+			response.data.forEach(supplier => {
+				html += '<option value="' + supplier.supplierId + '">' + supplier.supplierId + '</option>';
+			});
+
+
+            html += '</select>';
+            console.log(html)
+			$('#item-select').append(html);
+		}).catch(function (error) {
+			// handle error
+			console.log(error);
+		});
+}
+
+
+
 function formatDate(date) {
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
@@ -220,7 +258,7 @@ function formatDate(date) {
 
 
 function loadOnHoldPurchasedOrders(){
-    axios.get(BASE_URL_LOCAL + '/order/onhold/true')
+    axios.get(BASE_URL_LOCAL + '/order/onhold/'+true)
     .then(function (response) {
         console.log(response)
         response.data.forEach(request => {
@@ -243,7 +281,7 @@ function loadOnHoldPurchasedOrders(){
 }
 
 function loadSuccessfullPurchasedOrders(){
-    axios.get(BASE_URL_LOCAL + '/order/onhold/false')
+    axios.get(BASE_URL_LOCAL + '/order/onhold/'+false)
     .then(function (response) {
         console.log(response)
         response.data.forEach(request => {
@@ -340,3 +378,155 @@ function getBannedLabel(status){
 	return html;
 }
 /***********  View Suppliers Ends ******************/
+
+
+function pay(){
+    let data='';
+	 data = {
+		paymentID : 0,
+		paymentMethod : $('#method').find(":selected").text(),
+        supplierId : $('#item-select').find(":selected").text(),
+        totAmount : $("#amount").val(),
+        orderID : $("#order-id").val(),
+        bankNo : $("#bank-acc-id").val(),
+        date : $("#date").val(),
+        email : $("#supplier-email").val()
+		
+		
+    }
+
+    axios.post(BASE_URL_LOCAL + '/email', data)
+    .then(function (response) {
+    	
+    })
+    .catch(function (error) {
+       
+    });
+
+	axios.post(BASE_URL_LOCAL + '/payment', data)
+    .then(function (response) {
+    	$.notify("Successfully Paid", "success");
+    })
+    .catch(function (error) {
+        // handle error
+        $.notify("Payment Failed", "error");
+    });
+
+
+}
+
+function sentEmail(){
+    let data='';
+	 data = {
+		
+ 
+        totAmount : $("#amount").val(),
+        orderID : $("#order-id").val(),
+        bankNo : $("#bank-acc-id").val(),
+        date : $("#date").val(),
+        email : $("#supplier-email").val()
+		
+		
+    }
+
+    axios.post(BASE_URL_LOCAL + '/email', data)
+    .then(function (response) {
+    	$.notify("Receipt Sent to "+ data.email, "success");
+    })
+    .catch(function (error) {
+        $.notify("Email is not sent", "error");
+    });
+
+	
+
+
+}
+
+
+function loadAllPayments(){
+    axios.get(BASE_URL_LOCAL + '/payment')
+    .then(function (response) {
+        console.log(response)
+        response.data.forEach(request => {
+
+
+            var html = '<tr>';
+            html +='<td align="center">'+request.paymentID+'</td>' ;
+            html +='<td align="center">' + request.orderID +'</td>' ;
+            html +='<td align="center">' + request.supplierId + '</td>' ;
+            html +='<td align="center">' + request.date + '</td>' ;
+            html +='<td align="center">' + request.totAmount + '</td>' ;
+            html +='<td align="center">' + request.bankNo + '</td>';
+            html +='<td align="center">' + request.paymentMethod + '</td>' ;
+            
+            html +='</tr>';
+           $('#view-tot-acc tbody').append(html);
+        });
+    })
+    .catch(function (error) {
+        // handle error
+        console.log(error);
+    });
+}
+
+
+
+/***********  View Constructor Start ******************/
+
+function getConstructors() {
+    axios.get(BASE_URL_LOCAL + '/employee/constructor/')
+    .then(response => {
+        if (response.status == 200) {
+            console.log(response.data);
+            $('#view-con-acc').append(getConstructorTable('constructor-table', response.data));
+            window.$('#constructor-table').DataTable();
+        }
+    })
+    .catch(err => {
+        console.log(err);
+    });
+}
+
+
+
+function getConstructorTable(tableId, constructors) {
+        let html =
+            '<table class="table table-striped table-bordered" id="'+ tableId +'">' +
+            '<thead>' +
+            '<tr>' +
+            '<th align="center"scope="col">Constructor ID</th>' +
+            '<th align="center" scope="col">Constructor Name</th>' +
+            '<th align="center" scope="col">Site ID</th>' +
+            '<th align="center" scope="col">Address</th>' +
+            '<th align="center" scope="col">Email</th>' +
+            '<th align="center" scope="col">Phone</th>' +
+             '<th align="center" scope="col">Availability Status</th>' +
+         
+            '</tr>' +
+            '</thead>' +
+            '<tbody>';  
+    
+        
+            constructors.forEach(request => {
+            html +=
+                '<tr>'+
+                    '<td align="center">' + request.employeeId + '</td>' +
+                    '<td align="center">' + request.employeeName + '</td>' +
+                    '<td align="center">' + request.site + '</td>' +
+                    '<td align="center">' + request.address  + '</td>' +
+                  
+                    '<td align="center">' + request.email  + '</td>' +
+                    '<td align="center">' + request.phone  + '</td>' +
+                    '<td align="center">' + getBannedLabel(request.isBanned) + '</td>' +
+                    
+                '</tr>';
+        });
+    
+        html += '</tbody></table>'; 
+    
+        return html;
+    }
+
+
+
+/***********  View Constructor Ends ******************/

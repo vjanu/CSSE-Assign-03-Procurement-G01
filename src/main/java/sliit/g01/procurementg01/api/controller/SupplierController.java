@@ -49,7 +49,7 @@ public class SupplierController {
 	}
 
 	@PutMapping("/supplier/update/{employeeId}")
-	public Supplier update(@PathVariable String employeeId, @RequestBody Supplier supplier) {
+	public Boolean update(@PathVariable String employeeId, @RequestBody Supplier supplier) {
 		return supplierService.updateSupplier(employeeId, supplier);
 	}
 
@@ -57,7 +57,6 @@ public class SupplierController {
 	public Supplier updateSupplier(@RequestBody Supplier supplier) {
 		return supplierService.updateSupplier(supplier);
 	}
-
 
 	@DeleteMapping("supplier/{supplierId}")
 	public void deleteCategory(@PathVariable String supplierId) {

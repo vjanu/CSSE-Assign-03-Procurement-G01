@@ -25,58 +25,73 @@
 <body class="fixed-nav">
 
  
-     <!-- navbar: start -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="#">Account Staff Home</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-                    
+<!-- navbar: start -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="#">Account Staff Home</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
                 
-                <li class="nav-item dropdown navbar-dark bg-dark">
-                        <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Manage Payments
+            
+            
+                  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Pending Payments">
+                        <a class="nav-link nav-link-collapse" href="pending-payments.html">
+                            <i class="fas fa-hourglass-half"></i>
+                            <span class="nav-link-text">Pending Payments</span>
                         </a>
-                        <div class="dropdown-menu navbar-dark bg-dark" aria-labelledby="navbarDropdownMenuLink">
-                          <a class="dropdown-item" href="pending-payments.html" style="color:white">Pending Payments</a>
-                          <a class="dropdown-item" href="successfull-payments.html" style="color:white">Successfull Payments</a>
-                          <a class="dropdown-item" href="onhold-payments.html" style="color:white">On Hold Payments</a>
+                            </li>  
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Successfull Payments">
+                        <a class="nav-link nav-link-collapse" href="successfull-payments.html">
+                                <i class="far fa-thumbs-up"></i>
+                            <span class="nav-link-text">Successfull Payments</span>
+                        </a>
+                </li> 
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="On Hold Payments">
+                        <a class="nav-link nav-link-collapse" href="onhold-payments.html">
+                                <i class="fas fa-ban"></i>
+                            <span class="nav-link-text">On-Hold Payments</span>
+                        </a>
+                </li> 
+                  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="View Supplier">
+                <a class="nav-link nav-link-collapse" href="view-supplier-acc.html">        
+                        <i class="fas fa-people-carry"></i>
+                    <span class="nav-link-text">Suppliers</span>
+                </a>
+                    </li> 
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="View Constructors">
+                            <a class="nav-link nav-link-collapse" href="view-constructors-acc.html">              
+                                    <i class="fas fa-user"></i>
+                                <span class="nav-link-text">Constructors</span>
+                            </a>
+                                </li>     
+
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
                         </div>
-                      </li>
-
-                      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-3">
-                    <a class="nav-link nav-link-collapse" href="view-supplier-acc.html">                        <i class="far fa-fw fa-paper-plane"></i>
-                        <span class="nav-link-text">View Supplier</span>
-                    </a>
-                          
-
-            </ul>
-
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-
-                    <form class="navbar-form" role="search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" name="q">
-                            <div class="input-group-btn">
-                                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
-                </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="left" title="Logout">
-                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-                        <i class="fa fa-fw fa-sign-out-alt"></i>
-                        <span class="nav-link-text">Logout</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <!-- navbar: end -->
+                    </div>
+                </form>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="left" title="Logout">
+                <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-fw fa-sign-out-alt"></i>
+                    <span class="nav-link-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- navbar: end -->
 
     <div class="content-wrapper">
         <div class="container-fluid">
@@ -102,11 +117,13 @@
                                        <div class="form-row">
                                            <div class="form-group col-md-6">
                                                <label for="site-id">Order ID</label>
-                                               <input type="text" class="form-control" id="order-idorder-id" placeholder="Order Id">
+                                               <input type="text" class="form-control" id="order-id" placeholder="Order Id">
                                            </div>
-                                           <div class="form-group col-md-6">
-                                               <label for="site-name">Supplier ID</label>
-                                               <input type="text" class="form-control" id="supplier-id" placeholder="Supplier Id">
+                                           <div class="form-group col-md-6" id="item-select">
+
+                                                
+                                                        <label for="site-id">Supplier ID</label>
+                                                    
                                            </div>
                                        </div>
 
@@ -114,6 +131,11 @@
                                            <label for="Supplier Name">Supplier Name</label>
                                            <input type="text" class="form-control" id="supplier-name" placeholder="Supplier Name">
                                        </div>
+
+                                       <div class="form-group">
+                                        <label for="Supplier Name">Supplier Email</label>
+                                        <input type="text" class="form-control" id="supplier-email" placeholder="Supplier Email">
+                                    </div>
 
                                        <div class="form-group">
                                            <label for="Bank Account ID">Bank Account ID</label>
@@ -125,18 +147,51 @@
                                            <input type="text" class="form-control" id="bank-acc-name" placeholder="Bank Name">
                                        </div>
 
-                                       <div class="form-group">
-                                           <label for="Amount">Amount</label>
-                                           <input type="number" class="form-control" id="amount" placeholder="Amount">
-                                       </div>
-
                                        
 
-                                           <div class="form-group">
-                                       <button type="button" class="btn btn-sucess" id="btn-pay">Pay Now </button>
-                                       <a href="pending-payments.html" class="btn btn-danger"><i class="fas fa-plus-circle"></i> Change Order</a>
-                                       <button type="button" class="btn btn-primary" id="btn-clear" onclick="clearPayments()">Clear</button>
-                                   </div>
+                                       <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                   
+                                                            <label for="exampleFormControlSelect1">Payment Method</label>
+                                                            <select class="form-control" id="method">
+                                                              <option>Visa</option>
+                                                              <option>Master</option>
+                                                             
+                                                            </select>
+                                                         
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                    <label for="site-id">Amount</label>
+                                                    <input type="number" class="form-control" id="amount" placeholder="Amount">
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                        <label for="site-id">Date</label>
+                                                        <input type="date" class="form-control" id="date" >
+                                                    </div>
+                                        </div>
+                                   
+                                   <div class="form-group" align="center">
+                                                            
+                                    <a href="#" title="" id ="btn-pay" class="btn btn-success " onclick="pay()">
+                                            <span class="fa fa-credit-card" aria-hidden="true"></span>
+                                       <span><strong>Pay Now</strong></span></a>
+                                    
+                                       <a href="#" title="" id ="btn-pay" class="btn btn-dark " onclick="sentEmail()">
+                                        <span class="fa fa-envelope" aria-hidden="true"></span>
+                                   <span><strong>Email Receipt</strong></span></a>
+                            
+                                    <a href="pending-payments.html" title="" id ="btn-reset" class="btn btn-primary">
+                                            <span class="fa fa-undo" aria-hidden="true"></span>
+                                            <span><strong>Change Order</strong></span></a>
+
+                                            <a href="#" title="" id ="btn-reset" class="btn btn-danger " onclick="clearPayments()">
+                                                <span class="fa fa-window-restore" aria-hidden="true"></span>
+                                                <span><strong>Clear</strong></span></a>
+                                    
+                            
+                     </div>
+
+
                                    </form>
                                </div>
                               
@@ -194,7 +249,7 @@
         crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/axios.min.js"></script>
-    <script src="js/site-script.js"></script>
+    <script src="js/accountingstaff-script.js"></script>
     <script src="js/notify.min.js"></script>
     <script src="js/notify.js"></script>
   
