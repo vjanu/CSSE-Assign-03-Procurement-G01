@@ -94,7 +94,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             PurchaseOrder p = new PurchaseOrder();
 
             p.setRequestId(requestMaterial.getRequestId());
-            p.setOrderId(requestMaterial.getRequestId());
+            p.setOrderId(requestMaterial.getRequestId() + "-" + supplierId);
             p.setDraftPurchaseOrder(true); // will be a draft as long as the payment isn't made.
             p.setItems(itemsOrderedFromEachSupplier.get(supplierId));
             p.setOnHold(false);
