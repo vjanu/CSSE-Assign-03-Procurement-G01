@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import sliit.g01.procurementg01.api.model.PurchaseOrder;
 import sliit.g01.procurementg01.api.model.RequestMaterial;
 import sliit.g01.procurementg01.api.repository.RequestMaterialRepository;
 import sliit.g01.procurementg01.api.service.RequestMaterialService;;
@@ -66,11 +65,12 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 
 		// if the material request is updated, we can go ahead and create the
 		// purchase orders.
-		if (requestMaterial.getIsProcumentApproved()) {
-			List<PurchaseOrder> ordersForSuppliers = purchaseOrderService.createOrder(requestMaterial);
-			// save to db so the suppliers can see them.
-			purchaseOrderService.addPurchaseOrders(ordersForSuppliers);
-		}
+		// if (requestMaterial.getIsProcumentApproved()) {
+		// List<PurchaseOrder> ordersForSuppliers =
+		// purchaseOrderService.createOrder(requestMaterial);
+		// // save to db so the suppliers can see them.
+		// purchaseOrderService.addPurchaseOrders(ordersForSuppliers);
+		// }
 
 		return (requestmaterialRepository.save(req) != null);
 	}
