@@ -183,8 +183,8 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		PurchaseOrder order = purchaseOrderRepository.getPurchaseOrderByOrderId(orderId);
 		if (purchaseOrder.getReturnedDate() != null)
 			order.setReturnedDate(purchaseOrder.getReturnedDate());
-		 if (purchaseOrder.getOrderStatus() != null)
-		 order.setOrderStatus(purchaseOrder.getOrderStatus());
+		if (purchaseOrder.getOrderStatus() != null)
+			order.setOrderStatus(purchaseOrder.getOrderStatus());
 		if (purchaseOrder.isOnHold() != "false")
 			order.setOnHold(purchaseOrder.isOnHold());
 		return purchaseOrderRepository.save(order);
