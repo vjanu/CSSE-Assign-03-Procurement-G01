@@ -30,6 +30,8 @@ public class PurchaseOrder {
     private Date returnedDate;
 
 
+    public PurchaseOrder() {}
+
     public Date getReturnedDate() {
         return returnedDate;
     }

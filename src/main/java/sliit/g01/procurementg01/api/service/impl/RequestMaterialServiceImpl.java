@@ -60,17 +60,17 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 		if (requestMaterial.getIsImmediated() != null)
 			req.setIsImmediated(requestMaterial.getIsImmediated());
 
-		// if (requestMaterial.getItems() == null)
-		// requestMaterial.setItems(req.getItems());
+		if (requestMaterial.getItems() == null)
+			requestMaterial.setItems(req.getItems());
 
 		// if the material request is updated, we can go ahead and create the
 		// purchase orders.
-		// if (requestMaterial.getIsProcumentApproved()) {
-		// List<PurchaseOrder> ordersForSuppliers =
-		// purchaseOrderService.createOrder(requestMaterial);
-		// // save to db so the suppliers can see them.
-		// purchaseOrderService.addPurchaseOrders(ordersForSuppliers);
-		// }
+		if (requestMaterial.getIsProcumentApproved()) {
+		    System.out.println("Creating orders...");
+			List<PurchaseOrder> ordersForSuppliers = purchaseOrderService.createOrder(requestMaterial);
+			// save to db so the suppliers can see them.
+			purchaseOrderService.addPurchaseOrders(ordersForSuppliers);
+		}
 
 		return (requestmaterialRepository.save(req) != null);
 	}

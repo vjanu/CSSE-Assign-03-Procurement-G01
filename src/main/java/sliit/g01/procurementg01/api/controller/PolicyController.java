@@ -28,7 +28,7 @@ public class PolicyController {
 	@Autowired
 	private PolicyServiceImpl policyService;
 
-	// add new policy.
+	// add new policies.
 	@PostMapping("/policy")
 	public Policy addPolicy(@RequestBody @Validated Policy policy) {
 		policy.setPolicyId("PC" + RandomStringUtils.randomNumeric(5));
@@ -43,15 +43,15 @@ public class PolicyController {
 		return policyService.getAllPolicies();
 	}
 
-	// get a specific policy by id.
+	// get a specific policies by id.
 	@GetMapping("/policy/{policyId}")
 	public Policy viewPolicy(@PathVariable String policyId) {
 		return policyService.viewPolicy(policyId);
 	}
 
-	// get policy(s) that has the provided keyword in the description.
+	// get policies(s) that has the provided keyword in the description.
 	// this is going to have a query parameter.
-	// possible url: <hostname>:<port>/policy?description=<keyword>
+	// possible url: <hostname>:<port>/policies?description=<keyword>
 	@GetMapping("/policy")
 	public List<Policy> viewPoliciesWithDescription(@RequestParam Map<String, String> query) {
 		if (query.containsKey("description")) {
@@ -62,7 +62,7 @@ public class PolicyController {
 		return new ArrayList<Policy>();
 	}
 
-	// delete a policy.
+	// delete a policies.
 	@DeleteMapping("policy/{policyId}")
 	public boolean deletePolicy(@PathVariable String policyId) {
 		return policyService.deletePolicy(policyId);
