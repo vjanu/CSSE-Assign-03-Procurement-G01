@@ -32,7 +32,27 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            
+            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                    
+                
+                <li class="nav-item dropdown navbar-dark bg-dark">
+                        <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Manage Payments
+                        </a>
+                        <div class="dropdown-menu navbar-dark bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" href="pending-payments.html" style="color:white">Pending Payments</a>
+                          <a class="dropdown-item" href="successfull-payments.html" style="color:white">Successfull Payments</a>
+                          <a class="dropdown-item" href="onhold-payments.html" style="color:white">On Hold Payments</a>
+                        </div>
+                      </li>
+
+                      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-3">
+                    <a class="nav-link nav-link-collapse" href="view-supplier-acc.html">                        <i class="far fa-fw fa-paper-plane"></i>
+                        <span class="nav-link-text">View Supplier</span>
+                    </a>
+                          
+
+            </ul>
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
@@ -60,73 +80,44 @@
         <div class="container-fluid">
 
             <div>
-                
-               <!-- code -->
-               
-               <div class="container">
-                    <div class="row mt-5">
-                            <div class="col-md-3">
-                                <div class="card-counter primary">
-                                    <i class="fas fa-code-branch"></i>
-                                    <span class="count-numbers">12</span>
-                                    <span class="count-name">Suppliers</span>
-                                </div>
-                            </div>
-            
-                            <div class="col-md-3">
-                                <div class="card-counter danger">
-                                    <i class="far fa-paper-plane"></i>
-                                    <span class="count-numbers">599</span>
-                                    <span class="count-name">Total Payments</span>
-                                </div>
-                            </div>
-            
-                            <div class="col-md-3">
-                                <div class="card-counter success">
-                                    <i class="fa fa-database"></i>
-                                    <span class="count-numbers">6875</span>
-                                    <span class="count-name">Pending Payments</span>
-                                </div>
-                            </div>
-            
-                            <div class="col-md-3">
-                                <div class="card-counter info">
-                                    <i class="fa fa-users"></i>
-                                    <span class="count-numbers">35000</span>
-                                    <span class="count-name">Paid Amount</span>
-                                </div>
-                            </div>
-                        </div>
-<br/>
-                <div class="row">
-                    <div class="col-sm-4">
-                            <h5 class="card-title text-center">Pending Payments</h5>
-                            <p><a href="pending-payments.html"><img class="imgcenter" src="icons/pending-pay.png"/></a></p>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="accountingstaff-dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">View On-Hold Orders</li>
+                   
+                </ol>
+                <div class="card">
+                    <div class="card-header">
+                        <h4>View On-Hold Orders</h4>
                     </div>
-                  <div class="col-sm-4">
-                          <h5 class="card-title text-center">Successfull Payments</h5>
-                          <p><a href="successfull-payments.html"><img class="imgcenter" src="icons/success-pay.png"/></a></p>
-                  </div>
-                  <div class="col-sm-4">
-                        <h5 class="card-title text-center">On Hold Payments</h5>
-                        <p><a href="onhold-payments.html"><img class="imgcenter" src="icons/hold-pay.png"/></a></p>
-                </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-6">
-                        <h5 class="card-title text-center">Suppliers</h5>
-                        
-                        <p><a href="view-supplier-acc.html"><img class="imgcenter" src="icons/supplier.png"/></a></p>
-                </div>
-                  
-                  <div class="col-sm-6">
-                        <h5 class="card-title text-center">Constructors</h5>
-                        <p><a href="view-constructors-acc.html"><img class="imgcenter" src="icons/construct.png"/></p>
-                </div>
-                  </div>
-                </div>
-              
+                    <div class="card-body">
+                        <div style="width: 100%; padding-left: -10px; ">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="view-onhold-orders-acc">
+                                <thead>
+                                    <tr>
+                                        <th  class="text-center">Order ID</th>
+                                
+                                        <th scope="col" class="text-center">Order Requested Date</th>
+                                        <th scope="col" class="text-center">Order Returned Date</th>
+                                      
+                                        <th  class="text-center">Order Status</th>
+                                    <!-- initially status = pending then partially/fully delivered -->
+                                    <th scope="col" class="text-center">On Hold Status</th>
+                                 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
 
+                
+                
+    </div>
             
         </div>
     </div></div>
