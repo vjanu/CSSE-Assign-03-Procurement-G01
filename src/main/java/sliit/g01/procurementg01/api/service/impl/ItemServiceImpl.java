@@ -42,8 +42,15 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public Boolean deleteItem(String itemId) {
-		// TODO Auto-generated method stub
-		return null;
+		Item existingItem = itemRepository.findByItemId(itemId);
+
+		if (existingItem != null) {
+			System.out.println(existingItem.getItemName());
+			itemRepository.delete(existingItem);
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

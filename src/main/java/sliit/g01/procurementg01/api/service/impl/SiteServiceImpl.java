@@ -97,8 +97,10 @@ public class SiteServiceImpl implements SiteService {
 		if (site.getCurrentCapacity() > 0)
 			newSite.setCurrentCapacity(site.getCurrentCapacity());
 
-		if (site.getSiteManager().getEmployeeId() != null)
-			siteManagerService.assignSiteToSiteManager(site.getSiteId(), site.getSiteManager().getEmployeeId());
+		if (site.getSiteManager() != null) {
+			if (site.getSiteManager().getEmployeeId() != null)
+				siteManagerService.assignSiteToSiteManager(site.getSiteId(), site.getSiteManager().getEmployeeId());
+		}
 
 		if (site.getItems() != null)
 			newSite.setItems(site.getItems());

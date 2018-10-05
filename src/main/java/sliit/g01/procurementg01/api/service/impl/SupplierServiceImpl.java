@@ -35,7 +35,15 @@ public class SupplierServiceImpl implements SupplierService {
 
 	@Override
 	public Boolean deleteSupplier(String supplierId) {
-		return null;
+		// get the existing supplier object and ask mongo to delete it for us.
+		Supplier existingSupplier = supplierRepository.findBySupplierId(supplierId);
+
+		if (existingSupplier != null) {
+			supplierRepository.delete(existingSupplier);
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

@@ -12,12 +12,12 @@
         crossorigin="anonymous">
 
     <!-- font awesome(for icons) -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" crossorigin="anonymous">
 
     <!-- lato font(from google fonts) -->
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
     <link href="css/custom-style.css" rel="stylesheet">
+    <link href="css/update-stock.css" rel="stylesheet">
 
     <title>Procurement Home</title>
 </head>
@@ -67,7 +67,7 @@
 
                       <li class="nav-item dropdown navbar-dark bg-dark">
                         <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Manage Requests
+                                Manage Materials
                         </a>
                         <div class="dropdown-menu navbar-dark bg-dark" aria-labelledby="navbarDropdownMenuLink">
                           <a class="dropdown-item" href="request-order-site-manager.html" style="color:white">Request Materials</a>
@@ -183,21 +183,23 @@
                                         </div>
 
                                         <div class="form-group col-md-4 mt-4" align="center">
-
+                                                <a href="#" title="" id="btn-add-item" class="btn btn-success btn-sm">
                                                 <span class="fa fa-plus-circle" aria-hidden="true"></span>
                                                 <span><strong>Add Items</strong></span></a>
+
+                                                <a href="#" title="" id ="btn-add-request" class="btn btn-primary btn-sm">                                                
                                                 <span class="fas fa-edit" aria-hidden="true"></span>
                                                 <span><strong>Make Request</strong></span></a>
                                         </div>
 
                                         <div class="table-responsive" id="item-list1">
-                                            <table class="table table-bordered table-hover" id="request-item-table1">
+                                            <table class="table table-bordered table-striped" id="request-item-table1">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col" class="text-center">Item ID</th>
-                                                        <th scope="col" class="text-center">Item Name</th>
-                                                        <th scope="col" class="text-center">Quantity</th>
-                                                        <th scope="col" class="text-center">Remove</th>
+                                                        <th scope="col" class="text-left">Item ID</th>
+                                                        <th scope="col" class="text-left">Item Name</th>
+                                                        <th scope="col" class="text-left">Quantity</th>
+                                                        <th scope="col" class="text-left">Remove</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>

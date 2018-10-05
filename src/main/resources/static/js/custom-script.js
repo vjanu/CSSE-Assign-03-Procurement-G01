@@ -227,8 +227,6 @@ if (CURRENT_URL.includes('procurement-staff-dashboard')) {
 }
 
 
-
-
 /* * * * * FUNCTION * * * * */
 function populateSiteItems() {
 	if (CURRENT_URL.includes('#')) {

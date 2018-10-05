@@ -5,6 +5,7 @@
 
 /* * * * *     Global Variables     * * * * */
 let BASE_URL_LOCAL = 'http://localhost:9000';
+// let BASE_URL_LOCAL = 'http://ec2-54-147-93-165.compute-1.amazonaws.com:9000/';
 let USER_INFO = 'user-info';
 let CURRENT_URL = window.location.href;
 
@@ -161,6 +162,7 @@ window.makeOrderHold = function(ele) {
         .then(response => {
             console.log(response.orderPurchased);
                    $.notify("Order Marked as on Hold", "warn");
+                   location.reload(true);
                    
         })
         .catch(error => {
@@ -395,13 +397,6 @@ function pay(){
 		
     }
 
-    axios.post(BASE_URL_LOCAL + '/email', data)
-    .then(function (response) {
-    	
-    })
-    .catch(function (error) {
-       
-    });
 
 	axios.post(BASE_URL_LOCAL + '/payment', data)
     .then(function (response) {

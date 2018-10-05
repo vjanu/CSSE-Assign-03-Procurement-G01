@@ -27,7 +27,7 @@ public class ItemController {
 	private SupplierServiceImpl supplierService;
 
 	@PostMapping("/item/add-new-item")
-	public ResponseEntity<String> addCategory(@RequestBody Item item) {
+	public ResponseEntity<String> addItem(@RequestBody Item item) {
 		item.setItemId("IT" + RandomStringUtils.randomNumeric(5));
 		if (itemService.addItem(item)) {
 			return new ResponseEntity<>("New Item Added", HttpStatus.OK);
@@ -35,20 +35,6 @@ public class ItemController {
 			return new ResponseEntity<>("Item Not Created", HttpStatus.NOT_IMPLEMENTED);
 		}
 
-	}
-
-	// this should be used when a supplier is adding an item to the database.
-	@PostMapping("/item")
-	public ResponseEntity<String> addItem(@RequestBody Item item) {
-		// generate the item id on the fly.
-		item.setItemId(UUID.randomUUID().toString());
-
-		if (supplierService.supplierExists(item.getSupplierId())) {
-			itemService.addItem(item);
-			return new ResponseEntity<>("New Item Added", HttpStatus.OK);
-		}
-
-		return new ResponseEntity<>("Item Not Created; Check if supplier exists.", HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	// update an item.
@@ -70,14 +56,20 @@ public class ItemController {
 
 	// get all items offered by each supplier, grouped by the supplier.
 	@GetMapping("/item")
-	public Map<String, List<Item>> getAllCategories() {
+	public Map<String, List<Item>> getAllItems() {
 		return itemService.getAllItemsGroupedBySupplier();
 	}
 
 	// get details of a specific item.
 	@GetMapping("/item/{itemId}")
-	public Item getCategory(@PathVariable String itemId) {
+	public Item getItem(@PathVariable String itemId) {
 		return itemService.getItem(itemId);
+	}
+
+	// delete an item.
+	@DeleteMapping("/item/{itemId}")
+	public void deleteItem(@PathVariable String itemId) {
+		itemService.deleteItem(itemId);
 	}
 
 }
