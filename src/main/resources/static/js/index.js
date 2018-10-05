@@ -23,19 +23,19 @@ $('#btn-login').on('click', function (e) {
  */
 function validateUserSignedIn() {
     let data = {
-        usernaem: document.getElementById('username').value,
+        username: document.getElementById('username').value,
         password: document.getElementById('password').value
     }
 
-    axios.post(baseUrl + '/login', data)
+    axios.post(BASE_URL_LOCAL + '/login/validate-user', data)
         .then(response => {
             console.log(response.data);
             if (response.data.success) {
                 let user_info = {
                     UserType: response.data.userType,
-                    userData: response.data.info[0]
+                    userId: response.data.userId
                 }
-                localStorage.setItem('user_info', window.btoa(JSON.stringify(user_info)));
+                localStorage.setItem(USER_INFO, window.btoa(JSON.stringify(user_info)));
                 // localStorage.setItem('user_info', (JSON.stringify(user_info)));
                 if(user_info.UserType == 'Procurement-Staff'){
                     window.location.href = "manage-sites.html";
