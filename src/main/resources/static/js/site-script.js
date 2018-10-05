@@ -5,6 +5,7 @@
 
 /* * * * *     Global Variables     * * * * */
 let BASE_URL_LOCAL = 'http://localhost:9000';
+// let BASE_URL_LOCAL = 'http://ec2-54-147-93-165.compute-1.amazonaws.com:9000/';
 let USER_INFO = 'user-info';
 let CURRENT_URL = window.location.href;
 let itemsArray = [];
@@ -81,6 +82,7 @@ if (CURRENT_URL.includes('request-order-site-manager')) {
 
 
 if (CURRENT_URL.includes('make-request')) {
+    generateSiteID1()
     populateRequestDetails()
    
 }
@@ -91,6 +93,7 @@ $('#btn-add-item-to-site').on('click', function (e) {
 });
 
 if (CURRENT_URL.includes('update-stock-sitemanager')) {
+    generateSiteID();
 	generateItemSelectDropdown1();
 	
 }
@@ -101,18 +104,23 @@ if (CURRENT_URL.includes('update-stock-sitemanager')) {
 
 
 function addRequest() {
-	let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
-	var obj = {};
+    let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+	var itemList = [];
 	for (var i of storedItems) {
-		obj[i.itemName] = i.itemQty;
-	}
+		let data = {
+			itemId: i.itemId,
+			quantity: i.itemQty
+		}
+		itemList.push(data);
+    }
+   
 
 	let data = {
 			requestId: $('#requestId').val(),
 			requestedPerson: $('#constructorname').val(),
 		    requestedDate: $('#requesteddate').val(),
 		    siteId: $('#siteId').val(),
-            items: obj,
+            items: itemList,
             requestingDate: $('#requestingdate').val(),
             isSiteManagerApproved:"0"
 		
@@ -153,10 +161,10 @@ function loadAddedItemTable1() {
 	for (var i of storedItems) {
 		console.log(i.itemId + " | " + i.itemName);
 		var html = '<tr>';
-		html += '	<td class="nr-itemId"><center>' + i.itemId + '</center></td>';
-		html += '	<td class="text-center">' + i.itemName + '</td>';
-		html += '	<td class="text-center">' + i.itemQty + '</td>';
-		html += '	<td class="text-center">' +
+		html += '	<td class="text-right">' + i.itemId + '</td>';
+		html += '	<td class="text-right">' + i.itemName + '</td>';
+		html += '	<td class="text-right">' + i.itemQty + '</td>';
+		html += '	<td class="text-right">' +
 			'		<a href="#" title="" id ="btn-clear" class="btn btn-danger btn-sm">\n' +
 			'        	<span class="far fa-trash-alt" aria-hidden="true"></span>\n' +
 			'        	<span><strong>Remove</strong></span></a>' +
@@ -308,6 +316,7 @@ window.getConfirmation = function(ele) {
             .then(response => {
                 console.log(response.form3Data);
                        $.notify("Successfully Approved", "success");
+                       location.reload(true);
                        
             })
             .catch(error => {
@@ -319,45 +328,24 @@ window.getConfirmation = function(ele) {
 
 }
 
-// setTimeout(function(){
-//     $( "#view-requests" ).load( "view-requests-sitemanager.html #view-requests" );
-//  }, 1000); //refresh every 1 second
-// show a dialog box when clicking on a link
 
+function getItemList(items) {
+	var html = '';
 
+	items.forEach(item => {
+		html +=  item.itemName + ' - ' + item.quantity +'<br/>';
+	});
+	html += '';
+	return html;
+}
 
-function getItemList(items){
-    var html = '';
-    // // var count = 0;
-    // console.log(items)
-    // // console.log(items.length)
-  
-    // // console.log(items.data.length)
-  
-    
-    // for(var count in items){
-    // axios.get(BASE_URL_LOCAL + '/item/'+count)
-    //  .then(response => {
-    // 	 console.log(response.data)
-    	
-    //         var i = response.data.itemName;
-    //         console.log("name: "+i)
-    //         itemsArray.push(i);
-    	 
-    //  })
-    
-    //  .catch(function (error) {
-    //      // handle error
-    //      console.log(error);
-    //  });
-    // }
-	for (var key in items) {
+function getItemListShow(items) {
+	var html = '<ul>';
 
-		if (items.hasOwnProperty(key)) {
-			html += key +' : '+items[key]+'<br/>';
-		}
-	}
-	
+	items.forEach(item => {
+		html += '<li>'+ item.itemName + ' - ' + item.quantity +'</li>';
+	});
+	html += '</ul>';
 	return html;
 }
 
@@ -460,85 +448,66 @@ $(document).ready(function(){
 
 
 
-// get the item list when request id is typed
-
-    // $('#request-id').on('input',function(e){
-    //     let x='';
+    // get the information of the site when site id is given
+    // $('#site-id_').on('input',function(e){
     //     let data = {
-    //       reqId : $('#request-id').val()
-    //     }
-    //      console.log(data.reqId);
-    //     axios.get(BASE_URL_LOCAL + '/requestmaterial/'+ data.reqId)
-    //     .then(function (response) {
-    //         console.log(response.data.items)
-    //         // console.log(JSON.parse(response));
-    //             // $("#items").val(response.data.orderId);
-    //             $(function () {
-    //                 $.each(response.data.items, function (i, item) {
-    //                     console.log(i);
-    //                     console.log(item);
-    //                      x += i+" : "+item+' ';
-    //                      console.log(x);
-                       
-    //                 });
-    //             $("#items").val(x);
-                    
-    //             });
-    //             $("#date").val(response.data.requestedDate);
-    //             $("#requested-person").val(response.data.requestedPerson);
-    //     })
-    //     .catch(function (error) {
-    //         // handle error
-    //         console.log(error);
-    //     });
-    // });
-    
-// get the information of the site manager when site id is given
-    // $('#site-id').on('input',function(e){
-    //     let data = {
-    //       siteId : $('#site-id').val()
+    //       siteId : $('#site-id_').val()
     //     }
     //      console.log(data.siteId);
-    //     axios.get(BASE_URL_LOCAL + '/employee/site-manager/sites/'+ data.siteId)
+    //     axios.get(BASE_URL_LOCAL + '/site/'+ data.siteId)
     //     .then(function (response) {
-    //             $("#nic").val(response.data.nic);
-    //             $("#site-manager-id").val(response.data.employeeId);
-    //             $("#site-manager-name").val(response.data.employeeName);
+    //             $("#site-name").val(response.data.siteName);
+
     //     })
     //     .catch(function (error) {
     //         // handle error
     //         console.log(error);
     //     });
+
+    //     axios.get(BASE_URL_LOCAL + '/employee/site-manager/sites/'+data.siteId).then(function (response) {
+    //         if (response.data) {
+    //             console.log(response);
+    //             $('#nic').val(response.data.nic);
+    //             $('#site-manager-id').val(response.data.employeeId);
+    //             $('#site-manager-name').val(response.data.employeeName);
+    //         }
+    //     }).catch(function (error) {
+    //         console.log(error);
+    //     });
+
     // });
 
-    // get the information of the site when site id is given
-    $('#site-id_').on('input',function(e){
-        let data = {
-          siteId : $('#site-id_').val()
-        }
-         console.log(data.siteId);
-        axios.get(BASE_URL_LOCAL + '/site/'+ data.siteId)
-        .then(function (response) {
-                $("#site-name").val(response.data.siteName);
+    $(document).ready(function() {   
 
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        });
-
-        axios.get(BASE_URL_LOCAL + '/employee/site-manager/sites/'+data.siteId).then(function (response) {
-            if (response.data) {
-                console.log(response);
-                $('#nic').val(response.data.nic);
-                $('#site-manager-id').val(response.data.employeeId);
-                $('#site-manager-name').val(response.data.employeeName);
+        $(document).on("change", "#site-select", function() {
+      
+            let data = {
+            siteId : $('#site-select').find(":selected").text()
             }
-        }).catch(function (error) {
-            console.log(error);
-        });
+        
+             console.log(data.supplierId);
+             axios.get(BASE_URL_LOCAL + '/site/'+ data.siteId)
+             .then(function (response) {
+                     $("#site-name").val(response.data.siteName);
+     
+             })
+             .catch(function (error) {
+                 // handle error
+                 console.log(error);
+             });
 
-    });
+             axios.get(BASE_URL_LOCAL + '/employee/site-manager/sites/'+data.siteId).then(function (response) {
+                if (response.data) {
+                    console.log(response);
+                    $('#nic').val(response.data.nic);
+                    $('#site-manager-id').val(response.data.employeeId);
+                    $('#site-manager-name').val(response.data.employeeName);
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
+        })
+        });
 
     function populateRequestDetails(){
         let x='';
@@ -553,19 +522,14 @@ $(document).ready(function(){
         axios.get(BASE_URL_LOCAL + '/requestmaterial/'+ reqId)
         .then(function (response) {
             console.log(response.data.items)
-            // console.log(JSON.parse(response));
-                // $("#items").val(response.data.orderId);
-                $(function () {
-                    $.each(response.data.items, function (i, item) {
-                        console.log(i);
-                        console.log(item);
-                         x += i+" : "+item+' ';
-                         console.log(x);
-                       
-                    });
-                $("#items").val(x);
-                    
-                });
+         
+           
+             
+            var html = '<tr>';
+            html +='<td align="left">' + getItemListShow(response.data.items) + '</td>' ;
+            html +='</tr>';
+           $('#view tbody').append(html);
+                            
                 $("#date").val(response.data.requestedDate);
                 $("#requested-person").val(response.data.requestedPerson);
         })
@@ -596,6 +560,7 @@ $(document).ready(function(){
         })
         .then(function (response) {
             $.notify("Successfully Approved", "success");
+           
         })
         .catch(function (error) {
             // handle error
@@ -622,6 +587,7 @@ $(document).ready(function(){
         })
         .then(function (response) {
             $.notify("Request Declined", "warn");
+           
         })
         .catch(function (error) {
             // handle error
@@ -833,25 +799,27 @@ window.getOrderPurchasedFullyDelivered = function(ele) {
         orderDate: row.find('td:nth-child(3)').text(),   
         returnedDate: $('#returnedDate').val(),  
         orderStatus: "Complete",   
-        onHold:false
+        onHold:"false"
         
     }
+    if(orderPurchased.returnedDate != ""){
         axios.put(BASE_URL_LOCAL + '/order/' + orderPurchased.orderId, orderPurchased, {
         headers: headers
     })
         .then(response => {
             console.log(response.orderPurchased);
                    $.notify("Order Marked as Fully Delivered", "success");
-                    loadRequestsFromConstructor();
-                    
-                
+                    location.reload(true);
                    
         })
         .catch(error => {
             console.log(error);
                     $.notify("Order Marking Error", "error");           
         })
-
+    }
+    else{
+        $.notify("Please Specify a date", "error"); 
+    }
 
 }
 
@@ -863,23 +831,28 @@ window.getOrderPurchasedPartiallyDelivered = function(ele) {
         orderDate: row.find('td:nth-child(3)').text(),   
         returnedDate: $('#returnedDate').val(),  
         orderStatus: "Partial",
-        onHold:false
+        onHold:"false"
         
     }
+
+    if(orderPurchased.returnedDate != ""){
         axios.put(BASE_URL_LOCAL + '/order/' + orderPurchased.orderId, orderPurchased, {
         headers: headers
     })
         .then(response => {
             console.log(response.orderPurchased);
                    $.notify("Order Marked as Partially Delivered", "success");
-                   loadPurchasedOrders();
+                   location.reload(true);
         })
         .catch(error => {
             console.log(error);
             $.notify("Order Marking Error", "error");  
         })
 
-        
+    }
+    else{
+        $.notify("Please Specify a date", "error"); 
+    } 
 
 }
 /***********  View Purchased Orders Ends ******************/
@@ -990,40 +963,50 @@ $(document).on('click', '#site-item-table .btn-danger', function (e) {
 });
 
 //  get the information of the site when site id is given
-    $('#site-id').on('input',function(e){
-        let data = {
-          siteId : $('#site-id').val()
-        }
-         console.log(data.siteId);
-        axios.get(BASE_URL_LOCAL + '/site/'+ data.siteId)
-        .then(function (response) {
-                $("#site-name").val(response.data.siteName);
-                $("#site-address").val(response.data.address);
+    $(document).ready(function() {   
 
+        $(document).on("change", "#siteid-select", function() {
+      
+            let data = {
+            siteId : $('#siteid-select').find(":selected").text()
+            }
+        
+             console.log(data.supplierId);
+             axios.get(BASE_URL_LOCAL + '/site/'+data.siteId).then(function (response) {
+                if (response.data) {
+                    console.log(response);
+                    $("#site-name").val(response.data.siteName);
+                    $("#site-address").val(response.data.address);
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
         })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
         });
-    });
 
 
 function updateSiteStock() {
-	let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
-	var obj = {};
+    let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+	var itemList = [];
 	for (var i of storedItems) {
-		obj[i.itemName] = i.itemQty;
-	}
+		let data = {
+			itemId: i.itemId,
+			quantity: i.itemQty
+		}
+		itemList.push(data);
+    }
+   
 
 	let data = {
-        siteId : $('#site-id').val(),
-		items: obj,
+        siteId : $('#siteid-select').find(":selected").text(),
+        items: itemList,
+       
 	}
 
 	axios.put(BASE_URL_LOCAL + '/site/' + data.siteId, data)
 		.then(function (response) {
             $.notify("Site Updated With Items", "success");
-            $('#site-id').val('');
+          
             $("#site-name").val('');
             $("#site-address").val('');
 		})
@@ -1065,3 +1048,43 @@ function addConstructors(){
 
 
 /***********  Add Constructor Ends ******************/
+
+
+function generateSiteID() {
+	axios.get(BASE_URL_LOCAL + '/site/')
+		.then(function (response) {
+			console.log(response.data)
+			var html = '<select class="form-control" id="op-site-select">';
+
+			
+            response.data.forEach(site => {
+				html += '<option value="' + site.siteId + '">' + site.siteId + '</option>';
+			});
+
+			html += '</select>';
+			$('#siteid-select').append(html);
+		}).catch(function (error) {
+			// handle error
+			console.log(error);
+		});
+}
+
+
+function generateSiteID1() {
+	axios.get(BASE_URL_LOCAL + '/site/')
+		.then(function (response) {
+			console.log(response.data)
+			var html = '<select class="form-control" id="op-site-select">';
+
+			
+            response.data.forEach(site => {
+				html += '<option value="' + site.siteId + '">' + site.siteId + '</option>';
+			});
+
+			html += '</select>';
+			$('#site-select').append(html);
+		}).catch(function (error) {
+			// handle error
+			console.log(error);
+		});
+}
