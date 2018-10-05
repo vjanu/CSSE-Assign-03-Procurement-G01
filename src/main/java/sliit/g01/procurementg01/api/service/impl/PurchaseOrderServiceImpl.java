@@ -56,7 +56,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		// list of items mapped against the supplier.
 		Map<String, List<Item>> itemsOrderedFromEachSupplier = new HashMap<>();
 		// quantity required, mapped against item id.
-		Map<String, String> itemIdAndQuantities = requestMaterial.getItems();
+		List<Item> itemIdAndQuantities = requestMaterial.getItems();
 		// this is where the order is headed.
 		Site deliverySite = siteService.getSite(requestMaterial.getSiteId());
 
@@ -64,12 +64,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		// item is mapped against its item code.
 		// we need to get full details of the item(from the database) and group
 		// the items by the supplier.
-		for (String itemId : itemIdAndQuantities.keySet()) {
-			String quantity = itemIdAndQuantities.get(itemId);
-			Item i = itemService.getItem(itemId);
 
+		for (Item i : itemIdAndQuantities) {
 			if (i != null) {
-				i.setQuantity(quantity);
+				// i.setQuantity(quantity);
 
 				// now we group.
 				if (itemsOrderedFromEachSupplier.containsKey(i.getSupplierId())) {

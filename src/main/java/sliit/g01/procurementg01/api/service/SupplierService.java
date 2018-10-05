@@ -16,7 +16,7 @@ public interface SupplierService {
 
 	Supplier getSupplier(String supplierId);
 
-	Supplier updateSupplier(String employeeId, Supplier supplier);
+	Boolean updateSupplier(String employeeId, Supplier supplier);
 
 	Supplier updateSupplier(Supplier supplier);
 

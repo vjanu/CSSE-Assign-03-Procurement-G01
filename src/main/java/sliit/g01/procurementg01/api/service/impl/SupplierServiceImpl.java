@@ -44,12 +44,12 @@ public class SupplierServiceImpl implements SupplierService {
 	}
 
 	@Override
-	public Supplier updateSupplier(String employeeId, Supplier supplier) {
+	public Boolean updateSupplier(String employeeId, Supplier supplier) {
 		Supplier sup = supplierRepository.findBySupplierId(employeeId);
 
 		sup.setIsBanned(supplier.getisBanned());
 
-		return supplierRepository.save(sup);
+		return (supplierRepository.save(sup) != null);
 	}
 
 	@Override
@@ -58,7 +58,9 @@ public class SupplierServiceImpl implements SupplierService {
 		Supplier existingSupplier = supplierRepository.findBySupplierId(supplier.getSupplierId());
 
 		if (existingSupplier != null) {
-			return supplierRepository.save(supplier);	// existing entry will be replaced since the ids are the same.
+			return supplierRepository.save(supplier); // existing entry will be
+														// replaced since the
+														// ids are the same.
 		}
 
 		return new Supplier();
