@@ -45,7 +45,7 @@ $('#btn-edit-site').on('click', function (e) {
  * Material request approve click
  * this click cannot be undone
  */
-$(document).on('click', '#manage-material-requests .btn-primary', function (e) {
+$(document).on('click', '#manage-material-requests #btn-approve-request-material', function (e) {
 	e.preventDefault();
 	e.stopPropagation();
 	var oid = $(this).closest("tr").find(".nr-oid").text();
@@ -59,14 +59,26 @@ $(document).on('click', '#manage-material-requests .btn-primary', function (e) {
 /**
  * Click event in material request 
  */
-$(document).on('click', '#manage-material-requests .btn-danger', function (e) {
+$(document).on('click', '#manage-material-requests #btn-remove', function (e) {
 	e.preventDefault();
 	e.stopPropagation();
-	var oid = $(this).closest("tr").find(".nr-oid").text();
-	console.log(oid);
+	var rid = $(this).closest("tr").find(".nr-oid").text();
 	var r = confirm("Are you sure want to delete this request? This action cannot be undone");
 	if (r == true) {
-		removeMaterialRequest(oid);
+		removeMaterialRequest(rid);
+	}
+});
+
+/**
+ * Material requeest reject click event
+ */
+$(document).on('click', '#manage-material-requests #btn-reject', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	var rid = $(this).closest("tr").find(".nr-oid").text();
+	var r = confirm("Are you sure want to reject this request? This action cannot be undone");
+	if (r == true) {
+		rejectMaterialRequest(rid);
 	}
 });
 
@@ -147,7 +159,6 @@ $(document).on('click', '#site-item-table .btn-danger', function (e) {
 	var r = confirm("Are you sure want to remove this item from this site? This action cannot be undone");
 	if (r == true) {
 
-
 		let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
 
 		var index = storedItems.findIndex(function (item, i) {
@@ -163,15 +174,9 @@ $(document).on('click', '#site-item-table .btn-danger', function (e) {
 		$("#item-list tbody").empty();
 
 		loadItemTable();
-
-
 		$.notify(itemId, "success");
 	}
 });
-
-
-
-
 
 
 
@@ -318,6 +323,8 @@ function removeMaterialRequest(rid) {
 		});
 }
 
+
+
 function removeSite(siteId) {
 	axios.delete(BASE_URL_LOCAL + '/site/' + siteId)
 		.then(function (response) {
@@ -334,9 +341,10 @@ function removeSite(siteId) {
 }
 
 
-function approveRequestedMaterial(oid) {
+function approveRequestedMaterial(oid, isApproved, isRejected) {
 	let data = {
-		"isProcumentApproved": true
+		"isProcumentApproved": isApproved,
+		"isProcumentRejected": isRejected
 	}
 	axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + oid, data)
 		.then(function (response) {
@@ -477,15 +485,20 @@ function loadRequestedMaterialTable() {
 				html += '<td class="text-center">' + requestStatus(item.isProcumentApproved) + '</td>';
 				html += '<td class="text-center">' + getApprovedButton(item.isProcumentApproved) + '</td>';
 				html += '<td><center>' +
-					'<a href="#" title="" class="btn btn-success btn-sm">\n' +
+					'<a href="#" id="btn-reject" title="" class="btn btn-danger btn-sm">\n' +
 					'        <span class="fas fa-check-double" aria-hidden="true"></span>\n' +
-					'        <span><strong>Notify</strong></span></a>' +
+					'        <span><strong>Reject</strong></span>' +
 					'</a></center>' +
 					'</td>';
 				html += '<td><center>' +
-					'<a href="#" title="" class="btn btn-danger btn-sm">\n' +
+					'<a href="#" title="" id="btn-notify" class="btn btn-success btn-sm">\n' +
+					'        <span class="fas fa-check-double" aria-hidden="true"></span>\n' +
+					'        <span><strong>Notify</strong></span>' +
+					'</a></center>' +
+					'</td>';
+				html += '<td><center>' +
+					'<a href="#" title="" id="btn-remove" class="btn btn-danger btn-sm">\n' +
 					'        <span class="far fa-trash-alt" aria-hidden="true"></span>\n' +
-					'        <span><strong>Remove</strong></span></a>' +
 					'</a></center>' +
 					'</td>';
 				html += '</tr>';
@@ -914,5 +927,5 @@ function requestStatus(isProcumentApproved){
 	var badgeClass = (isProcumentApproved) ? "badge badge-pill badge-success" : "badge badge-pill badge-warning";
 	var badgeText = (isProcumentApproved) ? "Approved" : "Pending";
 
-	return '<h5><span class="' + badgeClass + '">' + badgeText + '</span></h5>';
+	return '<h5><span class="' + badgeClass + '"><span style="color:white">' + badgeText + '</span></span></h5>';
 }

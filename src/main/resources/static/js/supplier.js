@@ -67,6 +67,32 @@ function addSupplier(update) {
     }
 }
 
+/**
+ * Delete a supplier;  get user confirmation first.
+ *
+ */
+function deleteSupplier(button) {
+    // get the id of the button which is relevant to the supplier that we want to delete,
+    // since we embed the supplier id in the button id.
+    let supplierId = button.id.replace('delete-supplier-', '');
+
+    // ask for user confirmation.
+    if (confirm('Are you sure you want to delete the supplier(' + supplierId  + ')')) {
+        // yes/true
+        // use an else clause if there should be an action for no/false.
+        axios.delete(BASE_URL + '/supplier/' + supplierId)
+            .then(response => {
+                if (response.status == 200) {
+                    alert('Supplier(' + supplierId + ') deleted successfully.');
+
+                    // refresh the page to reflect the change.
+                    location.reload();
+                }
+            })
+    }
+}
+
+
 
 /**
  * Retrieve available suppliers from the database.
@@ -171,7 +197,7 @@ function renderSupplierTable(tagId, suppliers) {
             '<td>' +
             '<div class="btn-group" role="group" aria-label="Basic example">' +
             '<button id="edit-supplier-' + supplier.supplierId + '" type="button" class="btn btn-outline-success" onclick="goToEditPage(this);"><i class="fas fa-edit"></i></button>' +
-            '<button id="delete-supplier-' + supplier.supplierId + '" type="button" class="btn btn-outline-danger" onclick="deleteItem(this);"><i class="fas fa-trash-alt"></i></button>' +
+            '<button id="delete-supplier-' + supplier.supplierId + '" type="button" class="btn btn-outline-danger" onclick="deleteSupplier(this);"><i class="fas fa-trash-alt"></i></button>' +
             '</div>'
         '</td>' +
         '</tr>';

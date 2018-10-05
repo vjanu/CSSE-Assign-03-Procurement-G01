@@ -62,6 +62,32 @@ function addItem(update) {
 }
 
 /**
+ * Delete an item; get user confirmation first.
+ *
+ */
+function deleteItem(button) {
+    // get the id of the button which is relevant to the item that we want to delete,
+    // since we embed the item id in the button id.
+    let itemId = button.id.replace('delete-item-', '');
+
+    // ask for user confirmation.
+    if (confirm('Are you sure you want to delete the item(' + itemId + ')')) {
+        // yes/true
+        // use an else clause if there should be an action for no/false.
+        axios.delete(BASE_URL + '/item/' + itemId)
+            .then(response => {
+                if (response.status == 200) {
+                    alert('Item(' + itemId + ') deleted successfully.');
+
+                    // refresh the page to reflect the change.
+                    location.reload();
+                }
+            })
+    }
+}
+
+
+        /**
  * Retrieve available items provided by this supplier from the database.
  * API call: http://<base_url>/item/<supplierId>/items
  *
@@ -191,3 +217,4 @@ function loadItemDetailsForEditing() {
             })
     }
 }
+
