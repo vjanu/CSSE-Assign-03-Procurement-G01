@@ -20,6 +20,7 @@ public class RequestMaterial {
 	private List<Item> items;
 	private String isImmediated;
 	private Boolean isProcumentApproved;
+	private Boolean isProcumentRejected;
 	private String isSiteManagerApproved;
 	private Boolean notifyManagement;
 	private String siteManagerName;
@@ -139,6 +140,14 @@ public class RequestMaterial {
 
 	public void setIsProcumentApproved(Boolean isProcumentApproved) {
 		this.isProcumentApproved = isProcumentApproved;
+	}
+
+	public Boolean getIsProcumentRejected() {
+		return isProcumentRejected;
+	}
+
+	public void setIsProcumentRejected(Boolean isProcumentRejected) {
+		this.isProcumentRejected = isProcumentRejected;
 	}
 
 }
