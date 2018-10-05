@@ -70,6 +70,7 @@ public class SiteServiceImpl implements SiteService {
 		site.setItems(itemList);
 
 		if (siteRepository.save(site) != null) {
+			System.out.println("Creating orders...");
 			List<PurchaseOrder> ordersForSuppliers = purchaseOrderService.createOrder(site);
 			// save to db so the suppliers can see them.
 			purchaseOrderService.addPurchaseOrders(ordersForSuppliers);

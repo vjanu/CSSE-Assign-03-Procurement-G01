@@ -49,8 +49,16 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 	public Boolean updateRequest(String requestId, RequestMaterial requestMaterial) {
 		RequestMaterial req = requestmaterialRepository.findByRequestId(requestId);
 
+		System.out.println(requestMaterial.getNotifyManagement());
+
 		if (requestMaterial.getIsProcumentApproved() != null)
 			req.setIsProcumentApproved(requestMaterial.getIsProcumentApproved());
+
+		if (requestMaterial.getIsProcumentRejected() != null)
+			req.setIsProcumentRejected(requestMaterial.getIsProcumentRejected());
+
+		if (requestMaterial.getNotifyManagement() != null)
+			req.setNotifyManagement(requestMaterial.getNotifyManagement());
 
 		if (requestMaterial.getIsSiteManagerApproved() != null)
 			req.setIsSiteManagerApproved(requestMaterial.getIsSiteManagerApproved());
@@ -64,17 +72,11 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 		if (requestMaterial.getItems() == null)
 			requestMaterial.setItems(req.getItems());
 
-		if (requestMaterial.getNotifyManagement() == null)
-			requestMaterial.setNotifyManagement(req.getNotifyManagement());
-
-		if (requestMaterial.getIsProcumentRejected() == null)
-			requestMaterial.setIsProcumentRejected(req.getIsProcumentRejected());
-
 		// if the material request is updated, we can go ahead and create the
 		// purchase orders.
-		if (requestMaterial.getIsProcumentApproved()) {
+		if ((requestMaterial.getIsProcumentApproved() != null) && requestMaterial.getIsProcumentApproved()) {
 			System.out.println("Creating orders...");
-			List<PurchaseOrder> ordersForSuppliers = purchaseOrderService.createOrder(requestMaterial);
+			List<PurchaseOrder> ordersForSuppliers = purchaseOrderService.createOrder(req);
 			// save to db so the suppliers can see them.
 			purchaseOrderService.addPurchaseOrders(ordersForSuppliers);
 		}

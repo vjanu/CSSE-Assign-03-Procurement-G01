@@ -123,7 +123,7 @@ $(document).on('click', '#manage-constructor-black-list .btn-danger', function (
 	}
 });
 
-$(document).on('click', '#manage-constructor-black-list .btn-warning', function (e) {
+$(document).on('click', '#manage-constructor-black-list .btn-success', function (e) {
 	e.preventDefault();
 	e.stopPropagation();
 	var cid = $(this).closest("tr").find(".nr-cid").text();
@@ -149,7 +149,7 @@ $(document).on('click', '#manage-supplier-black-list .btn-danger', function (e) 
 });
 
 
-$(document).on('click', '#manage-supplier-black-list .btn-warning', function (e) {
+$(document).on('click', '#manage-supplier-black-list .btn-success', function (e) {
 	e.preventDefault();
 	e.stopPropagation();
 	var sid = $(this).closest("tr").find(".nr-sid").text();
@@ -359,6 +359,8 @@ function approveOrRejectRequestedMaterial(rid, isApproved) {
 		"isProcumentApproved": isApproved,
 		"isProcumentRejected": ((isApproved) ? false : true)
 	}
+
+	console.log(data);
 	axios.put(BASE_URL_LOCAL + '/requestmaterial/update/' + rid, data)
 		.then(function (response) {
 			console.log(response);
@@ -516,10 +518,10 @@ function loadRequestedMaterialTable() {
 				html += '<td class="text-center">' + requestStatus(item) + '</td>';
 				html += '<td class="text-center">' + getApprovedButton(item) + '</td>';
 				html += '<td><center>' +
-					'<a href="#" id="btn-reject" title="" class="btn btn-danger btn-sm">\n' +
+					'<button id="btn-reject" title="" class="btn btn-danger btn-sm" ' + ((item.isProcumentRejected) ? "disabled" : "") + '>\n' +
 					'        <span class="fas fa-check-double" aria-hidden="true"></span>\n' +
 					'        <span><strong>Reject</strong></span>' +
-					'</a></center>' +
+					'</button></center>' +
 					'</td>';
 				html += '<td><center>' +
 					'<a href="#" title="" id="btn-notify" class="btn btn-success btn-sm">\n' +
@@ -809,10 +811,11 @@ function formatDate(date) {
  */
 function getItemList(items) {
 	var html = '<ul>';
-
-	items.forEach(item => {
-		html += '<li>' + item.itemId + ' - ' + item.itemName + '</li>';
-	});
+	if (items != null) {
+		items.forEach(item => {
+			html += '<li>' + item.itemId + ' - ' + item.itemName + '</li>';
+		});
+	}
 	html += '</ul>';
 	return html;
 }
@@ -851,13 +854,13 @@ function getImmediateButton(status) {
 
 function getBlacklistButton(isBanned, isbtnDisabled) {
 
-	var btnClass = (isBanned) ? ((isbtnDisabled) ? "btn btn-default btn-sm" : "btn btn-warning btn-sm") : "btn btn-danger btn-sm";
+	var btnClass = (isBanned) ? ((isbtnDisabled) ? "btn btn-default btn-sm" : "btn btn-success btn-sm") : "btn btn-danger btn-sm";
 	var btnText = (isBanned) ? ((isbtnDisabled) ? "Blacklisted" : "Unbanned") : "Blacklist";
 	var isDisabled = (isBanned) ? ((isbtnDisabled) ? "disabled" : "") : "";
 
 	var html = '<button type="button" title="" class="' + btnClass + '" ' + isDisabled + '>' +
-		'        <span class="fas fa-ban" aria-hidden="true"></span>' +
-		'        <span><strong>' + btnText + '</strong></span></a>' +
+		'        <span class="fas fa-ban" style="color:white" aria-hidden="true"></span>' +
+		'        <span><strong style="color:white">' + btnText + '</strong></span></a>' +
 		'</button>';
 	return html;
 }
@@ -866,7 +869,7 @@ function getBlacklistBadge(status) {
 	var badgeClass = (status) ? "badge badge-pill badge-danger" : "badge badge-pill badge-primary";
 	var badgeText = (status) ? "Banned" : "Active";
 
-	return '<h5><span class="' + badgeClass + '">' + badgeText + '</span></h5>';
+	return '<h5><span class="' + badgeClass + '"><span style="color:white">' + badgeText + '</span></span></h5>';
 }
 
 function generateCategoryDropdown() {
@@ -932,15 +935,17 @@ function generateRatingStarts(rateValue) {
 function isViolation(items) {
 	let isCompanyPoliciesViolated = false;
 	let totalCost = 0;
-	items.forEach(item => {
-		if (item.isRestrictedItem) {
+	if (items != null) {
+		items.forEach(item => {
+			if (item.isRestrictedItem) {
+				isCompanyPoliciesViolated = true;
+			}
+			totalCost += item.price * item.quantity;
+		});
+
+		if (totalCost > 100000) {
 			isCompanyPoliciesViolated = true;
 		}
-		totalCost += item.price * item.quantity;
-	});
-
-	if (totalCost > 100000) {
-		isCompanyPoliciesViolated = true;
 	}
 
 	var badgeClass = (isCompanyPoliciesViolated) ? "badge badge-pill badge-danger" : "badge badge-pill badge-primary";

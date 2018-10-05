@@ -18,10 +18,10 @@ public class RequestMaterial {
 	private String requestedDate;
 	private List<Item> items;
 	private String isImmediated;
-	private Boolean isProcumentApproved = false;
-	private Boolean isProcumentRejected = false;
+	private Boolean isProcumentApproved;
+	private Boolean isProcumentRejected;
 	private String isSiteManagerApproved;
-	private Boolean notifyManagement = false;
+	private Boolean notifyManagement;
 	private String siteManagerName;
 	private String siteManagerID;
 	@JsonIgnore
