@@ -13,7 +13,7 @@ public class RootController {
     public String index() {
         // index.html is at src/main/resources/static.
         // we can reference anything at static directory as if we are in that directory.
-        return "<script type='text/javascript'> window.location.href = 'index.html'; </script>";    //this will ask the browser to redirect to the given url.
+        return "<script type='text/javascript'> window.location.href = 'login.html'; </script>";    //this will ask the browser to redirect to the given url.
     }
 
     @GetMapping("/error")

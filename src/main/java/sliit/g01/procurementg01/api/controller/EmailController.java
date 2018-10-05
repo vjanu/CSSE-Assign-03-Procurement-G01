@@ -23,8 +23,8 @@ import java.util.Properties;
 @RequestMapping("/email")
 public class EmailController {
 
-    private static String USER_NAME = "kasund9585";
-    private static String PASSWORD = "123456789@#";
+    private static String USER_NAME = "vjanuradhawick";
+    private static String PASSWORD = "Bcskaranawa";
 
 
     @RequestMapping(method = RequestMethod.POST)
