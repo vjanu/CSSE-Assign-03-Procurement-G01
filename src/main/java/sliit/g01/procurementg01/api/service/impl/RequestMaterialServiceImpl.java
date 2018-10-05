@@ -64,6 +64,9 @@ public class RequestMaterialServiceImpl implements RequestMaterialService {
 		if (requestMaterial.getItems() == null)
 			requestMaterial.setItems(req.getItems());
 
+		if (requestMaterial.getNotifyManagement() == null)
+			requestMaterial.setNotifyManagement(req.getNotifyManagement());
+
 		// if the material request is updated, we can go ahead and create the
 		// purchase orders.
 		if (requestMaterial.getIsProcumentApproved()) {

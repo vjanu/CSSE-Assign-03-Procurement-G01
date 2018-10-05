@@ -21,6 +21,7 @@ public class RequestMaterial {
 	private String isImmediated;
 	private Boolean isProcumentApproved;
 	private String isSiteManagerApproved;
+	private Boolean notifyManagement;
 	private String siteManagerName;
 	private String siteManagerID;
 	@JsonIgnore
@@ -64,6 +65,14 @@ public class RequestMaterial {
 
 	public void setSiteManagerName(String siteManagerName) {
 		this.siteManagerName = siteManagerName;
+	}
+
+	public Boolean getNotifyManagement() {
+		return notifyManagement;
+	}
+
+	public void setNotifyManagement(Boolean notifyManagement) {
+		this.notifyManagement = notifyManagement;
 	}
 
 	public String getSiteManagerID() {
