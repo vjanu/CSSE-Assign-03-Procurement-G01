@@ -36,7 +36,12 @@ public class LoginServiceImpl implements LoginService {
 			userInfo.put("userId", "");
 		}
 
-		// siteManagerImpl.
+		else if (siteManagerImpl.getSiteManager(login.getUsername(), login.getPassword()).getEmployeeId() != null) {
+			userInfo.put("success", "true");
+			userInfo.put("userType", "Sitemanager");
+			userInfo.put("userId",
+					siteManagerImpl.getSiteManager(login.getUsername(), login.getPassword()).getEmployeeId());
+		}
 
 		return userInfo;
 	}

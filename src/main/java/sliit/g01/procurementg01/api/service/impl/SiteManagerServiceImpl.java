@@ -111,4 +111,10 @@ public class SiteManagerServiceImpl implements SiteManagerService {
 
 		return unassignedList;
 	}
+
+	public SiteManager getSiteManager(String email, String nic) {
+		// SiteManager
+
+		return siteManagerRepository.findByEmailAndNic(email, nic);
+	}
 }

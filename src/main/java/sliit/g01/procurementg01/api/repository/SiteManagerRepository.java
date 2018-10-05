@@ -25,4 +25,6 @@ public interface SiteManagerRepository extends MongoRepository<SiteManager, Stri
 																	// managers.
 
 	SiteManager findSiteManagerByManagedSiteId(String managedSiteId);
+
+	SiteManager findByEmailAndNic(String email, String nic);
 }
