@@ -31,6 +31,19 @@ public class PurchaseOrder {
 	private boolean draftPurchaseOrder;
 	private String onHold;
 	private Date returnedDate;
+	private double total;
+
+	public String getOnHold() {
+		return onHold;
+	}
+
+	public double getTotal() {
+		return total;
+	}
+
+	public void setTotal(double total) {
+		this.total = total;
+	}
 
 	public PurchaseOrder() {
 	}

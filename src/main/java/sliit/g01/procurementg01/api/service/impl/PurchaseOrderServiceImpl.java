@@ -33,6 +33,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	@Autowired
 	private SiteServiceImpl siteService;
 
+	@Autowired
+	private ItemServiceImpl itemService;
+
+
 	@Override
 	public boolean specifyQuantity(String itemId, int quantity) {
 		return false;
@@ -64,7 +68,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
 		for (Item i : itemIdAndQuantities) {
 			if (i != null) {
-				// i.setQuantity(quantity);
+				Item existingItem = itemService.getItem(i.getItemId());
+
+				// we take all the attributes of the existing item but change the quantity to the one in the request.
+                existingItem.setQuantity(i.getQuantity());
+                i = existingItem;
 
 				// now we group.
 				if (itemsOrderedFromEachSupplier.containsKey(i.getSupplierId())) {
@@ -106,6 +114,14 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 			p.setSupplierId(supplierId);
 			p.setDeliverySite(deliverySite);
 			p.setOrderStatus("Pending");
+
+			// calculate order total.
+            double total = 0.0;
+            for(Item i: p.getItems()) {
+                total += i.getPrice() * Double.parseDouble(i.getQuantity());
+            }
+
+            p.setTotal(total);
 
 			orders.add(p);
 		}
