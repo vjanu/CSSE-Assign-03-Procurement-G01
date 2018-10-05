@@ -141,31 +141,36 @@ function generateItemSelectDropdown() {
 
 //constructor add requests-add request page
 function addRequest() {
-	let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
-	var obj = {};
+    let storedItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+	var itemList = [];
 	for (var i of storedItems) {
-		obj[i.itemName] = i.itemQty;
-	}
+		let data = {
+			itemId: i.itemId,
+			quantity: i.itemQty
+		}
+		itemList.push(data);
+    }
+   
 
 	let data = {
 			requestId: $('#requestId').val(),
 			requestedPerson: $('#constructorname').val(),
-		    requestedDate: $('#requesteddate').val(),	   
+		    requestedDate: $('#requesteddate').val(),
 		    siteId: $('#siteId').val(),
-            items: obj,
-			requestingDate: $('#requestingdate').val(),
-			isSiteManagerApproved:"0"
+            items: itemList,
+            requestingDate: $('#requestingdate').val(),
+            isSiteManagerApproved:"0"
 		
 	}
 
 	axios.post(BASE_URL_LOCAL + '/requestmaterial/add-new-request', data)
 		.then(function (response) {
-			$.notify(response.data, "success");
+			$.notify("Request Added Successfully", "success");
 		})
 		.catch(function (error) {
 			// handle error
 			console.log(error);
-			$.notify("Request not added", "error");;
+			$.notify("Request not added", "error");
 		});
 }
 
@@ -299,13 +304,11 @@ function formatDate(date) {
 
 function getItemList(items) {
 	var html = '<ul>';
-	for (var key in items) {
-		if (items.hasOwnProperty(key)) {
-			html += '<li>' + key + ' - ' + items[key] + '</li>';
-		}
-	}
+
+	items.forEach(item => {
+		html += '<li>' + item.itemId + ' - ' + item.itemName + '</li>';
+	});
 	html += '</ul>';
 	return html;
 }
-
 
