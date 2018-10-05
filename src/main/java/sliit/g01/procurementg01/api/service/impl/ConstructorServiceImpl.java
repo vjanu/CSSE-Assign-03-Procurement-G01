@@ -35,4 +35,8 @@ public class ConstructorServiceImpl implements ConstructorService {
 		return constructorRepository.save(cs);
 	}
 
+	public Constructor getConstructor(String email, String nic) {
+		return constructorRepository.findByEmailAndNic(email, nic);
+	}
+
 }

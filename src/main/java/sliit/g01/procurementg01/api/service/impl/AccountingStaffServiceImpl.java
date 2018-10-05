@@ -58,4 +58,8 @@ public class AccountingStaffServiceImpl implements AccountingStaffService {
 		return null;
 	}
 
+	public AccountingStaff getAccountingStaff(String email, String nic) {
+		return accountingStaffRepository.findByEmailAndNic(email, nic);
+	}
+
 }

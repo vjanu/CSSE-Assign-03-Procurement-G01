@@ -73,4 +73,8 @@ public class SupplierServiceImpl implements SupplierService {
 
 		return new Supplier();
 	}
+
+	public Supplier getSupplier(String email, String phone) {
+		return supplierRepository.findByEmailAndPhone(email, phone);
+	}
 }

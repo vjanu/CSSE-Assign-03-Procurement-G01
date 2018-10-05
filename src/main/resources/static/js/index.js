@@ -43,8 +43,10 @@ function validateUserSignedIn() {
                     window.location.href = "sitemanager-dashboard.html";
                 }else if(user_info.UserType == 'Constructor'){
                     window.location.href = "constructor-dashboard.html";
-                }else if(user_info.UserType == 'Accounting Staff'){
+                }else if(user_info.UserType == 'Accounting-Staff'){
                     window.location.href = "accountingstaff-dashboard.html";
+                }else if(user_info.UserType == 'Supplier'){
+                    window.location.href = "suppliers/view-suppliers.html";
                 }
                 
                 else{

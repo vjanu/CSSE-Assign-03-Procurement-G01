@@ -15,7 +15,16 @@ public class LoginServiceImpl implements LoginService {
 	private LoginRepository loggedUserRepository;
 
 	@Autowired
-	private SiteManagerServiceImpl siteManagerImpl;
+	private SiteManagerServiceImpl siteManagerServiceImpl;
+
+	@Autowired
+	private AccountingStaffServiceImpl accountingStaffServiceImpl;
+
+	@Autowired
+	private SupplierServiceImpl supplierServiceImpl;
+
+	@Autowired
+	private ConstructorServiceImpl constructorServiceImpl;
 
 	@Override
 	public Login addUsers(Login login) {
@@ -36,13 +45,34 @@ public class LoginServiceImpl implements LoginService {
 			userInfo.put("userId", "");
 		}
 
-		else if (siteManagerImpl.getSiteManager(login.getUsername(), login.getPassword()).getEmployeeId() != null) {
+		else if (siteManagerServiceImpl.getSiteManager(login.getUsername(), login.getPassword())
+				.getEmployeeId() != null) {
 			userInfo.put("success", "true");
 			userInfo.put("userType", "Sitemanager");
 			userInfo.put("userId",
-					siteManagerImpl.getSiteManager(login.getUsername(), login.getPassword()).getEmployeeId());
+					siteManagerServiceImpl.getSiteManager(login.getUsername(), login.getPassword()).getEmployeeId());
+		} else if (accountingStaffServiceImpl.getAccountingStaff(login.getUsername(), login.getPassword())
+				.getEmployeeId() != null) {
+			userInfo.put("success", "true");
+			userInfo.put("userType", "Accounting-Staff");
+			userInfo.put("userId", accountingStaffServiceImpl
+					.getAccountingStaff(login.getUsername(), login.getPassword()).getEmployeeId());
 		}
 
+		else if (supplierServiceImpl.getSupplier(login.getUsername(), login.getPassword()).getSupplierId() != null) {
+			userInfo.put("success", "true");
+			userInfo.put("userType", "Supplier");
+			userInfo.put("userId",
+					supplierServiceImpl.getSupplier(login.getUsername(), login.getPassword()).getSupplierId());
+		}
+
+		else if (constructorServiceImpl.getConstructor(login.getUsername(), login.getPassword())
+				.getEmployeeId() != null) {
+			userInfo.put("success", "true");
+			userInfo.put("userType", "Constructor");
+			userInfo.put("userId",
+					constructorServiceImpl.getConstructor(login.getUsername(), login.getPassword()).getEmployeeId());
+		}
 		return userInfo;
 	}
 
