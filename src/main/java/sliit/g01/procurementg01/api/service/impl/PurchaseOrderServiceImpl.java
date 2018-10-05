@@ -209,4 +209,68 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         return ordersOfSupplier;
     }
 
+
+	@Override
+	public List<PurchaseOrder> createOrder(Site site) {
+		// holds the purchase orders(one order per supplier).
+		List<PurchaseOrder> orders = new ArrayList<>();
+		// list of items mapped against the supplier.
+		Map<String, List<Item>> itemsOrderedFromEachSupplier = new HashMap<>();
+		// quantity required, mapped against item id.
+		List<Item> siteItems = site.getItems();
+		// this is where the order is headed.
+		Site deliverySite = siteService.getSite(site.getSiteId());
+
+		// request material object has a map of items where quantity of each
+		// item is mapped against its item code.
+		// we need to get full details of the item(from the database) and group
+		// the items by the supplier.
+
+		for (Item i : siteItems) {
+			// now we group.
+			if (itemsOrderedFromEachSupplier.containsKey(i.getSupplierId())) {
+				// get the existing item list of the supplier so that we
+				// won't replace it.
+				List<Item> existingItems = itemsOrderedFromEachSupplier.get(i.getSupplierId());
+				existingItems.add(i);
+
+				// put it back so that the list mapped against the supplier
+				// is up to date.
+				itemsOrderedFromEachSupplier.put(i.getSupplierId(), existingItems);
+			} else {
+				// create a new list of items for future use.
+				List<Item> itemList = new ArrayList<>();
+				itemList.add(i);
+
+				// create a new entry in the map for this supplier.
+				itemsOrderedFromEachSupplier.put(i.getSupplierId(), itemList);
+			}
+		}
+
+		// now that we have grouped each item by its supplier, we can create a
+		// purchase order,
+		// for each supplier.
+		// we keep the requestId the same with varying order ids.
+		for (String supplierId : itemsOrderedFromEachSupplier.keySet()) {
+			PurchaseOrder p = new PurchaseOrder();
+
+			p.setRequestId("RI" + RandomStringUtils.randomNumeric(5));
+			p.setOrderId("OR" + RandomStringUtils.randomNumeric(5));
+			p.setDraftPurchaseOrder(true); // will be a draft as long as the
+											// payment isn't made.
+			p.setItems(itemsOrderedFromEachSupplier.get(supplierId));
+			p.setOnHold(false);
+			p.setOrderDate(new Date());
+			// p.setOrderStatus("Pending approval");
+			p.setSequentialReference("No idea");
+			p.setSupplierId(supplierId);
+			p.setDeliverySite(deliverySite);
+			p.setOrderStatus("Pending");
+
+			orders.add(p);
+		}
+
+		return orders;
+	}
+
 }
