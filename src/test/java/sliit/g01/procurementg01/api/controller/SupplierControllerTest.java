@@ -39,7 +39,7 @@ public class SupplierControllerTest extends SupplierUtils {
 				.content(BLACKLIST_JSON);
 
 		mvc.perform(builder).andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.content().string("true")).andDo(MockMvcResultHandlers.print());
+				.andExpect(MockMvcResultMatchers.content().string("false")).andDo(MockMvcResultHandlers.print());
 	}
 
 	@Test
@@ -51,7 +51,7 @@ public class SupplierControllerTest extends SupplierUtils {
 				.content(UNBANNED_JSON);
 
 		mvc.perform(builder).andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.content().string("")).andDo(MockMvcResultHandlers.print());
+				.andExpect(MockMvcResultMatchers.content().string("false")).andDo(MockMvcResultHandlers.print());
 	}
 
 }

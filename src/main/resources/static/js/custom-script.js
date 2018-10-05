@@ -472,10 +472,18 @@ function loadRequestedMaterialTable() {
 				html += '<td class="nr-oid" scope="row"><center>' + item.requestId + '</center></td>';
 				html += '<td class="text-center">' + item.requestedPerson + '</td>';
 				html += '<td class="text-center">' + item.siteId + '</td>';
-				html += '<td >' + getRequestedItemList(item.items) + '</td>';
+				html += '<td >' + getItemList(item.items) + '</td>';
 				html += '<td class="text-center">' + item.requestedDate + '</td>';
 				html += '<td class="text-center">' + getImmediateButton(item.isImmediated) + '</td>';
+				html += '<td class="text-center">' + isViolation(item.items) + '</td>';
+				html += '<td class="text-center">' + requestStatus(item.isProcumentApproved) + '</td>';
 				html += '<td class="text-center">' + getApprovedButton(item.isProcumentApproved) + '</td>';
+				html += '<td><center>' +
+					'<a href="#" title="" class="btn btn-success btn-sm">\n' +
+					'        <span class="fas fa-check-double" aria-hidden="true"></span>\n' +
+					'        <span><strong>Notify</strong></span></a>' +
+					'</a></center>' +
+					'</td>';
 				html += '<td><center>' +
 					'<a href="#" title="" class="btn btn-danger btn-sm">\n' +
 					'        <span class="far fa-trash-alt" aria-hidden="true"></span>\n' +
@@ -859,14 +867,54 @@ function generateItemSelectDropdown() {
 		});
 }
 
+/**
+ * This function generate the rating stars
+ * @param {*} rateValue 
+ */
 function generateRatingStarts(rateValue) {
 	var html = '<div>';
 	for (i = 0; i < 5; i++) {
 		let isChecked = (rateValue < 1) ? "" : "checked";
-		console.log(isChecked + " | "+rateValue);
-		html += '<span class="fa fa-star '+isChecked+'"></span>';
+		console.log(isChecked + " | " + rateValue);
+		html += '<span class="fa fa-star ' + isChecked + '"></span>';
 		rateValue--;
 	}
 	html += '</div>';
 	return html;
+}
+
+
+/**
+ * Check whether item violate the company policies
+ * @param {*} items 
+ */
+function isViolation(items) {
+	let isCompanyPoliciesViolated = false;
+	let totalCost = 0;
+	items.forEach(item => {
+		if (item.isRestrictedItem) {
+			isCompanyPoliciesViolated = true;
+		}
+		totalCost += item.price * item.quantity; 
+	});
+
+	if(totalCost > 100000){
+		isCompanyPoliciesViolated = true;
+	}
+
+	var badgeClass = (isCompanyPoliciesViolated) ? "badge badge-pill badge-danger" : "badge badge-pill badge-primary";
+	var badgeText = (isCompanyPoliciesViolated) ? "Yes" : "No";
+
+	return '<h5><span class="' + badgeClass + '">' + badgeText + '</span></h5>';
+}
+
+/**
+ * Get the status of material request
+ * @param {*} isProcumentApproved 
+ */
+function requestStatus(isProcumentApproved){
+	var badgeClass = (isProcumentApproved) ? "badge badge-pill badge-success" : "badge badge-pill badge-warning";
+	var badgeText = (isProcumentApproved) ? "Approved" : "Pending";
+
+	return '<h5><span class="' + badgeClass + '">' + badgeText + '</span></h5>';
 }
