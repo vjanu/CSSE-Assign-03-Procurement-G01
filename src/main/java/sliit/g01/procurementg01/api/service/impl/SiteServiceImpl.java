@@ -27,6 +27,9 @@ public class SiteServiceImpl implements SiteService {
 	@Autowired
 	private SiteManagerServiceImpl siteManagerService;
 
+	@Autowired
+	private PurchaseOrderServiceImpl purchaseOrderService;
+
 	@Override
 	public List<Item> getAvailableItems(String siteId) {
 		return siteRepository.findBySiteId(siteId).getItems();
@@ -64,7 +67,15 @@ public class SiteServiceImpl implements SiteService {
 			}
 		}
 		site.setItems(itemList);
-		return (siteRepository.save(site) != null);
+
+		if (siteRepository.save(site) != null) {
+			purchaseOrderService.createOrder(site);
+			return true;
+		} else {
+			return false;
+		}
+
+		// return (siteRepository.save(site) != null);
 	}
 
 	@Override

@@ -5,15 +5,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sliit.g01.procurementg01.api.model.*;
 
 import sliit.g01.procurementg01.api.model.Item;
 import sliit.g01.procurementg01.api.model.PurchaseOrder;
 import sliit.g01.procurementg01.api.model.RequestMaterial;
+import sliit.g01.procurementg01.api.model.Site;
 import sliit.g01.procurementg01.api.model.Supplier;
 import sliit.g01.procurementg01.api.repository.PurchaseOrderRepository;
 import sliit.g01.procurementg01.api.service.PurchaseOrderService;
@@ -24,189 +24,259 @@ import sliit.g01.procurementg01.api.service.PurchaseOrderService;
 @Service("PurchaseOrderService")
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
-    @Autowired
-    private ItemServiceImpl itemService;
+	@Autowired
+	private ItemServiceImpl itemService;
 
-    @Autowired
-    private PurchaseOrderRepository purchaseOrderRepository;
+	@Autowired
+	private PurchaseOrderRepository purchaseOrderRepository;
 
-    @Autowired
-    private SupplierServiceImpl supplierService;
+	@Autowired
+	private SupplierServiceImpl supplierService;
 
-    @Autowired
-    private SiteServiceImpl siteService;
+	@Autowired
+	private SiteServiceImpl siteService;
 
+	@Override
+	public boolean specifyQuantity(String itemId, int quantity) {
+		return false;
+	}
 
-    @Override
-    public boolean specifyQuantity(String itemId, int quantity) {
-        return false;
-    }
+	/**
+	 * This method will produce a purchase order for each supplier. (a material
+	 * request may contain materials offered by different suppliers)
+	 *
+	 * @param requestMaterial:
+	 *            an object that encloses a request for materials made by an
+	 *            employee.
+	 */
+	@Override
+	public List<PurchaseOrder> createOrder(RequestMaterial requestMaterial) {
+		// holds the purchase orders(one order per supplier).
+		List<PurchaseOrder> orders = new ArrayList<>();
+		// list of items mapped against the supplier.
+		Map<String, List<Item>> itemsOrderedFromEachSupplier = new HashMap<>();
+		// quantity required, mapped against item id.
+		Map<String, String> itemIdAndQuantities = requestMaterial.getItems();
+		// this is where the order is headed.
+		Site deliverySite = siteService.getSite(requestMaterial.getSiteId());
 
-    /**
-     * This method will produce a purchase order for each supplier. (a material
-     * request may contain materials offered by different suppliers)
-     *
-     * @param requestMaterial: an object that encloses a request for materials made by an
-     *                         employee.
-     */
-    @Override
-    public List<PurchaseOrder>createOrder(RequestMaterial requestMaterial) {
-        List<PurchaseOrder> orders = new ArrayList<>(); // holds the purchase orders(one order per supplier).
-        Map<String, List<Item>> itemsOrderedFromEachSupplier = new HashMap<>(); // list of items mapped against the supplier.
-        Map<String, String> itemIdAndQuantities = requestMaterial.getItems(); // quantity required, mapped against item id.
-        Site deliverySite = siteService.getSite(requestMaterial.getSiteId()); // this is where the order is headed.
+		// request material object has a map of items where quantity of each
+		// item is mapped against its item code.
+		// we need to get full details of the item(from the database) and group
+		// the items by the supplier.
+		for (String itemId : itemIdAndQuantities.keySet()) {
+			String quantity = itemIdAndQuantities.get(itemId);
+			Item i = itemService.getItem(itemId);
 
-        // request material object has a map of items where quantity of each item is mapped against its item code.
-        // we need to get full details of the item(from the database) and group the items by the supplier.
-        for (String itemId : itemIdAndQuantities.keySet()) {
-            String quantity = itemIdAndQuantities.get(itemId);
-            Item i = itemService.getItem(itemId);
+			if (i != null) {
+				i.setQuantity(quantity);
 
-            if (i != null) {
-                i.setQuantity(quantity);
+				// now we group.
+				if (itemsOrderedFromEachSupplier.containsKey(i.getSupplierId())) {
+					// get the existing item list of the supplier so that we
+					// won't replace it.
+					List<Item> existingItems = itemsOrderedFromEachSupplier.get(i.getSupplierId());
+					existingItems.add(i);
 
-                // now we group.
-                if (itemsOrderedFromEachSupplier.containsKey(i.getSupplierId())) {
-                    // get the existing item list of the supplier so that we
-                    // won't replace it.
-                    List<Item> existingItems = itemsOrderedFromEachSupplier.get(i.getSupplierId());
-                    existingItems.add(i);
+					// put it back so that the list mapped against the supplier
+					// is up to date.
+					itemsOrderedFromEachSupplier.put(i.getSupplierId(), existingItems);
+				} else {
+					// create a new list of items for future use.
+					List<Item> itemList = new ArrayList<>();
+					itemList.add(i);
 
-                    // put it back so that the list mapped against the supplier
-                    // is up to date.
-                    itemsOrderedFromEachSupplier.put(i.getSupplierId(), existingItems);
-                } else {
-                    // create a new list of items for future use.
-                    List<Item> itemList = new ArrayList<>();
-                    itemList.add(i);
+					// create a new entry in the map for this supplier.
+					itemsOrderedFromEachSupplier.put(i.getSupplierId(), itemList);
+				}
+			}
+		}
 
-                    // create a new entry in the map for this supplier.
-                    itemsOrderedFromEachSupplier.put(i.getSupplierId(), itemList);
-                }
-            }
-        }
+		// now that we have grouped each item by its supplier, we can create a
+		// purchase order,
+		// for each supplier.
+		// we keep the requestId the same with varying order ids.
+		for (String supplierId : itemsOrderedFromEachSupplier.keySet()) {
+			PurchaseOrder p = new PurchaseOrder();
 
-        // now that we have grouped each item by its supplier, we can create a
-        // purchase order,
-        // for each supplier.
-        // we keep the requestId the same with varying order ids.
-        for (String supplierId : itemsOrderedFromEachSupplier.keySet()) {
-            PurchaseOrder p = new PurchaseOrder();
+			p.setRequestId(requestMaterial.getRequestId());
+			p.setOrderId(requestMaterial.getRequestId());
+			p.setDraftPurchaseOrder(true); // will be a draft as long as the
+											// payment isn't made.
+			p.setItems(itemsOrderedFromEachSupplier.get(supplierId));
+			p.setOnHold(false);
+			p.setOrderDate(new Date());
+			// p.setOrderStatus("Pending approval");
+			p.setSequentialReference("No idea");
+			p.setSupplierId(supplierId);
+			p.setDeliverySite(deliverySite);
+			p.setOrderStatus("Pending");
 
-            p.setRequestId(requestMaterial.getRequestId());
-            p.setOrderId(requestMaterial.getRequestId());
-            p.setDraftPurchaseOrder(true); // will be a draft as long as the payment isn't made.
-            p.setItems(itemsOrderedFromEachSupplier.get(supplierId));
-            p.setOnHold(false);
-            p.setOrderDate(new Date());
-//            p.setOrderStatus("Pending approval");
-            p.setSequentialReference("No idea");
-            p.setSupplierId(supplierId);
-            p.setDeliverySite(deliverySite);
-            p.setOrderStatus("Pending");
+			orders.add(p);
+		}
 
-            orders.add(p);
-        }
+		return orders;
+	}
 
-        return orders;
-    }
+	@Override
+	public PurchaseOrder getPurchaseOrder(String orderId) {
+		return purchaseOrderRepository.getPurchaseOrderByOrderId(orderId);
+	}
 
+	@Override
+	public List<PurchaseOrder> getAllPurchaseOrders() {
+		return purchaseOrderRepository.findAll();
+	}
 
-    @Override
-    public PurchaseOrder getPurchaseOrder(String orderId) {
-        return purchaseOrderRepository.getPurchaseOrderByOrderId(orderId);
-    }
+	@Override
+	public List<PurchaseOrder> getOnHoldPurchaseOrders(String onHold) {
+		return purchaseOrderRepository.getPurchaseOrdersByOnHold(onHold);
+	}
 
-    @Override
-    public List<PurchaseOrder> getAllPurchaseOrders() {
-        return purchaseOrderRepository.findAll();
-    }
+	@Override
+	public List<PurchaseOrder> getOrdersUnderMaterialRequest(String requestId) {
+		return purchaseOrderRepository.getPurchaseOrdersByRequestId(requestId);
+	}
 
-    @Override
-    public List<PurchaseOrder> getOnHoldPurchaseOrders(String onHold) {
-        return purchaseOrderRepository.getPurchaseOrdersByOnHold(onHold);
-    }
+	@Override
+	public String requestApproval() {
+		return null;
+	}
 
-    @Override
-    public List<PurchaseOrder> getOrdersUnderMaterialRequest(String requestId) {
-        return purchaseOrderRepository.getPurchaseOrdersByRequestId(requestId);
-    }
+	// save a single purchase order to the database.
+	// for multiple orders, call this method iteratively; LOL!
+	@Override
+	public void addPurchaseOrder(PurchaseOrder purchaseOrder) {
+		purchaseOrderRepository.save(purchaseOrder);
+	}
 
-    @Override
-    public String requestApproval() {
-        return null;
-    }
+	// save multiple orders to database.
+	@Override
+	public void addPurchaseOrders(List<PurchaseOrder> orders) {
+		for (PurchaseOrder purchaseOrder : orders) {
+			addPurchaseOrder(purchaseOrder);
+		}
+	}
 
-    // save a single purchase order to the database.
-    // for multiple orders, call this method iteratively; LOL!
-    @Override
-    public void addPurchaseOrder(PurchaseOrder purchaseOrder) {
-        purchaseOrderRepository.save(purchaseOrder);
-    }
+	// for the given supplier, get the orders that are pending or something
+	// similar to that.
+	@Override
+	public List<PurchaseOrder> getOrdersOfSpecificSupplierUnderSpecificStatus(String supplierId, String orderStatus) {
+		return purchaseOrderRepository.getPurchaseOrdersBySupplierIdAndOrderStatus(supplierId, orderStatus);
+	}
 
-    // save multiple orders to database.
-    @Override
-    public void addPurchaseOrders(List<PurchaseOrder> orders) {
-        for (PurchaseOrder purchaseOrder : orders) {
-            addPurchaseOrder(purchaseOrder);
-        }
-    }
+	// regardless of the supplier get all orders that are pending or something
+	// similar to that.
+	@Override
+	public Map<String, List<PurchaseOrder>> getOrdersUnderSpecificStatus(String orderStatus) {
+		Map<String, List<PurchaseOrder>> ordersOfSupplier = new HashMap<>();
+		List<Supplier> suppliers = supplierService.getAllSuppliers();
 
-    // for the given supplier, get the orders that are pending or something
-    // similar to that.
-    @Override
-    public List<PurchaseOrder> getOrdersOfSpecificSupplierUnderSpecificStatus(String supplierId, String orderStatus) {
-        return purchaseOrderRepository.getPurchaseOrdersBySupplierIdAndOrderStatus(supplierId, orderStatus);
-    }
+		// now for each supplier we find orders that has the specified status.
+		for (Supplier s : suppliers) {
+			ordersOfSupplier.put(s.getSupplierId(), purchaseOrderRepository
+					.getPurchaseOrdersBySupplierIdAndOrderStatus(s.getSupplierId(), orderStatus));
+		}
 
-    // regardless of the supplier get all orders that are pending or something
-    // similar to that.
-    @Override
-    public Map<String, List<PurchaseOrder>> getOrdersUnderSpecificStatus(String orderStatus) {
-        Map<String, List<PurchaseOrder>> ordersOfSupplier = new HashMap<>();
-        List<Supplier> suppliers = supplierService.getAllSuppliers();
+		return ordersOfSupplier;
+	}
 
-        // now for each supplier we find orders that has the specified status.
-        for (Supplier s : suppliers) {
-            ordersOfSupplier.put(s.getSupplierId(), purchaseOrderRepository
-                    .getPurchaseOrdersBySupplierIdAndOrderStatus(s.getSupplierId(), orderStatus));
-        }
+	// for the given supplier, get the orders that are pending or something
+	// similar to that.
+	@Override
+	public PurchaseOrder updatePurchaseOrder(String orderId, PurchaseOrder purchaseOrder) {
+		PurchaseOrder order = purchaseOrderRepository.getPurchaseOrderByOrderId(orderId);
+		if (purchaseOrder.getReturnedDate() != null)
+			order.setReturnedDate(purchaseOrder.getReturnedDate());
+		// if (purchaseOrder.getOrderStatus() != null)
+		// order.setOrderStatus(purchaseOrder.getOrderStatus());
+		if (purchaseOrder.isOnHold() != false)
+			order.setOnHold(purchaseOrder.isOnHold());
+		return purchaseOrderRepository.save(order);
+	}
 
-        return ordersOfSupplier;
-    }
+	// regardless of the status, get all orders issued to a specific supplier.
+	@Override
+	public List<PurchaseOrder> getOrdersofSpecificSupplier(String supplierId) {
+		return purchaseOrderRepository.getPurchaseOrdersBySupplierId(supplierId);
+	}
 
-    // for the given supplier, get the orders that are pending or something similar to that.
-    @Override
-    public PurchaseOrder updatePurchaseOrder(String orderId, PurchaseOrder purchaseOrder) {
-        PurchaseOrder order = purchaseOrderRepository.getPurchaseOrderByOrderId(orderId);
-        if (purchaseOrder.getReturnedDate() != null)
-            order.setReturnedDate(purchaseOrder.getReturnedDate());
-//        if (purchaseOrder.getOrderStatus() != null)
-//            order.setOrderStatus(purchaseOrder.getOrderStatus());
-        if (purchaseOrder.isOnHold() != false)
-            order.setOnHold(purchaseOrder.isOnHold());
-        return purchaseOrderRepository.save(order);
-    }
+	// regardless of the status, all orders of all suppliers are retrieved and
+	// grouped by the supplier.
+	@Override
+	public Map<String, List<PurchaseOrder>> getAllOrders() {
+		Map<String, List<PurchaseOrder>> ordersOfSupplier = new HashMap<>();
+		List<Supplier> suppliers = supplierService.getAllSuppliers();
 
+		for (Supplier s : suppliers) {
+			ordersOfSupplier.put(s.getSupplierId(),
+					purchaseOrderRepository.getPurchaseOrdersBySupplierId(s.getSupplierId()));
+		}
 
-    // regardless of the status, get all orders issued to a specific supplier.
-    @Override
-    public List<PurchaseOrder> getOrdersofSpecificSupplier(String supplierId) {
-        return purchaseOrderRepository.getPurchaseOrdersBySupplierId(supplierId);
-    }
+		return ordersOfSupplier;
+	}
 
-    // regardless of the status, all orders of all suppliers are retrieved and grouped by the supplier.
-    @Override
-    public Map<String, List<PurchaseOrder>> getAllOrders() {
-        Map<String, List<PurchaseOrder>> ordersOfSupplier = new HashMap<>();
-        List<Supplier> suppliers = supplierService.getAllSuppliers();
+	@Override
+	public List<PurchaseOrder> createOrder(Site site) {
+		// holds the purchase orders(one order per supplier).
+		List<PurchaseOrder> orders = new ArrayList<>();
+		// list of items mapped against the supplier.
+		Map<String, List<Item>> itemsOrderedFromEachSupplier = new HashMap<>();
+		// quantity required, mapped against item id.
+		List<Item> siteItems = site.getItems();
+		// this is where the order is headed.
+		Site deliverySite = siteService.getSite(site.getSiteId());
 
-        for (Supplier s : suppliers) {
-            ordersOfSupplier.put(s.getSupplierId(),
-                    purchaseOrderRepository.getPurchaseOrdersBySupplierId(s.getSupplierId()));
-        }
+		// request material object has a map of items where quantity of each
+		// item is mapped against its item code.
+		// we need to get full details of the item(from the database) and group
+		// the items by the supplier.
 
-        return ordersOfSupplier;
-    }
+		for (Item i : siteItems) {
+			// now we group.
+			if (itemsOrderedFromEachSupplier.containsKey(i.getSupplierId())) {
+				// get the existing item list of the supplier so that we
+				// won't replace it.
+				List<Item> existingItems = itemsOrderedFromEachSupplier.get(i.getSupplierId());
+				existingItems.add(i);
+
+				// put it back so that the list mapped against the supplier
+				// is up to date.
+				itemsOrderedFromEachSupplier.put(i.getSupplierId(), existingItems);
+			} else {
+				// create a new list of items for future use.
+				List<Item> itemList = new ArrayList<>();
+				itemList.add(i);
+
+				// create a new entry in the map for this supplier.
+				itemsOrderedFromEachSupplier.put(i.getSupplierId(), itemList);
+			}
+		}
+
+		// now that we have grouped each item by its supplier, we can create a
+		// purchase order,
+		// for each supplier.
+		// we keep the requestId the same with varying order ids.
+		for (String supplierId : itemsOrderedFromEachSupplier.keySet()) {
+			PurchaseOrder p = new PurchaseOrder();
+
+			p.setRequestId("RI" + RandomStringUtils.randomNumeric(5));
+			p.setOrderId("OR" + RandomStringUtils.randomNumeric(5));
+			p.setDraftPurchaseOrder(true); // will be a draft as long as the
+											// payment isn't made.
+			p.setItems(itemsOrderedFromEachSupplier.get(supplierId));
+			p.setOnHold(false);
+			p.setOrderDate(new Date());
+			// p.setOrderStatus("Pending approval");
+			p.setSequentialReference("No idea");
+			p.setSupplierId(supplierId);
+			p.setDeliverySite(deliverySite);
+			p.setOrderStatus("Pending");
+
+			orders.add(p);
+		}
+
+		return orders;
+	}
 
 }
