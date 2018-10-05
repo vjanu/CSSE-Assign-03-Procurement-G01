@@ -97,7 +97,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             p.setOrderId(requestMaterial.getRequestId());
             p.setDraftPurchaseOrder(true); // will be a draft as long as the payment isn't made.
             p.setItems(itemsOrderedFromEachSupplier.get(supplierId));
-            p.setOnHold(false);
+            p.setOnHold("false");
             p.setOrderDate(new Date());
 //            p.setOrderStatus("Pending approval");
             p.setSequentialReference("No idea");
@@ -183,7 +183,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             order.setReturnedDate(purchaseOrder.getReturnedDate());
 //        if (purchaseOrder.getOrderStatus() != null)
 //            order.setOrderStatus(purchaseOrder.getOrderStatus());
-        if (purchaseOrder.isOnHold() != false)
+        if (purchaseOrder.isOnHold() != "false")
             order.setOnHold(purchaseOrder.isOnHold());
         return purchaseOrderRepository.save(order);
     }

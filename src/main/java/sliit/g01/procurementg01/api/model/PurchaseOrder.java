@@ -26,7 +26,7 @@ public class PurchaseOrder {
     private Site deliverySite;  // site where the order should be delivered to.
     private Date orderDate;
     private boolean draftPurchaseOrder;
-    private boolean onHold;
+    private String onHold;
     private Date returnedDate;
 
 
@@ -87,11 +87,11 @@ public class PurchaseOrder {
         this.draftPurchaseOrder = draftPurchaseOrder;
     }
 
-    public boolean isOnHold() {
+    public String isOnHold() {
         return onHold;
     }
 
-    public void setOnHold(boolean onHold) {
+    public void setOnHold(String onHold) {
         this.onHold = onHold;
     }
 

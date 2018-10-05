@@ -13,18 +13,18 @@ public class Payment {
 	@Id
 	private String paymentID;
 	private String paymentMethod;
-//	private String supplierId;
+	private String supplierId;
 	private double totAmount;
-	@JsonIgnore
-	private String isDeleted;
+	private String orderID;
+	private String bankNo;
+	private String date;
 
-
-	public String getIsDeleted() {
-		return isDeleted;
+	public String getDate() {
+		return date;
 	}
 
-	public void setIsDeleted(String isDeleted) {
-		this.isDeleted = isDeleted;
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 	public String getPaymentID() {
@@ -43,13 +43,13 @@ public class Payment {
 		this.paymentMethod = paymentMethod;
 	}
 
-//	public String getSupplierId() {
-//		return supplierId;
-//	}
-//
-//	public void setSupplierId(String supplierId) {
-//		this.supplierId = supplierId;
-//	}
+	public String getSupplierId() {
+		return supplierId;
+	}
+
+	public void setSupplierId(String supplierId) {
+		this.supplierId = supplierId;
+	}
 
 	public double getTotAmount() {
 		return totAmount;
@@ -57,5 +57,21 @@ public class Payment {
 
 	public void setTotAmount(double totAmount) {
 		this.totAmount = totAmount;
+	}
+
+	public String getOrderID() {
+		return orderID;
+	}
+
+	public void setOrderID(String orderID) {
+		this.orderID = orderID;
+	}
+
+	public String getBankNo() {
+		return bankNo;
+	}
+
+	public void setBankNo(String bankNo) {
+		this.bankNo = bankNo;
 	}
 }

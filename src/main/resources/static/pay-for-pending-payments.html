@@ -102,11 +102,13 @@
                                        <div class="form-row">
                                            <div class="form-group col-md-6">
                                                <label for="site-id">Order ID</label>
-                                               <input type="text" class="form-control" id="order-idorder-id" placeholder="Order Id">
+                                               <input type="text" class="form-control" id="order-id" placeholder="Order Id">
                                            </div>
-                                           <div class="form-group col-md-6">
-                                               <label for="site-name">Supplier ID</label>
-                                               <input type="text" class="form-control" id="supplier-id" placeholder="Supplier Id">
+                                           <div class="form-group col-md-6" id="item-select">
+
+                                                
+                                                        <label for="site-id">Item</label>
+                                                    
                                            </div>
                                        </div>
 
@@ -125,18 +127,49 @@
                                            <input type="text" class="form-control" id="bank-acc-name" placeholder="Bank Name">
                                        </div>
 
-                                       <div class="form-group">
-                                           <label for="Amount">Amount</label>
-                                           <input type="number" class="form-control" id="amount" placeholder="Amount">
-                                       </div>
-
                                        
 
-                                           <div class="form-group">
-                                       <button type="button" class="btn btn-sucess" id="btn-pay">Pay Now </button>
-                                       <a href="pending-payments.html" class="btn btn-danger"><i class="fas fa-plus-circle"></i> Change Order</a>
-                                       <button type="button" class="btn btn-primary" id="btn-clear" onclick="clearPayments()">Clear</button>
-                                   </div>
+                                       <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                   
+                                                            <label for="exampleFormControlSelect1">Payment Method</label>
+                                                            <select class="form-control" id="method">
+                                                              <option>Visa</option>
+                                                              <option>Master</option>
+                                                             
+                                                            </select>
+                                                         
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                    <label for="site-id">Amount</label>
+                                                    <input type="number" class="form-control" id="amount" placeholder="Amount">
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                        <label for="site-id">Date</label>
+                                                        <input type="date" class="form-control" id="date" >
+                                                    </div>
+                                        </div>
+                                   
+                                   <div class="form-group" align="center">
+                                                            
+                                    <a href="#" title="" id ="btn-pay" class="btn btn-success " onclick="pay()">
+                                            <span class="fa fa-star" aria-hidden="true"></span>
+                                       <span><strong>Pay Now</strong></span></a>
+                                    
+                            
+                            
+                                    <a href="pending-payments.html" title="" id ="btn-reset" class="btn btn-primary">
+                                            <span class="fa fa-undo" aria-hidden="true"></span>
+                                            <span><strong>Change Order</strong></span></a>
+
+                                            <a href="#" title="" id ="btn-reset" class="btn btn-danger " onclick="clearPayments()">
+                                                <span class="fa fa-window-restore" aria-hidden="true"></span>
+                                                <span><strong>Clear</strong></span></a>
+                                    
+                            
+                     </div>
+
+
                                    </form>
                                </div>
                               
@@ -194,7 +227,7 @@
         crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/axios.min.js"></script>
-    <script src="js/site-script.js"></script>
+    <script src="js/accountingstaff-script.js"></script>
     <script src="js/notify.min.js"></script>
     <script src="js/notify.js"></script>
   
