@@ -14,26 +14,18 @@ public class RequestMaterial {
 	private String requestId;
 	private String requestedPerson;
 	private String siteId;
-	private String quantity;
 	private String requestingDate;
 	private String requestedDate;
 	private List<Item> items;
 	private String isImmediated;
-	private Boolean isProcumentApproved;
+	private Boolean isProcumentApproved = false;
+	private Boolean isProcumentRejected = false;
 	private String isSiteManagerApproved;
-	private Boolean notifyManagement;
+	private Boolean notifyManagement = false;
 	private String siteManagerName;
 	private String siteManagerID;
 	@JsonIgnore
 	private String isDeclinedBySiteManager;
-
-	public String getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(String quantity) {
-		this.quantity = quantity;
-	}
 
 	public String getRequestingDate() {
 		return requestingDate;
@@ -139,6 +131,14 @@ public class RequestMaterial {
 
 	public void setIsProcumentApproved(Boolean isProcumentApproved) {
 		this.isProcumentApproved = isProcumentApproved;
+	}
+
+	public Boolean getIsProcumentRejected() {
+		return isProcumentRejected;
+	}
+
+	public void setIsProcumentRejected(Boolean isProcumentRejected) {
+		this.isProcumentRejected = isProcumentRejected;
 	}
 
 }
