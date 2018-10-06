@@ -28,8 +28,11 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public Login addUsers(Login login) {
-		// TODO Auto-generated method stub
 		return loggedUserRepository.save(login);
+	}
+
+	public Login getUser(String username, String password) {
+		return loggedUserRepository.findByUsernameAndPassword(username, password);
 	}
 
 	@Override
@@ -39,10 +42,10 @@ public class LoginServiceImpl implements LoginService {
 		System.out.println(login.getUsername());
 		System.out.println(login.getPassword());
 
-		if (login.getUsername().contentEquals("test") && login.getPassword().contentEquals("123")) {
+		if (this.getUser(login.getUsername(), login.getPassword()).getUserType() != null) {
 			userInfo.put("success", "true");
-			userInfo.put("userType", "Procurement-Staff");
-			userInfo.put("userId", "");
+			userInfo.put("userType", this.getUser(login.getUsername(), login.getPassword()).getUserType());
+			userInfo.put("userId", this.getUser(login.getUsername(), login.getPassword()).getUsername());
 		}
 
 		else if (siteManagerServiceImpl.getSiteManager(login.getUsername(), login.getPassword())

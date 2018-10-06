@@ -2,7 +2,6 @@ package sliit.g01.procurementg01.api.controller;
 
 import java.util.HashMap;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,13 +21,12 @@ public class LoginController {
 
 	@PostMapping("/addemployee")
 	public Login addUsers(@Validated @RequestBody Login login) {
-		login.setEmployeeId("CS" + RandomStringUtils.randomNumeric(5));
+		// login.setEmployeeId("CS" + RandomStringUtils.randomNumeric(5));
 		return loginService.addUsers(login);
 	}
 
 	@PostMapping("/validate-user")
 	public HashMap<String, String> validateUser(@Validated @RequestBody Login login) {
-		login.setEmployeeId("CS" + RandomStringUtils.randomNumeric(5));
 		return loginService.validateUser(login);
 	}
 
