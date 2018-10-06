@@ -1,4 +1,4 @@
-/*
+package sliit.g01.procurementg01.api.controller;/*
 package sliit.g01.procurementg01.api.controller;
 
 import org.springframework.validation.annotation.Validated;
@@ -18,7 +18,23 @@ import java.util.Properties;
 
 /**
  * @author viraj
- **//*
+ **/
+
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import sliit.g01.procurementg01.api.model.Payment;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 
 @RestController
 @RequestMapping("/email")
@@ -95,4 +111,3 @@ public class EmailController {
         }
     }
 }
-*/
