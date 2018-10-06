@@ -190,7 +190,7 @@ function renderSupplierTable(tagId, suppliers) {
             '<td>' + supplier.supplierName + '</td>' +
             '<td>' + supplier.bankName + '</td>' +
             '<td>' + supplier.bankAccountNo + '</td>' +
-            '<td>' + supplier.address + '</td>' +
+            '<td>' + supplier.deliverySite.address + '</td>' +
             '<td>' + supplier.email + '</td>' +
             '<td>' + supplier.phone + '</td>' +
             '<td>' + (supplier.isBanned ? 'Allowed' : 'Not allowed') + '</td>' +
