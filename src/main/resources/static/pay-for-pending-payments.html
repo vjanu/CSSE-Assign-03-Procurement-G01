@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <!-- font awesome(for icons) -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+
+    <!-- lato font(from google fonts) -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link href="css/custom-style.css" rel="stylesheet">
+
+
+    <title>Account Staff Home</title>
+</head>
+
+<body class="fixed-nav">
+
+ 
+<!-- navbar: start -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="#">Account Staff Home</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                
+            
+            
+                  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Pending Payments">
+                        <a class="nav-link nav-link-collapse" href="pending-payments.html">
+                            <i class="fas fa-hourglass-half"></i>
+                            <span class="nav-link-text">Pending Payments</span>
+                        </a>
+                            </li>  
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Successfull Payments">
+                        <a class="nav-link nav-link-collapse" href="successfull-payments.html">
+                                <i class="far fa-thumbs-up"></i>
+                            <span class="nav-link-text">Successfull Payments</span>
+                        </a>
+                </li> 
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="On Hold Payments">
+                        <a class="nav-link nav-link-collapse" href="onhold-payments.html">
+                                <i class="fas fa-ban"></i>
+                            <span class="nav-link-text">On-Hold Payments</span>
+                        </a>
+                </li> 
+                  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="View Supplier">
+                <a class="nav-link nav-link-collapse" href="view-supplier-acc.html">        
+                        <i class="fas fa-people-carry"></i>
+                    <span class="nav-link-text">Suppliers</span>
+                </a>
+                    </li> 
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="View Constructors">
+                            <a class="nav-link nav-link-collapse" href="view-constructors-acc.html">              
+                                    <i class="fas fa-user"></i>
+                                <span class="nav-link-text">Constructors</span>
+                            </a>
+                                </li>     
+
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="left" title="Logout">
+                <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-fw fa-sign-out-alt"></i>
+                    <span class="nav-link-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- navbar: end -->
+
+    <div class="content-wrapper">
+        <div class="container-fluid">
+
+            <div>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="accountingstaff-dashboard.html">Dashboard</a>
+                    </li>
+                   
+                </ol>
+                <div class="card">
+                    <div class="card-header">
+                       <h4>Pay For Suppliers</h4>
+                   </div>
+                   <div class="card-body">    
+                       <!-- main content: start -->
+
+                       <div class="card-body mr-md-5 ml-md-5">
+                           <div class="row">
+                               <div class="col-md-12">
+                                   <form>
+                                       <div class="form-row">
+                                           <div class="form-group col-md-6">
+                                               <label for="site-id">Order ID</label>
+                                               <input type="text" class="form-control" id="order-id" placeholder="Order Id">
+                                           </div>
+                                           <div class="form-group col-md-6" id="item-select">
+
+                                                
+                                                        <label for="site-id">Supplier ID</label>
+                                                    
+                                           </div>
+                                       </div>
+
+                                       <div class="form-group">
+                                           <label for="Supplier Name">Supplier Name</label>
+                                           <input type="text" class="form-control" id="supplier-name" placeholder="Supplier Name">
+                                       </div>
+
+                                       <div class="form-group">
+                                        <label for="Supplier Name">Supplier Email</label>
+                                        <input type="text" class="form-control" id="supplier-email" placeholder="Supplier Email">
+                                    </div>
+
+                                       <div class="form-group">
+                                           <label for="Bank Account ID">Bank Account ID</label>
+                                           <input type="text" class="form-control" id="bank-acc-id" placeholder="Bank Account ID">
+                                       </div>
+
+                                       <div class="form-group">
+                                           <label for="Bank Name">Bank Name</label>
+                                           <input type="text" class="form-control" id="bank-acc-name" placeholder="Bank Name">
+                                       </div>
+
+                                       
+
+                                       <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                   
+                                                            <label for="exampleFormControlSelect1">Payment Method</label>
+                                                            <select class="form-control" id="method">
+                                                              <option>Visa</option>
+                                                              <option>Master</option>
+                                                             
+                                                            </select>
+                                                         
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                    <label for="site-id">Amount</label>
+                                                    <input type="number" class="form-control" id="amount" placeholder="Amount">
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                        <label for="site-id">Date</label>
+                                                        <input type="date" class="form-control" id="date" >
+                                                    </div>
+                                        </div>
+                                   
+                                   <div class="form-group" align="center">
+                                                            
+                                    <a href="#" title="" id ="btn-pay" class="btn btn-success " onclick="pay()">
+                                            <span class="fa fa-credit-card" aria-hidden="true"></span>
+                                       <span><strong>Pay Now</strong></span></a>
+                                    
+                                       <a href="#" title="" id ="btn-pay" class="btn btn-dark " onclick="sentEmail()">
+                                        <span class="fa fa-envelope" aria-hidden="true"></span>
+                                   <span><strong>Email Receipt</strong></span></a>
+                            
+                                    <a href="pending-payments.html" title="" id ="btn-reset" class="btn btn-primary">
+                                            <span class="fa fa-undo" aria-hidden="true"></span>
+                                            <span><strong>Change Order</strong></span></a>
+
+                                            <a href="#" title="" id ="btn-reset" class="btn btn-danger " onclick="clearPayments()">
+                                                <span class="fa fa-window-restore" aria-hidden="true"></span>
+                                                <span><strong>Clear</strong></span></a>
+                                    
+                            
+                     </div>
+
+
+                                   </form>
+                               </div>
+                              
+                           </div>
+                       </div>
+                       <!-- main content: end -->
+
+                 
+               </div>
+               
+          
+             </div>
+
+                   
+                
+    </div>
+            
+        </div>
+    </div></div>
+        <footer class="sticky-footer">
+            <div class="container">
+                <div class="text-center">
+                    <small>Copyright © Procurement Home 2018</small>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary" id="btn-logout">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/accountingstaff-script.js"></script>
+    <script src="js/notify.min.js"></script>
+    <script src="js/notify.js"></script>
+  
+
+</html>
+
+

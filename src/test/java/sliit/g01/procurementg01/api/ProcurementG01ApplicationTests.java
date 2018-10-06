@@ -1,4 +1,4 @@
-package sliit.g01.procurementg01;
+package sliit.g01.procurementg01.api;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
